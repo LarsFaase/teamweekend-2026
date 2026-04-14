@@ -14,10 +14,6 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -27,141 +23,62 @@ body {
   min-height: 100vh;
 }
 
-/* Navigatie */
-.navbar {
+/* NAV (oude versie) */
+nav {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 14px;
+  flex-wrap: wrap;
   padding: 18px 16px;
   background: rgba(0, 37, 97, 0.95);
   border-bottom: 3px solid var(--accent);
   position: sticky;
   top: 0;
   z-index: 1000;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 4px 20px var(--shadow);
-  position: relative;
-  flex-direction: column;
 }
 
-nav img {
-  height: 40px;
-  width: auto;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+nav a {
+  color: var(--text);
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
-nav img.logo-left {
-  left: 16px;
+nav a:hover {
+  background: var(--accent);
+  transform: translateY(-1px);
 }
 
-nav img.logo-right {
-  right: 16px;
-}
-
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-  .navbar {
-    gap: 8px;
-    padding: 12px 8px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .nav-menu {
-    max-height: 60px;
-    gap: 8px;
-  }
-
-  .nav-menu a {
-    padding: 8px 12px;
-    font-size: 0.9rem;
-  }
-
-  .menu-toggle {
-    display: flex;
-  }
-
-  nav img {
-    height: 30px;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-  }
-
-  h3 {
-    font-size: 1.1rem;
-  }
-
-  main {
-    padding: 30px 12px;
-  }
-
-  .card {
-    padding: 16px;
-    margin: 16px auto;
-  }
-
-  button,
-  .button {
-    padding: 12px 16px;
-    min-height: 44px;
-    min-width: 44px;
-    font-size: 0.95rem;
-  }
-
-  p {
-    font-size: 0.95rem;
-  }
-
-  ul li {
-    padding: 12px 14px;
-    margin: 8px auto;
-  }
-}
-
-/* Pagina inhoud */
+/* CONTENT */
 main {
   max-width: 1000px;
   margin: 0 auto;
   padding: 56px 20px;
 }
 
-/* Titels */
+/* TITELS */
 h1 {
   font-size: 3rem;
   margin: 0 0 16px;
   color: var(--accent);
   text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
 h2 {
   font-size: 2rem;
-  margin: 0 0 12px;
-  color: var(--text);
+  margin-bottom: 12px;
 }
 
-h3 {
-  font-size: 1.25rem;
-  margin: 0 0 10px;
-  color: var(--accent);
-}
-
+/* TEXT */
 p {
   color: var(--text-muted);
   line-height: 1.6;
-  margin: 0 0 16px;
 }
 
-/* Cards / blokken */
+/* CARDS */
 .card {
   background: var(--surface-light);
   border: 1px solid var(--border);
@@ -172,33 +89,10 @@ p {
   box-shadow: 0 8px 24px var(--shadow);
 }
 
-/* Buttons */
-button,
-.button {
-  display: inline-block;
-  background: var(--accent);
-  color: var(--text);
-  border: none;
-  border-radius: 12px;
-  padding: 12px 20px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  text-decoration: none;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-button:hover,
-.button:hover {
-  transform: translateY(-2px);
-  opacity: 0.9;
-}
-
-/* Lijsten */
+/* LIJST */
 ul {
   list-style: none;
   padding: 0;
-  margin: 20px 0;
 }
 
 ul li {
@@ -209,56 +103,30 @@ ul li {
   border-radius: 10px;
   max-width: 700px;
   text-align: left;
-  color: var(--text);
 }
 
-/* Tabellen of programma-blokken */
-.section {
-  margin: 40px 0;
+/* AFBEELDINGEN */
+img {
+  max-width: 100%;
+  border-radius: 12px;
 }
 
-.highlight {
-  color: var(--accent);
-  font-weight: bold;
-}
-
-/* Footer */
-footer {
-  padding: 30px 20px;
-  color: var(--text-muted);
-  font-size: 0.95rem;
-}
-
-/* Mobiel */
+/* MOBIEL */
 @media (max-width: 768px) {
+  h1 {
+    font-size: 2.2rem;
+  }
+
   nav {
     gap: 10px;
     padding: 14px 10px;
-  }
-
-  nav a {
-    padding: 9px 12px;
-    font-size: 0.95rem;
   }
 
   main {
     padding: 40px 16px;
   }
 
-  h1 {
-    font-size: 2.2rem;
-  }
-
-  h2 {
-    font-size: 1.6rem;
-  }
-
   .card {
     padding: 18px;
-    margin: 18px auto;
-  }
-
-  ul li {
-    padding: 12px 14px;
   }
 }

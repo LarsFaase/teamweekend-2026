@@ -75,6 +75,57 @@ nav img.logo-right {
   right: 16px;
 }
 
+/* De knop met tekst en streepjes */
+.menu-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* De 3 streepjes zelf */
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  margin: 5px 0;
+  transition: 0.3s;
+}
+
+/* Standaard verbergen we de links (voor de dropdown) */
+.nav-links {
+  display: none; 
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  flex-direction: column;
+}
+
+/* De links onder elkaar in de dropdown */
+.nav-links a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Als de class 'show' wordt toegevoegd door JS, tonen we het menu */
+.nav-links.show {
+  display: flex;
+}
+
+/* Netjes maken: hover effect op links */
+.nav-links a:hover {
+  background-color: #f1f1f1;
+}
+
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   nav {

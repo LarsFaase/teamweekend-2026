@@ -115,9 +115,9 @@ img {
 
 .logo-left,
 .logo-right {
-  height: 40px;
-  width: auto;
-  max-width: none;
+  height: 40px !important;
+  width: auto !important;
+  max-width: none !important;
 }
 
 /* MOBIEL */

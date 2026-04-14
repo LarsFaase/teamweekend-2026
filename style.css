@@ -139,6 +139,27 @@ nav img.logo-right {
   transform: rotate(-45deg) translate(7px, -7px);
 }
 
+/* Desktop styles */
+@media (min-width: 769px) {
+  .navbar {
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .nav-menu {
+    max-height: none;
+    width: auto;
+    flex-direction: row;
+    padding: 0;
+    background: transparent;
+    border-top: none;
+  }
+  
+  .menu-toggle {
+    display: none !important;
+  }
+}
+
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .navbar {

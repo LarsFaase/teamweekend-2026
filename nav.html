@@ -1,7 +1,7 @@
 <nav class="navbar" id="navbar">
   <img src="pictures/parkhout-logo.png" alt="Parkhout Logo" class="logo-left" />
   
-  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle menu">
+  <button class="menu-toggle" aria-label="Toggle menu">
     <div class="hamburger">
       <span></span>
       <span></span>
@@ -19,18 +19,3 @@
 
   <img src="pictures/parkhout-logo.png" alt="Parkhout Logo" class="logo-right" />
 </nav>
-
-<script>
-  function toggleMenu() {
-    const navbar = document.getElementById('navbar');
-    navbar.classList.toggle('menu-open');
-  }
-  
-  // Close menu when a link is clicked
-  document.querySelectorAll('.nav-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-      const navbar = document.getElementById('navbar');
-      navbar.classList.remove('menu-open');
-    });
-  });
-</script>

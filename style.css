@@ -42,6 +42,7 @@ nav {
   z-index: 1000;
   backdrop-filter: blur(8px);
   box-shadow: 0 4px 20px var(--shadow);
+  position: relative;
 }
 
 nav a {
@@ -56,6 +57,22 @@ nav a {
 nav a:hover {
   background: var(--accent);
   transform: translateY(-1px);
+}
+
+nav img {
+  height: 40px;
+  width: auto;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+nav img.logo-left {
+  left: 16px;
+}
+
+nav img.logo-right {
+  right: 16px;
 }
 
 /* Pagina inhoud */

@@ -77,15 +77,11 @@ nav img.logo-right {
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
-  nav img {
-    display: none;
-  }
-
   nav {
     gap: 8px;
     padding: 12px 8px;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
     overflow-x: auto;
   }
 
@@ -95,6 +91,10 @@ nav img.logo-right {
     min-height: 44px;
     display: flex;
     align-items: center;
+  }
+
+  nav img {
+    height: 30px;
   }
 
   h1 {

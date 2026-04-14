@@ -54,6 +54,13 @@ body {
   transform: translateY(-1px);
 }
 
+.logo-left,
+.logo-right {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
 /* CONTENT */
 main {
   max-width: 1000px;

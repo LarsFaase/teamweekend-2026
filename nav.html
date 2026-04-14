@@ -3,7 +3,7 @@
   
   <div class="menu-container">
     <button class="menu-toggle" onclick="toggleMenu()">
-      <span>Menu</span>
+      <span>Menu- geupdate</span>
       <div class="hamburger">
         <span></span>
         <span></span>
@@ -12,7 +12,7 @@
     </button>
     
     <div class="nav-links" id="navLinks">
-      <a href="index.html">Homeaaaa</a>
+      <a href="index.html">Home</a>
       <a href="team.html">Team organisatie</a>
       <a href="programma.html">Programma</a>
       <a href="locatie.html">Locatie</a>
@@ -22,3 +22,10 @@
 
   <img src="pictures/parkhout-logo.png" alt="Parkhout Logo" class="logo-right" />
 </nav>
+
+<script>
+  function toggleMenu() {
+    const links = document.getElementById('navLinks');
+    links.classList.toggle('show');
+  }
+</script>

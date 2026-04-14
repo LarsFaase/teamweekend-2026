@@ -16,23 +16,12 @@
   </main>
 
   <script>
-  // 1. Laad de navigatie in
-  fetch('nav.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('nav-placeholder').innerHTML = data;
-
-      // 2. Pas nadat de HTML is ingeladen, zoeken we de knop op
-      const menuBtn = document.getElementById('menuBtn');
-      const navLinks = document.getElementById('navLinks');
-
-      if (menuBtn) {
-        menuBtn.addEventListener('click', function() {
-          navLinks.classList.toggle('show');
-        });
-      }
-    });
-</script>
+    fetch('nav.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('nav-placeholder').innerHTML = data;
+      });
+  </script>
 
 </body>
 </html>

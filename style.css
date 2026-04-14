@@ -75,6 +75,67 @@ nav img.logo-right {
   right: 16px;
 }
 
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  nav img {
+    display: none;
+  }
+
+  nav {
+    gap: 8px;
+    padding: 12px 8px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+
+  nav a {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  main {
+    padding: 30px 12px;
+  }
+
+  .card {
+    padding: 16px;
+    margin: 16px auto;
+  }
+
+  button,
+  .button {
+    padding: 12px 16px;
+    min-height: 44px;
+    min-width: 44px;
+    font-size: 0.95rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+  }
+
+  ul li {
+    padding: 12px 14px;
+    margin: 8px auto;
+  }
+}
+
 /* Pagina inhoud */
 main {
   max-width: 1000px;

@@ -23,7 +23,7 @@ body {
   min-height: 100vh;
 }
 
-/* NAV  */
+/* NAV */
 .navbar {
   display: flex;
   justify-content: center;
@@ -39,11 +39,13 @@ body {
 }
 
 .navbar a {
+  display: inline-block; /* 🔥 FIX voor knoppen */
   color: var(--text);
   text-decoration: none;
   padding: 10px 16px;
-  border-radius: 10px;
+  border-radius: 12px;
   font-weight: bold;
+  background: rgba(255, 255, 255, 0.05); /* extra button look */
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
@@ -117,7 +119,7 @@ img {
     font-size: 2.2rem;
   }
 
-  nav {
+  .navbar {
     gap: 10px;
     padding: 14px 10px;
   }

@@ -28,12 +28,11 @@ body {
 }
 
 /* Navigatie */
-nav {
+.navbar {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 14px;
-  flex-wrap: wrap;
   padding: 18px 16px;
   background: rgba(0, 37, 97, 0.95);
   border-bottom: 3px solid var(--accent);
@@ -43,20 +42,53 @@ nav {
   backdrop-filter: blur(8px);
   box-shadow: 0 4px 20px var(--shadow);
   position: relative;
+  flex-direction: column;
 }
 
-nav a {
+.nav-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  width: 100%;
+  max-height: 60px;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.navbar.menu-open .nav-menu {
+  max-height: 500px;
+  flex-direction: column;
+  padding: 16px 0;
+  background: rgba(0, 37, 97, 0.98);
+  border-top: 1px solid var(--border);
+}
+
+.nav-menu a {
   color: var(--text);
   text-decoration: none;
   padding: 10px 16px;
   border-radius: 10px;
   font-weight: bold;
   transition: background 0.2s ease, transform 0.2s ease;
+  display: block;
+  white-space: nowrap;
 }
 
-nav a:hover {
+.nav-menu a:hover {
   background: var(--accent);
   transform: translateY(-1px);
+}
+
+.navbar.menu-open .nav-menu a {
+  padding: 12px 20px;
+  width: 100%;
+  text-align: center;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 nav img {
@@ -75,75 +107,59 @@ nav img.logo-right {
   right: 16px;
 }
 
-/* De knop met tekst en streepjes */
+/* Hamburger Menu Button */
 .menu-toggle {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: none;
+  flex-direction: column;
   background: none;
-  border: 1px solid #ccc;
-  padding: 5px 10px;
+  border: none;
   cursor: pointer;
-  font-size: 16px;
+  padding: 8px;
+  gap: 6px;
 }
 
-/* De 3 streepjes zelf */
 .hamburger span {
   display: block;
   width: 25px;
   height: 3px;
-  background-color: #333;
-  margin: 5px 0;
-  transition: 0.3s;
+  background-color: var(--text);
+  transition: 0.3s ease;
+  border-radius: 2px;
 }
 
-/* Standaard verbergen we de links (voor de dropdown) */
-.nav-links {
-  display: none; 
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  flex-direction: column;
+.navbar.menu-open .hamburger span:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
 }
 
-/* De links onder elkaar in de dropdown */
-.nav-links {
-  display: none; /* Standaard onzichtbaar */
-  position: absolute; /* Zorgt dat het over de tekst heen valt */
-  background-color: white; /* Of de kleur van je site */
-  min-width: 160px;
-  border: 1px solid #ddd;
-  z-index: 1000; /* Zorgt dat het menu bovenop andere elementen ligt */
+.navbar.menu-open .hamburger span:nth-child(2) {
+  opacity: 0;
 }
 
-.nav-links.show {
-  display: flex;
-  flex-direction: column; /* Dit zet de links onder elkaar! */
-}
-
-/* Netjes maken: hover effect op links */
-.nav-links a:hover {
-  background-color: #f1f1f1;
+.navbar.menu-open .hamburger span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
 }
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
-  nav {
+  .navbar {
     gap: 8px;
     padding: 12px 8px;
     flex-wrap: wrap;
     justify-content: center;
-    overflow-x: auto;
   }
 
-  nav a {
+  .nav-menu {
+    max-height: 60px;
+    gap: 8px;
+  }
+
+  .nav-menu a {
     padding: 8px 12px;
     font-size: 0.9rem;
-    min-height: 44px;
+  }
+
+  .menu-toggle {
     display: flex;
-    align-items: center;
   }
 
   nav img {

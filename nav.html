@@ -1,23 +1,20 @@
-<nav class="navbar">
+<nav class="navbar" id="navbar">
   <img src="pictures/parkhout-logo.png" alt="Parkhout Logo" class="logo-left" />
   
-  <div class="menu-container">
-    <button class="menu-toggle" onclick="toggleMenu()">
-      <span>Menu- geupdate</span>
-      <div class="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </button>
-    
-    <div class="nav-links" id="navLinks">
-      <a href="index.html">Home</a>
-      <a href="team.html">Team organisatie</a>
-      <a href="programma.html">Programma</a>
-      <a href="locatie.html">Locatie</a>
-      <a href="paklijst.html">Paklijst</a>
+  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle menu">
+    <div class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
+  </button>
+  
+  <div class="nav-menu" id="navMenu">
+    <a href="index.html">Home</a>
+    <a href="team.html">Team organisatie</a>
+    <a href="programma.html">Programma</a>
+    <a href="locatie.html">Locatie</a>
+    <a href="paklijst.html">Paklijst</a>
   </div>
 
   <img src="pictures/parkhout-logo.png" alt="Parkhout Logo" class="logo-right" />
@@ -25,7 +22,15 @@
 
 <script>
   function toggleMenu() {
-    const links = document.getElementById('navLinks');
-    links.classList.toggle('show');
+    const navbar = document.getElementById('navbar');
+    navbar.classList.toggle('menu-open');
   }
+  
+  // Close menu when a link is clicked
+  document.querySelectorAll('.nav-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      const navbar = document.getElementById('navbar');
+      navbar.classList.remove('menu-open');
+    });
+  });
 </script>

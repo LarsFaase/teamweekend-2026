@@ -109,16 +109,18 @@ nav img.logo-right {
 }
 
 /* De links onder elkaar in de dropdown */
-.nav-links a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
+.nav-links {
+  display: none; /* Standaard onzichtbaar */
+  position: absolute; /* Zorgt dat het over de tekst heen valt */
+  background-color: white; /* Of de kleur van je site */
+  min-width: 160px;
+  border: 1px solid #ddd;
+  z-index: 1000; /* Zorgt dat het menu bovenop andere elementen ligt */
 }
 
-/* Als de class 'show' wordt toegevoegd door JS, tonen we het menu */
 .nav-links.show {
   display: flex;
+  flex-direction: column; /* Dit zet de links onder elkaar! */
 }
 
 /* Netjes maken: hover effect op links */

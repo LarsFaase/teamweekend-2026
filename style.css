@@ -54,13 +54,6 @@ body {
   transform: translateY(-1px);
 }
 
-.logo-left,
-.logo-right {
-  height: 40px;
-  width: auto;
-  object-fit: contain;
-}
-
 /* CONTENT */
 main {
   max-width: 1000px;
@@ -118,6 +111,13 @@ ul li {
 img {
   max-width: 100%;
   border-radius: 12px;
+}
+
+.logo-left,
+.logo-right {
+  height: 40px;
+  width: auto;
+  max-width: none;
 }
 
 /* MOBIEL */

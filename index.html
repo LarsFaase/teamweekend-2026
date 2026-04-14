@@ -13,17 +13,26 @@
   <main>
     <h1>Teamweekend 2026</h1>
     <p>Beleef het weekend van je leven!</p>
-    <p>SUIIIIIII</p>
-    <p>aaaaa</p>
   </main>
 
   <script>
-    fetch('nav.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('nav-placeholder').innerHTML = data;
-      });
-  </script>
+  // 1. Laad de navigatie in
+  fetch('nav.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('nav-placeholder').innerHTML = data;
+
+      // 2. Pas nadat de HTML is ingeladen, zoeken we de knop op
+      const menuBtn = document.getElementById('menuBtn');
+      const navLinks = document.getElementById('navLinks');
+
+      if (menuBtn) {
+        menuBtn.addEventListener('click', function() {
+          navLinks.classList.toggle('show');
+        });
+      }
+    });
+</script>
 
 </body>
 </html>

@@ -1,9 +1,31 @@
-<nav>
+<nav class="navbar">
   <img src="pictures/parkhout-logo.png" alt="Parkhout Logo" class="logo-left" />
-  <a href="index.html">Home</a>
-  <a href="team.html">Team organisatie</a>
-  <a href="programma.html">Programma</a>
-  <a href="locatie.html">Locatie</a>
-  <a href="paklijst.html">Paklijst</a>
+  
+  <div class="menu-container">
+    <button class="menu-toggle" onclick="toggleMenu()">
+      <span>Menu</span>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </button>
+    
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="team.html">Team organisatie</a>
+      <a href="programma.html">Programma</a>
+      <a href="locatie.html">Locatie</a>
+      <a href="paklijst.html">Paklijst</a>
+    </div>
+  </div>
+
   <img src="pictures/parkhout-logo.png" alt="Parkhout Logo" class="logo-right" />
 </nav>
+
+<script>
+  function toggleMenu() {
+    const links = document.getElementById('navLinks');
+    links.classList.toggle('show');
+  }
+</script>

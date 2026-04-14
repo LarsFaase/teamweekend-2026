@@ -7,17 +7,21 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="team.html">Team organisatie</a>
-    <a href="programma.html">Programma</a>
-    <a href="locatie.html">Locatie</a>
-    <a href="paklijst.html">Paklijst</a>
-  </nav>
+  
+  <div id="nav-placeholder"></div>
 
   <main>
     <h1>Team Organisatie</h1>
     <p>Hier komt de inhoud.</p>
   </main>
+  
+  <script>
+    fetch('nav.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('nav-placeholder').innerHTML = data;
+      });
+  </script>
+  
 </body>
 </html>

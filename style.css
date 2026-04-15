@@ -29,6 +29,14 @@ body {
   display: none;
 }
 
+/* Styling voor het woord 'Menu' */
+.menu-text {
+  color: var(--text, white);
+  font-weight: bold;
+  font-size: 1rem;
+  user-select: none; /* Voorkomt dat je de tekst per ongeluk selecteert bij het klikken */
+}
+
 /* Styling voor het hamburger icoontje (3 lijntjes) */
 .hamburger {
   display: flex;
@@ -36,6 +44,23 @@ body {
   cursor: pointer;
   gap: 5px;
   z-index: 1001;
+}
+
+/* De container voor de 3 streepjes */
+.hamburger-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* De individuele streepjes */
+.hamburger-lines span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: white;
+  border-radius: 3px;
+  transition: background 0.3s ease;
 }
 
 .hamburger span {

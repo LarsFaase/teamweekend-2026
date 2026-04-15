@@ -440,19 +440,20 @@ img {
   }
 
   .countdown {
-    gap: 8px;
+    gap: 6px;
+    max-width: 100%;
   }
 
   .time-box {
-    flex: 1;
-    min-width: 0;
+    padding: 8px 4px;
+    border-radius: 10px;
   }
 
   .time-box span {
-    font-size: 1.4rem;
+    font-size: 1.15rem;
   }
 
   .time-box small {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
   }
 }

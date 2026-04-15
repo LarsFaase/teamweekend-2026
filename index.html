@@ -14,14 +14,59 @@
   <main>
     <h1>Teamweekend 2026</h1>
     <p>Beleef het weekend van je leven!</p>
+
+    <!-- Countdown -->
+    <div class="card">
+      <h2>Countdown</h2>
+      <div id="countdown" class="countdown">
+        Laden...
+      </div>
+    </div>
+
+    <!-- Foto vorig jaar -->
+    <div class="card">
+      <h2>Vorig jaar</h2>
+      <img src="pictures/teamweekend-2025.jpg" alt="Teamweekend 2025">
+    </div>
+
   </main>
 
   <script>
+    // Navbar laden
     fetch('nav.html')
       .then(response => response.text())
       .then(data => {
         document.getElementById('nav-placeholder').innerHTML = data;
       });
+
+    // Countdown
+    const countdownEl = document.getElementById("countdown");
+    const targetDate = new Date("June 12, 2026 17:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        countdownEl.innerHTML = "WE ZIJN BEGONNEN 🔥";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((distance / (1000 * 60)) % 60);
+      const seconds = Math.floor((distance / 1000) % 60);
+
+      countdownEl.innerHTML = `
+        <div class="time-box"><span>${days}</span><small>Dagen</small></div>
+        <div class="time-box"><span>${hours}</span><small>Uur</small></div>
+        <div class="time-box"><span>${minutes}</span><small>Min</small></div>
+        <div class="time-box"><span>${seconds}</span><small>Sec</small></div>
+      `;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
   </script>
 
 </body>

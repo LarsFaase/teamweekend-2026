@@ -120,9 +120,9 @@ body {
   background: var(--accent); /* Jouw rode kleur */
   height: 30px; /* Bepaal hier de hoogte van je rode balk */
   /*margin-top: 10px;*/
-  margin-left: -16px; /* Compenseert de padding van de navbar */
-  margin-right: -16px; /* Compenseert de padding van de navbar */
-  width: calc(100% + 32px); /* Zorgt dat hij over de volle breedte loopt */
+  /*margin-left: -16px; /* Compenseert de padding van de navbar */
+  /*margin-right: -16px; /* Compenseert de padding van de navbar */
+  /*width: calc(100% + 32px); /* Zorgt dat hij over de volle breedte loopt */
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -131,12 +131,12 @@ body {
 .ticker-text {
   white-space: nowrap;
   display: inline-block;
-  animation: marquee 15s linear infinite;
+  animation: marquee 30s linear infinite;
 }
 
 .ticker-text span {
   display: inline-block;
-  padding-left: 50px;
+  padding-right: 0;
   color: white;
   font-weight: 900;
   font-style: italic;

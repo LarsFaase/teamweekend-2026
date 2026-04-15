@@ -101,7 +101,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap; /* Belangrijk: zorgt dat de rode balk naar de volgende regel springt */
+  /*flex-wrap: wrap; /* Belangrijk: zorgt dat de rode balk naar de volgende regel springt */
   padding: 18px 16px 0 16px; /* Onderste padding op 0 */
   background: rgba(0, 37, 97, 0.95);
   /* border-bottom verwijderd, want de ticker-bar wordt nu de bodem */

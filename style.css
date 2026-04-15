@@ -120,8 +120,8 @@ body {
   background: var(--accent); /* Jouw rode kleur */
   height: 30px; /* Bepaal hier de hoogte van je rode balk */
   /*margin-top: 10px;*/
-  /*margin-left: -16px; /* Compenseert de padding van de navbar */
-  /*margin-right: -16px; /* Compenseert de padding van de navbar */
+  margin-left: -16px; /* Compenseert de padding van de navbar */
+  margin-right: -16px; /* Compenseert de padding van de navbar */
   width: calc(100% + 32px); /* Zorgt dat hij over de volle breedte loopt */
   overflow: hidden;
   display: flex;

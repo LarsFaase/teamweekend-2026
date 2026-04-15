@@ -47,6 +47,14 @@ body {
   transition: 0.3s;
 }
 
+/* Styling voor het woord 'Menu' */
+.menu-text {
+  color: var(--text, white);
+  font-weight: bold;
+  font-size: 1rem;
+  user-select: none; /* Voorkomt dat je de tekst per ongeluk selecteert bij het klikken */
+}
+
 /* Het menu zelf (de dropdown) */
 .nav-menu {
   display: none; /* Standaard uit */

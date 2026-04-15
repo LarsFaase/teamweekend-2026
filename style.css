@@ -221,6 +221,25 @@ img {
   max-width: none !important;
 }
 
+/* VOORPAGINA */
+#countdown-container {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    background-color: var(--shadow);
+    border-radius: 2px;
+}
+
+#countdown {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+#countdown span {
+    color: white; 
+}
+
 /* ORGANISATIE */
 /* Container voor de kaartjes over organisatie */
 .team-container {

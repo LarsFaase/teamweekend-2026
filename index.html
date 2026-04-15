@@ -14,14 +14,51 @@
   <main>
     <h1>Teamweekend 2026</h1>
     <p>Beleef het weekend van je leven!</p>
+
+    <div id="countdown-container">
+      <h2>Nog even geduld...</h2>
+      <div id="countdown">
+        <span id="days">00</span> dagen 
+        <span id="hours">00</span>u 
+        <span id="minutes">00</span>m 
+        <span id="seconds">00</span>s
+      </div>
+    </div>
   </main>
 
   <script>
+    // Navigatie inladen
     fetch('nav.html')
       .then(response => response.text())
       .then(data => {
         document.getElementById('nav-placeholder').innerHTML = data;
       });
+
+    // Countdown Logica
+    const targetDate = new Date("June 12, 2026 00:00:00").getTime();
+
+    const timer = setInterval(function() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      // Berekeningen voor dagen, uren, minuten en seconden
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Resultaat weergeven in de elementen
+      document.getElementById("days").innerHTML = days;
+      document.getElementById("hours").innerHTML = hours;
+      document.getElementById("minutes").innerHTML = minutes;
+      document.getElementById("seconds").innerHTML = seconds;
+
+      // Als de datum bereikt is
+      if (distance < 0) {
+        clearInterval(timer);
+        document.getElementById("countdown-container").innerHTML = "<h2>Het weekend is begonnen!</h2>";
+      }
+    }, 1000);
   </script>
 
 </body>

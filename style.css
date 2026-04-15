@@ -79,11 +79,10 @@ body {
 }
 
 .navbar {
-  display: flex;
+  display: none;
   justify-content: space-between;
   align-items: center;
   gap: 14px;
-  /*flex-wrap: wrap;*/
   padding: 18px 16px;
   background: rgba(0, 37, 97, 0.95);
   border-bottom: 3px solid var(--accent);
@@ -94,11 +93,8 @@ body {
 
 /* De logica: Toon menu als checkbox is aangevinkt */
 .menu-toggle:checked ~ .nav-menu {
-  display: flex !important;
+  display: flex;
 }
-
-
-
 
 /* CONTENT */
 main {

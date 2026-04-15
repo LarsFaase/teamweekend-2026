@@ -303,6 +303,76 @@ img {
   font-style: italic;
 }
 
+.reveal-btn {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--text);
+  border: none;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.reveal-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+.reveal-btn:disabled {
+  opacity: 0.65;
+  cursor: default;
+}
+
+.hidden {
+  display: none;
+}
+
+.reveal-hint {
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.06);
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+}
+
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.map-wrapper iframe {
+  width: 100%;
+  height: 320px;
+  border: 0;
+  display: block;
+}
+
+.locked-map iframe {
+  filter: blur(10px) brightness(0.8);
+  pointer-events: none;
+  user-select: none;
+}
+
+.map-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 15, 31, 0.25);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
+}
+
 /* MOBIEL */
 @media (max-width: 768px) {
   h1 {

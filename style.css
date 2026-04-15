@@ -32,19 +32,28 @@ body {
 /* Styling voor het hamburger icoontje (3 lijntjes) */
 .hamburger {
   display: flex;
-  flex-direction: row;
+  flex-direction: row; /* Zet ze naast elkaar */
+  align-items: center; /* Lijn ze verticaal netjes uit */
+  gap: 12px;           /* Ruimte tussen het woord Menu en de streepjes */
   cursor: pointer;
-  gap: 5px;
-  z-index: 1001;
+  padding: 8px;
 }
 
-.hamburger span {
+/* De container voor de 3 streepjes */
+.hamburger-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* De individuele streepjes */
+.hamburger-lines span {
   display: block;
   width: 25px;
   height: 3px;
-  background: white; /* Kleur van de streepjes */
+  background: white;
   border-radius: 3px;
-  transition: 0.3s;
+  transition: background 0.3s ease;
 }
 
 /* Styling voor het woord 'Menu' */

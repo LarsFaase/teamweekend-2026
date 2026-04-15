@@ -444,8 +444,8 @@ img {
   }
 
   .time-box {
-    padding: 10px 8px;
-    min-width: 60px;
+    flex: 1;
+    min-width: 0;
   }
 
   .time-box span {

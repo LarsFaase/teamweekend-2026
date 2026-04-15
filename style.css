@@ -58,10 +58,10 @@ body {
 
 /* Styling voor het woord 'Menu' */
 .menu-text {
-  color: rgb(223, 29, 29);
+  color: white;
   font-weight: 900;          /* Extra dik */
   font-style: italic;        /* Schuin */
-  font-size: 1.1rem;
+  font-size: 10px;
   user-select: none;
   text-transform: uppercase; /* Optioneel: maakt het nog krachtiger */
 }

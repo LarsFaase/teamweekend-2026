@@ -61,7 +61,7 @@ body {
   color: white;
   font-weight: 900;          /* Extra dik */
   font-style: italic;        /* Schuin */
-  font-size: 10px;
+  font-size: 10rem;
   user-select: none;
   text-transform: uppercase; /* Optioneel: maakt het nog krachtiger */
 }
@@ -113,6 +113,42 @@ body {
 /* De logica: Toon menu als checkbox is aangevinkt */
 .menu-toggle:checked ~ .nav-menu {
   display: flex;
+}
+
+/* De rode balk container */
+.ticker-wrap {
+  width: 100%;
+  overflow: hidden; /* Zorgt dat tekst buiten de balk onzichtbaar is */
+  background-color: #ff0000; /* Felrood */
+  height: 40px; /* Hoogte van de balk */
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #000;
+}
+
+/* De bewegende container */
+.ticker {
+  display: inline-block;
+  white-space: nowrap; /* Zorg dat tekst op één lijn blijft */
+  padding-right: 100%; /* Begin buiten beeld */
+  animation: marquee 20s linear infinite; /* 20 seconden voor één ronde */
+}
+
+/* De tekst zelf */
+.ticker-item {
+  display: inline-block;
+  padding: 0 20px;
+  font-size: 1.2rem;
+  color: white;
+  font-weight: 900;       /* Extra dik */
+  font-style: italic;     /* Schuin naar voren */
+  text-transform: uppercase;
+}
+
+/* De animatie: van rechts naar links */
+@keyframes marquee {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-100%, 0, 0); }
 }
 
 /* CONTENT */

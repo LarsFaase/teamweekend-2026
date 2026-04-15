@@ -49,7 +49,7 @@ body {
 
 /* Styling voor het woord 'Menu' */
 .menu-text {
-  color: var(--text, white);
+  color: var(--text, red);
   font-weight: bold;
   font-size: 1rem;
   user-select: none; /* Voorkomt dat je de tekst per ongeluk selecteert bij het klikken */

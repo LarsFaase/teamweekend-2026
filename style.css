@@ -131,7 +131,7 @@ body {
 .ticker-text {
   white-space: nowrap;
   display: inline-block;
-  animation: marquee 15s linear infinite;
+  animation: marquee 20s linear infinite;
 }
 
 .ticker-text span {

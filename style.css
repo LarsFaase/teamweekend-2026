@@ -131,12 +131,12 @@ body {
 .ticker-text {
   white-space: nowrap;
   display: inline-block;
-  animation: marquee 15s linear infinite;
+  animation: marquee 60s linear infinite;
 }
 
 .ticker-text span {
   display: inline-block;
-  padding-left: 50px;
+  /*padding-left: 10px;*/
   color: white;
   font-weight: 900;
   font-style: italic;

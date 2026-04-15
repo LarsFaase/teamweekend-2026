@@ -24,6 +24,57 @@ body {
 }
 
 /* NAV */
+/* Verberg de checkbox zelf */
+.menu-toggle {
+  display: none;
+}
+
+/* Styling voor het hamburger icoontje (3 lijntjes) */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger span {
+  width: 30px;
+  height: 4px;
+  background-color: #333; /* Kleur van de streepjes */
+  border-radius: 2px;
+}
+
+/* Het menu zelf (de dropdown) */
+.nav-menu {
+  display: none; /* Standaard uit */
+  flex-direction: column;
+  position: absolute;
+  top: 100%; /* Direct onder de navbar */
+  left: 0;
+  width: 100%;
+  background: rgba(0, 37, 97, 0.98); /* Zelfde kleur als navbar */
+  padding: 10px 0;
+  border-bottom: 3px solid var(--accent);
+}
+
+/* Jouw knop-styling toepassen op de links in het menu */
+.nav-menu a {
+  color: var(--text);
+  text-decoration: none;
+  padding: 15px 20px;
+  margin: 5px 20px; /* Ruimte aan de zijkanten */
+  border-radius: 12px;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.05);
+  transition: background 0.2s ease, transform 0.2s ease;
+  text-align: center;
+}
+
+.nav-menu a:hover {
+  background: var(--accent);
+  transform: translateY(-1px);
+}
+
 .navbar {
   display: flex;
   justify-content: center;
@@ -38,21 +89,7 @@ body {
   z-index: 1000;
 }
 
-.navbar a {
-  display: inline-block; /* 🔥 FIX voor knoppen */
-  color: var(--text);
-  text-decoration: none;
-  padding: 10px 16px;
-  border-radius: 12px;
-  font-weight: bold;
-  background: rgba(255, 255, 255, 0.05); /* extra button look */
-  transition: background 0.2s ease, transform 0.2s ease;
-}
 
-.navbar a:hover {
-  background: var(--accent);
-  transform: translateY(-1px);
-}
 
 /* CONTENT */
 main {

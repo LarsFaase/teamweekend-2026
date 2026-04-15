@@ -226,8 +226,8 @@ img {
     text-align: center;
     margin-top: 50px;
     padding: 20px;
-    background-color: #f4f4f4;
-    border-radius: 10px;
+    background-color: var(--shadow);
+    border-radius: 2px;
 }
 
 #countdown {
@@ -237,7 +237,7 @@ img {
 }
 
 #countdown span {
-    color: #e67e22; /* Een leuk kleurtje voor de getallen */
+    color: white; 
 }
 
 /* ORGANISATIE */

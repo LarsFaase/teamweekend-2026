@@ -101,7 +101,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /*flex-wrap: wrap; /* Belangrijk: zorgt dat de rode balk naar de volgende regel springt */
+  flex-wrap: wrap; /* Belangrijk: zorgt dat de rode balk naar de volgende regel springt */
   padding: 18px 16px 0 16px; /* Onderste padding op 0 */
   background: rgba(0, 37, 97, 0.95);
   /* border-bottom verwijderd, want de ticker-bar wordt nu de bodem */
@@ -113,6 +113,41 @@ body {
 /* De logica: Toon menu als checkbox is aangevinkt */
 .menu-toggle:checked ~ .nav-menu {
   display: flex;
+}
+
+/* De nieuwe rode balk die de border vervangt */
+.ticker-bar {
+  width: 100%;
+  background: var(--accent); /* Jouw rode kleur */
+  height: 30px; /* Bepaal hier de hoogte van je rode balk */
+  margin-top: 10px;
+  margin-left: -16px; /* Compenseert de padding van de navbar */
+  margin-right: -16px; /* Compenseert de padding van de navbar */
+  width: calc(100% + 32px); /* Zorgt dat hij over de volle breedte loopt */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.ticker-text {
+  white-space: nowrap;
+  display: inline-block;
+  animation: marquee 15s linear infinite;
+}
+
+.ticker-text span {
+  display: inline-block;
+  padding-left: 50px;
+  color: white;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* Werkt het beste voor een loop */
 }
 
 /* Zorg dat de dropdown OVER de rode balk heen valt of eronder start */

@@ -122,7 +122,7 @@ body {
   /*margin-top: 10px;*/
   /*margin-left: -16px; /* Compenseert de padding van de navbar */
   /*margin-right: -16px; /* Compenseert de padding van de navbar */
-  /*width: calc(100% + 32px); /* Zorgt dat hij over de volle breedte loopt */
+  width: calc(100% + 32px); /* Zorgt dat hij over de volle breedte loopt */
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -136,7 +136,7 @@ body {
 
 .ticker-text span {
   display: inline-block;
-  padding-right: 0;
+  padding-left: 10px;
   color: white;
   font-weight: 900;
   font-style: italic;

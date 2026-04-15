@@ -447,6 +447,7 @@ img {
   .time-box {
     padding: 8px 4px;
     border-radius: 10px;
+    justify-content: center;
   }
 
   .time-box span {

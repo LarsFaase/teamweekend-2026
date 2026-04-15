@@ -58,10 +58,12 @@ body {
 
 /* Styling voor het woord 'Menu' */
 .menu-text {
-  color: var(--text, red);
-  font-weight: bold;
-  font-size: 1rem;
-  user-select: none; /* Voorkomt dat je de tekst per ongeluk selecteert bij het klikken */
+  color: rgb(223, 29, 29);
+  font-weight: 900;          /* Extra dik */
+  font-style: italic;        /* Schuin */
+  font-size: 1.1rem;
+  user-select: none;
+  text-transform: uppercase; /* Optioneel: maakt het nog krachtiger */
 }
 
 /* Het menu zelf (de dropdown) */

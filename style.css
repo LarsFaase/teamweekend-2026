@@ -35,13 +35,16 @@ body {
   flex-direction: column;
   cursor: pointer;
   gap: 5px;
+  z-index: 1001;
 }
 
 .hamburger span {
-  width: 30px;
-  height: 4px;
-  background-color: #333; /* Kleur van de streepjes */
-  border-radius: 2px;
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: white; /* Kleur van de streepjes */
+  border-radius: 3px;
+  transition: 0.3s;
 }
 
 /* Het menu zelf (de dropdown) */
@@ -77,10 +80,10 @@ body {
 
 .navbar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 14px;
-  flex-wrap: wrap;
+  /*flex-wrap: wrap;*/
   padding: 18px 16px;
   background: rgba(0, 37, 97, 0.95);
   border-bottom: 3px solid var(--accent);
@@ -89,6 +92,10 @@ body {
   z-index: 1000;
 }
 
+/* De logica: Toon menu als checkbox is aangevinkt */
+.menu-toggle:checked ~ .nav-menu {
+  display: flex;
+}
 
 
 /* CONTENT */

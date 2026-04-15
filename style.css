@@ -104,7 +104,6 @@ body {
   flex-wrap: wrap; /* Belangrijk: zorgt dat de rode balk naar de volgende regel springt */
   padding: 18px 16px 0 16px; /* Onderste padding op 0 */
   background: rgba(0, 37, 97, 0.95);
-  /* border-bottom verwijderd, want de ticker-bar wordt nu de bodem */
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -120,7 +119,7 @@ body {
   width: 100%;
   background: var(--accent); /* Jouw rode kleur */
   height: 30px; /* Bepaal hier de hoogte van je rode balk */
-  margin-top: 10px;
+  /*margin-top: 10px;*/
   margin-left: -16px; /* Compenseert de padding van de navbar */
   margin-right: -16px; /* Compenseert de padding van de navbar */
   width: calc(100% + 32px); /* Zorgt dat hij over de volle breedte loopt */

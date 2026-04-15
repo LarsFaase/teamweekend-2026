@@ -94,8 +94,10 @@ body {
 
 /* De logica: Toon menu als checkbox is aangevinkt */
 .menu-toggle:checked ~ .nav-menu {
-  display: flex;
+  display: flex !important;
 }
+
+
 
 
 /* CONTENT */

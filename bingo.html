@@ -78,7 +78,7 @@
         };
 
         // Controleer of de gebruiker bestaat EN of het wachtwoord klopt
-        if (teamLeden[user] && teamLeden[user] === pass) {
+        if (teamLeden[user] && teamLeden[user] == pass) {
             localStorage.setItem('bingoUser', user);
             showBingo(user);
         } else {
@@ -99,9 +99,9 @@
 
         // 2. Specifieke opdrachten per persoon (minimaal 4 per persoon)
         const specifiek = {
-            "jan": ["Vergeet zijn tas", "Praat over data science", "Draagt een foute hoed"],
-            "pieter": ["Slaapt in de bus", "Verliest bij FIFA", "Zoekt zijn sleutels"],
-            "rick": ["Makt een eigen doelpunt", "Is de bob", "Danst solo"]
+            "Julian": ["Vergeet zijn tas", "Praat over data science", "Draagt een foute hoed"],
+            "Tycho": ["Slaapt in de bus", "Verliest bij FIFA", "Zoekt zijn sleutels"],
+            "Fabio": ["Makt een eigen doelpunt", "Is de bob", "Danst solo"]
         };
 
         // 3. Maak de kaart

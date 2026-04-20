@@ -148,8 +148,9 @@
         mijnKaart.sort(() => Math.random() - 0.5);
 
         // 5. Bouw de HTML
-        let html = `<h1>Bingo van ${user.toUpperCase()}</h1><div class="bingo-grid">`;
-  
+        let html = `<h1>Bingo van ${user.toUpperCase()}</h1>`;
+        html += `<div class="bingo-grid">`;
+
         mijnKaart.forEach(item => {
             html += `
             <div class="bingo-item" onclick="this.classList.toggle('checked')">
@@ -157,8 +158,12 @@
                 <button type="button" class="info-btn" onclick="event.stopPropagation(); alert('${item.info}');">i</button>
             </div>`;
         });
-        
+
         html += `</div>`;
+
+        // VOEG DEZE REGEL TOE: Dit zet de knop onder de grid
+        html += `<button onclick="logout()" class="btn-secondary" style="margin-top: 30px;">Uitloggen</button>`;
+
         document.getElementById('bingo-content').innerHTML = html;
     }
 

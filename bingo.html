@@ -35,18 +35,19 @@
     // Functie: Inlogscherm tonen
     function showLoginForm() {
       main.innerHTML = `
-        <div class="card">
-            <h2>Kaart</h2>
-
+        <div class="card login-form">
+            <h2>Mijn Persoonlijke Bingo</h2>
+            
             <div class="map-wrapper locked-map">
-                <iframe
-                src="https://maps.google.com/maps?q=Bad%20Bentheim,Germany&z=9&output=embed"
-                loading="lazy"
-                title="Verborgen kaart">
-                </iframe>
+                <div style="padding: 20px; filter: blur(5px); pointer-events: none;">
+                    <input type="text" placeholder="Gebruikersnaam" disabled>
+                    <input type="password" placeholder="Wachtwoord" disabled>
+                    <button class="btn-primary" disabled>Inloggen</button>
+                </div>
 
                 <div class="map-overlay">
-                <span>Locatie nog geheim 🔒</span>
+                    <span>Login nog geblokkeerd 🔒<br>
+                    <small>Eerst de locatie onthullen!</small></span>
                 </div>
             </div>
         </div>

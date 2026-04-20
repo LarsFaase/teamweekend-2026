@@ -480,6 +480,7 @@ img {
 }
 
 .info-btn:hover {
+  background: white !important; /* Forceer een kleurverandering bij hover */
   background: var(--accent);
 }
 

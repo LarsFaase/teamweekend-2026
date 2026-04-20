@@ -93,21 +93,21 @@
     function showBingo(user) {
         // 1. Algemene pool van opdrachten (vul deze aan tot bijv. 30 stuks)
         const algemeen = [
-            "Bier morsen", "Zingen op tafel", "Slippers kwijt", "Gele kaart", 
-            "Scoort met links", "Regelt snacks", "Ligt als eerste in bed",
-            "Vergeet zonnebrand", "Bestelt een rondje", "Wint een discussie"
+            { tekst: "Bier morsen", info: "Dit telt alleen als er minimaal een half glas over de tafel gaat." },
+            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." }
         ];
 
         // 2. Specifieke opdrachten per persoon (minimaal 4 per persoon)
         const specifiek = {
-            "Julian": ["Vergeet zijn tas", "Praat over data science", "Draagt een foute hoed"],
-            "Tycho": ["Slaapt in de bus", "Verliest bij FIFA", "Zoekt zijn sleutels"],
-            "Fabio": ["Makt een eigen doelpunt", "Is de bob", "Danst solo"]
+            "julian": [
+                { tekst: "Data science talk", info: "Julian begint een technisch verhaal waar niemand iets van begrijpt." },
+                { tekst: "Foute hoed", info: "De legendarische roze vissershoed moet gedragen worden." }
+                    ]
         };
 
         // 3. Maak de kaart
         // We pakken de unieke items van de speler
-        let mijnKaart = specifiek[user] || ["Iets grappigs 1", "Iets grappigs 2"];
+        let mijnKaart = specifiek[user] || ["FOUT, informeer organisatie"];
         
         // We vullen de kaart aan met willekeurige items uit de algemene lijst
         // Totdat we er bijvoorbeeld 9 hebben (voor een 3x3 grid)
@@ -122,14 +122,17 @@
         mijnKaart.sort(() => Math.random() - 0.5);
 
         // 5. Bouw de HTML
-        let html = `<h1>Bingo van ${user.toUpperCase()}</h1>`;
-        html += `<div class="bingo-grid">`;
+        let html = `<h1>Bingo van ${user.toUpperCase()}</h1><div class="bingo-grid">`;
+  
         mijnKaart.forEach(item => {
-            html += `<div class="bingo-item" onclick="this.classList.toggle('checked')">${item}</div>`;
+            html += `
+            <div class="bingo-item" onclick="this.classList.toggle('checked')">
+                <span class="item-text">${item.tekst}</span>
+                <button class="info-btn" onclick="alert('${item.info}'); event.stopPropagation();">i</button>
+            </div>`;
         });
-        html += `</div>`;
-        html += `<br><button onclick="logout()" class="btn-secondary">Log uit</button>`;
         
+        html += `</div>`;
         document.getElementById('bingo-content').innerHTML = html;
     }
 

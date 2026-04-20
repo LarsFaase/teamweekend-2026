@@ -124,6 +124,10 @@
             "julian": [
                 { tekst: "Data science talk", info: "Julian begint een technisch verhaal waar niemand iets van begrijpt." },
                 { tekst: "Foute hoed", info: "De legendarische roze vissershoed moet gedragen worden." }
+                    ],
+            "tycho": [
+                { tekst: "Data science talk", info: "Julian begint een technisch verhaal waar niemand iets van begrijpt." },
+                { tekst: "Foute hoed", info: "De legendarische roze vissershoed moet gedragen worden." }
                     ]
         };
 
@@ -150,7 +154,7 @@
             html += `
             <div class="bingo-item" onclick="this.classList.toggle('checked')">
                 <span class="item-text">${item.tekst}</span>
-                <button class="info-btn" onclick="alert('${item.info}'); event.stopPropagation();">i</button>
+                <button type="button" class="info-btn" onclick="event.stopPropagation(); alert('${item.info}');">i</button>
             </div>`;
         });
         

@@ -438,4 +438,23 @@ img {
   .card {
     padding: 18px;
   }
+
+  .countdown {
+    gap: 6px;
+    max-width: 100%;
+  }
+
+  .time-box {
+    padding: 8px 4px;
+    border-radius: 10px;
+    justify-content: center;
+  }
+
+  .time-box span {
+    font-size: 1.15rem;
+  }
+
+  .time-box small {
+    font-size: 0.6rem;
+  }
 }

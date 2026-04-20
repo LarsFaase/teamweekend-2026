@@ -53,32 +53,33 @@
 
         // Het Wachtwoordenboek
         const teamLeden = {
-            "Julian": "Bier123",
-            "Tycho": "Scoor456",
-            "Fabio": "Keeper007",
-            "Lars": "ParkhoutWin",
-            "Franck": "Vakantie2026",
-            "Sten": "Scoor456",
-            "John": "Keeper007",
-            "Marco": "ParkhoutWin",
-            "Matej": "Vakantie2026",
-            "Lennart": "Scoor456",
-            "Marijn": "Keeper007",
-            "Marlon": "ParkhoutWin",
-            "Robin": "Vakantie2026",
-            "Roy": "Scoor456",
-            "Ryan": "Keeper007",
-            "Jesper": "ParkhoutWin",
-            "Tom": "Vakantie2026",
-            "Tim": "Scoor456",
-            "Wout": "Keeper007",
-            "Sander": "ParkhoutWin",
-            "Lorenzo": "Vakantie2026",
-            "Jim": "ParkhoutWin"
+            "julian": "Bier123",
+            "tycho": "Scoor456",
+            "fabio": "Keeper007",
+            "lars": "ParkhoutWin",
+            "franck": "Vakantie2026",
+            "sten": "Scoor456",
+            "john": "Keeper007",
+            "marco": "ParkhoutWin",
+            "matej": "Vakantie2026",
+            "lennart": "Scoor456",
+            "marijn": "Keeper007",
+            "marlon": "ParkhoutWin",
+            "robin": "Vakantie2026",
+            "roy": "Scoor456",
+            "ryan": "Keeper007",
+            "sven": "ParkhoutWin",
+            "jesper": "ParkhoutWin",
+            "tom": "Vakantie2026",
+            "tim": "Scoor456",
+            "wout": "Keeper007",
+            "sander": "ParkhoutWin",
+            "lorenzo": "Vakantie2026",
+            "jim": "ParkhoutWin"
         };
 
         // Controleer of de gebruiker bestaat EN of het wachtwoord klopt
-        if (teamLeden[user] && teamLeden[user] == pass) {
+        if (teamLeden[user] && teamLeden[user] === pass) {
             localStorage.setItem('bingoUser', user);
             showBingo(user);
         } else {

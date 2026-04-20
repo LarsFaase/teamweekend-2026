@@ -443,6 +443,7 @@ img {
 }
 
 .bingo-item {
+  position: relative; /* CRUCIAAL: Dit houdt de info-knop binnen het vakje */
   background: rgba(255, 255, 255, 0.05);
   border: 2px solid var(--accent);
   padding: 30px 10px;
@@ -480,7 +481,6 @@ img {
 }
 
 .info-btn:hover {
-  background: white !important; /* Forceer een kleurverandering bij hover */
   background: var(--accent);
 }
 

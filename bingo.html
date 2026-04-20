@@ -11,10 +11,8 @@
   
   <div id="nav-placeholder"></div>
 
-  <main>
-    <h1>Bingokaart</h1>
-    <p>Dit is jouw kaart, laat dit aan niemand zien</p>
-  </main>
+  <main id="bingo-content">
+    </main>
   
   <script>
     fetch('nav.html')
@@ -22,7 +20,122 @@
       .then(data => {
         document.getElementById('nav-placeholder').innerHTML = data;
       });
-  </script>
+    
+    const main = document.getElementById('bingo-content');
 
+    // 2. Check of er al een bekende gebruiker is
+    const savedUser = localStorage.getItem('bingoUser');
+
+    if (savedUser) {
+      showBingo(savedUser);
+    } else {
+      showLoginForm();
+    }
+
+    // Functie: Inlogscherm tonen
+    function showLoginForm() {
+      main.innerHTML = `
+        <div class="card login-form">
+          <h2>Inloggen voor Bingo</h2>
+          <p>Vul je naam in om je persoonlijke kaart te openen.</p>
+          <input type="text" id="username" placeholder="Je naam (bijv. Jan)">
+          <input type="password" id="password" placeholder="Wachtwoord">
+          <button onclick="login()" class="btn-primary">Open mijn kaart</button>
+          <p id="error" style="color:red; display:none;">Verkeerd wachtwoord!</p>
+        </div>
+      `;
+    }
+
+    // Functie: Inloggen verwerken
+    function login() {
+        const user = document.getElementById('username').value.trim().toLowerCase();
+        const pass = document.getElementById('password').value.trim();
+
+        // Het Wachtwoordenboek
+        const teamLeden = {
+            "Julian": "Bier123",
+            "Tycho": "Scoor456",
+            "Fabio": "Keeper007",
+            "Lars": "ParkhoutWin",
+            "Franck": "Vakantie2026",
+            "Sten": "Scoor456",
+            "John": "Keeper007",
+            "Marco": "ParkhoutWin",
+            "Matej": "Vakantie2026",
+            "Lennart": "Scoor456",
+            "Marijn": "Keeper007",
+            "Marlon": "ParkhoutWin",
+            "Robin": "Vakantie2026",
+            "Roy": "Scoor456",
+            "Ryan": "Keeper007",
+            "Jesper": "ParkhoutWin",
+            "Tom": "Vakantie2026",
+            "Tim": "Scoor456",
+            "Wout": "Keeper007",
+            "Sander": "ParkhoutWin",
+            "Lorenzo": "Vakantie2026",
+            "Jim": "ParkhoutWin"
+        };
+
+        // Controleer of de gebruiker bestaat EN of het wachtwoord klopt
+        if (teamLeden[user] && teamLeden[user] === pass) {
+            localStorage.setItem('bingoUser', user);
+            showBingo(user);
+        } else {
+            const error = document.getElementById('error');
+            error.innerText = "Naam of wachtwoord onjuist!";
+            error.style.display = 'block';
+        }
+    }
+
+    // Functie: De unieke bingo tonen
+    function showBingo(user) {
+        // 1. Algemene pool van opdrachten (vul deze aan tot bijv. 30 stuks)
+        const algemeen = [
+            "Bier morsen", "Zingen op tafel", "Slippers kwijt", "Gele kaart", 
+            "Scoort met links", "Regelt snacks", "Ligt als eerste in bed",
+            "Vergeet zonnebrand", "Bestelt een rondje", "Wint een discussie"
+        ];
+
+        // 2. Specifieke opdrachten per persoon (minimaal 4 per persoon)
+        const specifiek = {
+            "jan": ["Vergeet zijn tas", "Praat over data science", "Draagt een foute hoed"],
+            "pieter": ["Slaapt in de bus", "Verliest bij FIFA", "Zoekt zijn sleutels"],
+            "rick": ["Makt een eigen doelpunt", "Is de bob", "Danst solo"]
+        };
+
+        // 3. Maak de kaart
+        // We pakken de unieke items van de speler
+        let mijnKaart = specifiek[user] || ["Iets grappigs 1", "Iets grappigs 2"];
+        
+        // We vullen de kaart aan met willekeurige items uit de algemene lijst
+        // Totdat we er bijvoorbeeld 9 hebben (voor een 3x3 grid)
+        while (mijnKaart.length < 9) {
+            let randomItem = algemeen[Math.floor(Math.random() * algemeen.length)];
+            if (!mijnKaart.includes(randomItem)) {
+            mijnKaart.push(randomItem);
+            }
+        }
+
+        // 4. Hussel de volgorde zodat het eruit ziet als een echte kaart
+        mijnKaart.sort(() => Math.random() - 0.5);
+
+        // 5. Bouw de HTML
+        let html = `<h1>Bingo van ${user.toUpperCase()}</h1>`;
+        html += `<div class="bingo-grid">`;
+        mijnKaart.forEach(item => {
+            html += `<div class="bingo-item" onclick="this.classList.toggle('checked')">${item}</div>`;
+        });
+        html += `</div>`;
+        html += `<br><button onclick="logout()" class="btn-secondary">Log uit</button>`;
+        
+        document.getElementById('bingo-content').innerHTML = html;
+    }
+
+    function logout() {
+      localStorage.removeItem('bingoUser');
+      location.reload();
+    }
+  </script>
 </body>
 </html>

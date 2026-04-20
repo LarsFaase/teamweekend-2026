@@ -420,6 +420,57 @@ img {
   color: var(--text-muted);
 }
 
+/* PERSOONLIJKE KAART */
+.login-form {
+  max-width: 400px;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.login-form input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.bingo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.bingo-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid var(--accent);
+  padding: 30px 10px;
+  text-align: center;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.bingo-item.checked {
+  background: var(--accent);
+  color: white;
+  text-decoration: line-through;
+  transform: scale(0.95);
+}
+
+/* De knop-stijl aanpassen aan je eigen huisstijl */
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 /* MOBIEL */
 @media (max-width: 768px) {
   h1 {

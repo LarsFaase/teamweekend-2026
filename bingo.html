@@ -37,6 +37,7 @@
       main.innerHTML = `
         <div class="card login-form">
             <h2>Mijn Persoonlijke Pagina</h2>
+            <h3>LEES GOED DE INFORMATIE BIJ ELKE KAART</h3>
             
             <input type="text" id="username" placeholder="Je naam (bijv. Jan)">
             <input type="password" id="password" placeholder="Wachtwoord">
@@ -119,28 +120,38 @@
         } else {
             // KAART BESTAAT NOG NIET: We maken een nieuwe kaart aan (jouw originele logica)
             const algemeen = [
-                { tekst: "Bier morsen", info: "Minimaal een half glas over de tafel." },
-                { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "A kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "B kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "C kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "D kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "AD kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "AFDSA kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "FADSF kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "ASDFWE kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-                { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." }
+                { tekst: "Drank morsen", info: "Iemand anders moet per ongeluk zijn hele/volle glas omgooien, je mag geen invloed uitoefenen en je moet 3 mensen als getuigen hebben" },
+                { tekst: "Ren 3 rondjes", info: "Je moet 3 rondjes om de 3 huisjes heen rennen binnen 3 minuten, zorg ervoor dat een van de organisatoren de tijd bij houdt" },
+                { tekst: "Botten breken", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Activiteit tegen anderen", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Iemand KO", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Naakt rondlopen", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Rit platte kar", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "WC bezoekje", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Opruimsessie", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Grondpizza's", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Smirnoff Ice", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Rave room 2.0", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Mr. Barf", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Opdracht koprol", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Barfplek", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Yoga", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Scheten", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Overleef dag 1", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Striptease", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Bierflesjes", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Doe voorzichtig!", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Sven naakt?!?!?", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Smeken", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Monstermaster", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Lavishmaster", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Club uitgesmeten", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Geen toegang", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Gangnamstyle", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Tiktok", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Ice finder", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Ice tellers", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                { tekst: "Naakte mannen", info: "Je moet minimaal 5 minuten hebben gezocht." }
             ];
 
             const specifiek = {

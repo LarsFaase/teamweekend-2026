@@ -105,80 +105,92 @@
 
     // Functie: De unieke bingo tonen
     function showBingo(user) {
-        // 1. Algemene pool van opdrachten (vul deze aan tot bijv. 30 stuks)
-        const algemeen = [
-            { tekst: "Bier morsen", info: "Dit telt alleen als er minimaal een half glas over de tafel gaat." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
-            { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." }
-        ];
-
-        // 2. Specifieke opdrachten per persoon (minimaal 4 per persoon)
-        const specifiek = {
-            "julian": [
-                { tekst: "Data science talk", info: "Julian begint een technisch verhaal waar niemand iets van begrijpt." },
-                { tekst: "Foute hoed", info: "De legendarische roze vissershoed moet gedragen worden." }
-                    ],
-            "tycho": [
-                { tekst: "Data science talk", info: "Julian begint een technisch verhaal waar niemand iets van begrijpt." },
-                { tekst: "Foute hoed", info: "De legendarische roze vissershoed moet gedragen worden." }
-                    ]
-        };
-
-        // 3. Maak de kaart
-        // We pakken de unieke items van de speler
-        let mijnKaart = specifiek[user] || ["FOUT, informeer organisatie"];
+        const container = document.getElementById('bingo-content');
+    
+        // 1. Check of er al een kaart in het geheugen staat voor deze gebruiker
+        const storageKey = 'bingo_kaart_' + user;
+        const opgeslagenData = localStorage.getItem(storageKey);
         
-        // We vullen de kaart aan met willekeurige items uit de algemene lijst
-        // Totdat we er bijvoorbeeld 9 hebben (voor een 3x3 grid)
-        while (mijnKaart.length < 9) {
-            let randomItem = algemeen[Math.floor(Math.random() * algemeen.length)];
-            if (!mijnKaart.includes(randomItem)) {
-            mijnKaart.push(randomItem);
+        let mijnKaart = [];
+
+        if (opgeslagenData) {
+            // KAART BESTAAT AL: We laden de kaart uit het geheugen
+            mijnKaart = JSON.parse(opgeslagenData);
+        } else {
+            // KAART BESTAAT NOG NIET: We maken een nieuwe kaart aan (jouw originele logica)
+            const algemeen = [
+                { tekst: "Bier morsen", info: "Minimaal een half glas over de tafel." },
+                { tekst: "Slippers kwijt", info: "Je moet minimaal 5 minuten hebben gezocht." },
+                // ... vul hier de rest van je 30 items aan ...
+            ];
+
+            const specifiek = {
+                "julian": [
+                    { tekst: "Data science talk", info: "Julian begint een technisch verhaal." },
+                    { tekst: "Foute hoed", info: "De roze vissershoed moet op." }
+                ],
+                "tycho": [
+                    { tekst: "Slaapt in de bus", info: "Helemaal naar het eindpunt." },
+                    { tekst: "Zoekt sleutels", info: "Iedereen moet helpen." }
+                ]
+            };
+
+            // Pak de unieke items en voeg 'checked: false' toe aan elk object
+            const startItems = specifiek[user] || [];
+            mijnKaart = startItems.map(item => ({ ...item, checked: false }));
+
+            // Vul aan tot 9 items uit de algemene lijst
+            while (mijnKaart.length < 9) {
+                let randomItem = algemeen[Math.floor(Math.random() * algemeen.length)];
+                // Check of het item niet al op de kaart staat
+                if (!mijnKaart.some(e => e.tekst === randomItem.tekst)) {
+                    mijnKaart.push({ ...randomItem, checked: false });
+                }
             }
+
+            // Hussel de volgorde éénmalig
+            mijnKaart.sort(() => Math.random() - 0.5);
+
+            // Sla deze nieuwe kaart direct op in het geheugen
+            localStorage.setItem(storageKey, JSON.stringify(mijnKaart));
         }
 
-        // 4. Hussel de volgorde zodat het eruit ziet als een echte kaart
-        mijnKaart.sort(() => Math.random() - 0.5);
+        // 2. De functie die het afvinken regelt en opslaat
+        window.toggleVakje = function(index) {
+            // Verander de status in de lijst
+            mijnKaart[index].checked = !mijnKaart[index].checked;
+            
+            // Sla de bijgewerkte lijst op
+            localStorage.setItem(storageKey, JSON.stringify(mijnKaart));
+            
+            // Teken de kaart opnieuw om de rode kleur te tonen
+            renderBingoHTML(mijnKaart, user, container);
+        };
 
-        // 5. Bouw de HTML
+        // 3. Teken de kaart voor de eerste keer
+        renderBingoHTML(mijnKaart, user, container);
+    }
+
+    // 4. Losse functie om de HTML op te bouwen (zo houden we de code schoon)
+    function renderBingoHTML(kaart, user, container) {
         let html = `<h1>Bingo van ${user.toUpperCase()}</h1>`;
         html += `<div class="bingo-grid">`;
 
-        mijnKaart.forEach(item => {
+        kaart.forEach((item, index) => {
+            // Voeg de class 'checked' toe als het item in het geheugen op 'true' staat
+            const checkedClass = item.checked ? 'checked' : '';
+            
             html += `
-            <div class="bingo-item" onclick="this.classList.toggle('checked')">
+            <div class="bingo-item ${checkedClass}" onclick="toggleVakje(${index})">
                 <span class="item-text">${item.tekst}</span>
                 <button type="button" class="info-btn" onclick="event.stopPropagation(); alert('${item.info}');">i</button>
             </div>`;
         });
 
         html += `</div>`;
-
-        // VOEG DEZE REGEL TOE: Dit zet de knop onder de grid
         html += `<button onclick="logout()" class="btn-secondary" style="margin-top: 30px;">Uitloggen</button>`;
 
-        document.getElementById('bingo-content').innerHTML = html;
+        container.innerHTML = html;
     }
 
     function logout() {

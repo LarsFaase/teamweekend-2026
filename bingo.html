@@ -38,6 +38,12 @@
         <div class="card login-form">
             <h2>Mijn Persoonlijke Pagina</h2>
             
+            <input type="text" id="username" placeholder="Je naam (bijv. Jan)">
+            <input type="password" id="password" placeholder="Wachtwoord">
+            <button onclick="login()" class="btn-primary">Open mijn kaart</button>
+            <p id="error" style="color:red; display:none;">Verkeerd wachtwoord!</p>
+
+            ` + /* `
             <div class="map-wrapper locked-map">
                 <div style="padding: 20px; filter: blur(5px); pointer-events: none;">
                     <input type="text" placeholder="Gebruikersnaam" disabled>
@@ -49,6 +55,7 @@
                     <span>Nog geblokkeerd 🔒<br></span>
                 </div>
             </div>
+            */ `
         </div>
       `;
     }

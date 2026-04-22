@@ -204,7 +204,8 @@
 
     // 4. Losse functie om de HTML op te bouwen (zo houden we de code schoon)
     function renderBingoHTML(kaart, user, container) {
-        let html = `<h1>Bingo van ${user.toUpperCase()}</h1>`;
+        let html = `<h1>Bingo van ${user.toUpperCase()}</h1>
+                    <h3>LEES GOED DE INFORMATIE BIJ ELKE KAART</h3>`;
         html += `<div class="bingo-grid">`;
 
         kaart.forEach((item, index) => {

@@ -34,6 +34,42 @@
               <div class="lock-icon">🔒</div>
           </div>
       </div>
+      <div class="timeline-item locked active">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+              <span class="time">Vrijdag 20:30</span>
+              <h3>Bestemming Onbekend 🚌</h3>
+              <p class="blurred-text">Dit wordt pas onthuld bij vertrek...</p>
+              <div class="lock-icon">🔒</div>
+          </div>
+      </div>
+      <div class="timeline-item locked active">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+              <span class="time">Vrijdag 20:30</span>
+              <h3>Bestemming Onbekend 🚌</h3>
+              <p class="blurred-text">Dit wordt pas onthuld bij vertrek...</p>
+              <div class="lock-icon">🔒</div>
+          </div>
+      </div>
+      <div class="timeline-item locked active">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+              <span class="time">Vrijdag 20:30</span>
+              <h3>Bestemming Onbekend 🚌</h3>
+              <p class="blurred-text">Dit wordt pas onthuld bij vertrek...</p>
+              <div class="lock-icon">🔒</div>
+          </div>
+      </div>
+      <div class="timeline-item locked active">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+              <span class="time">Vrijdag 20:30</span>
+              <h3>Bestemming Onbekend 🚌</h3>
+              <p class="blurred-text">Dit wordt pas onthuld bij vertrek...</p>
+              <div class="lock-icon">🔒</div>
+          </div>
+      </div>
   </div>
 
   </main>
@@ -45,7 +81,17 @@
         document.getElementById('nav-placeholder').innerHTML = data;
       });
 
-    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+          if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.timeline-item').forEach(item => {
+        observer.observe(item);
+    });
   </script>
 
 </body>

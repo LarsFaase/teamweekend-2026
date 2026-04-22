@@ -635,4 +635,23 @@ img {
   .time-box small {
     font-size: 0.6rem;
   }
+
+  .timeline-line {
+    left: 30px; /* Lijn naar de linkerkant */
+  }
+  .timeline-dot {
+    left: 30px;
+  }
+  .timeline-item:nth-child(odd), 
+  .timeline-item:nth-child(even) {
+    justify-content: flex-start;
+    padding-left: 60px; /* Ruimte voor de lijn */
+    padding-right: 20px;
+  }
+  .timeline-item:nth-child(odd) .timeline-content {
+    text-align: left; /* Alles weer links op mobiel */
+  }
+  .timeline-content {
+    width: 100%; /* Volle breedte op mobiel */
+  }
 }

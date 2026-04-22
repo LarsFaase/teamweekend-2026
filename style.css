@@ -526,18 +526,18 @@ img {
 /* PROGRAMMA */
 .timeline-container {
     position: relative;
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px 0;
 }
 
-/* De verticale lijn */
+/* De verticale stippellijn */
 .timeline-line {
     position: absolute;
     left: 50%;
     top: 0;
     bottom: 0;
-    width: 2px;
+    width: 4px;
     background: repeating-linear-gradient(
         to bottom,
         var(--accent) 0,
@@ -550,40 +550,57 @@ img {
 
 .timeline-item {
     position: relative;
-    margin-bottom: 50px;
-    width: 45%; /* Kaartjes aan één kant */
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all 0.6s ease-out;
+    width: 100%;
+    margin-bottom: 60px;
+    display: flex;
+    justify-content: center; /* Zorgt dat alles rond de lijn centreert */
+    align-items: center;
 }
 
-/* Om en om links en rechts */
-.timeline-item:nth-child(odd) { float: left; text-align: right; }
-.timeline-item:nth-child(even) { float: right; text-align: left; }
-
-.timeline-item.active {
-    opacity: 1;
-    transform: translateY(0);
+/* Het bolletje op de lijn */
+.timeline-dot {
+    position: absolute;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    background: var(--accent);
+    border: 3px solid #1a1a1a; /* Je achtergrondkleur */
+    border-radius: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
 }
 
 .timeline-content {
-    background: rgba(255, 255, 255, 0.05);
+    width: 40%;
     padding: 20px;
-    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
     border: 1px solid var(--accent);
+    position: relative;
 }
 
-/* Locked styling */
+/* Om en om positioneren */
+.timeline-item:nth-child(odd) .timeline-content {
+    margin-right: 55%; /* Duwt content naar links */
+}
+
+.timeline-item:nth-child(even) .timeline-content {
+    margin-left: 55%; /* Duwt content naar rechts */
+}
+
+/* Locked status */
 .locked .timeline-content {
-    filter: grayscale(1) blur(2px);
-    opacity: 0.5;
-    pointer-events: none;
+    filter: blur(4px);
+    opacity: 0.6;
 }
 
-.blurred-text {
-    background: #555;
-    color: transparent;
-    border-radius: 4px;
+.lock-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    filter: none; /* Zorgt dat het slotje zelf niet blurret */
 }
 
 /* MOBIEL */

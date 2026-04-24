@@ -15,9 +15,14 @@
     <h1>Programma</h1>
 
     <div class="timeline-container">
-      <div class="timeline-line"></div>
+      <div class="scrolling-ball" id="ball">⚽</div>
+    
+      <div class="timeline-line" id="progress-line"></div>
 
-      <div class="timeline-item reveal active"> <div class="timeline-dot"></div>
+      <div class="timeline-line-bg"></div>
+
+      <div class="timeline-item reveal active first-item"> 
+          <div class="timeline-dot"></div>
           <div class="timeline-content">
               <span class="time">17:00</span>
               <h3>De Verzameling 🍻</h3>
@@ -121,19 +126,50 @@
   </main>
   
   <script>
+    // Navigatie inladen
     fetch('nav.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('nav-placeholder').innerHTML = data;
-      });
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('nav-placeholder').innerHTML = data;
+        });
 
+    // Scroll Logica
+    window.addEventListener('scroll', () => {
+        const ball = document.getElementById('ball');
+        const progressLine = document.getElementById('progress-line');
+        const firstItem = document.querySelector('.first-item');
+        
+        // Bereken hoe ver we zijn
+        const scrollTop = window.pageYOffset;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+
+        // 1. Zoom effect voor het eerste item
+        if (scrollTop > 100) {
+            firstItem.classList.add('shrunk');
+            ball.style.opacity = '1'; // Bal wordt zichtbaar
+        } else {
+            firstItem.classList.remove('shrunk');
+            ball.style.opacity = '0'; // Bal onzichtbaar bij de start
+        }
+
+        // 2. Groei van de rode lijn
+        progressLine.style.height = scrollPercent + "%";
+
+        // 3. Draaien en bewegen van de bal
+        // De bal draait synchroon aan de scroll
+        const rotation = scrollTop * 0.8; 
+        ball.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
+    });
+
+    // Reveal effect voor de kaartjes (Intersection Observer)
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-          if (entry.isIntersecting) {
-              entry.target.classList.add('active');
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
             }
         });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.2 });
 
     document.querySelectorAll('.timeline-item').forEach(item => {
         observer.observe(item);

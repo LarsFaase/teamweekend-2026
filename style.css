@@ -623,8 +623,7 @@ img {
 
 /* Startpositie van de bal: verborgen */
 .scrolling-ball {
-    position: fixed;
-    top: 50%;
+    position: absolute;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 2.5rem;
@@ -636,8 +635,14 @@ img {
 
 /* De groeiende rode lijn */
 #progress-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 4px;
+    background: var(--accent);
+    transform: translateX(-50%);
+    z-index: 2;
     height: 0;
-    z-index: 2; /* Ligt boven de achtergrondlijn */
 }
 
 /* De statische grijze achtergrondlijn */
@@ -705,8 +710,13 @@ img {
     font-size: 0.6rem;
   }
 
- 
-
+  .timeline-line {
+    left: 30px; /* Lijn naar de linkerkant */
+  }
+  .timeline-dot {
+    left: 30px;
+  }
+  
   .timeline-content {
     text-align: left; /* Alles weer links op mobiel */
   }

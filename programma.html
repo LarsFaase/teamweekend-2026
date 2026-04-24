@@ -137,49 +137,56 @@
     window.addEventListener('scroll', () => {
         const ball = document.getElementById('ball');
         const progressLine = document.getElementById('progress-line');
+        const container = document.querySelector('.timeline-container');
         const items = document.querySelectorAll('.timeline-item');
         const contents = document.querySelectorAll('.timeline-content, .day-separator span');
+
+        // 1. Bereken hoe ver de container in beeld is
+        const containerRect = container.getBoundingClientRect();
+        const containerTop = container.offsetTop;
+        const containerHeight = container.offsetHeight;
         
-        const scrollTop = window.pageYOffset;
+        // Bereken scroll voortgang specifiek voor de tijdlijn
         const windowHeight = window.innerHeight;
-        const docHeight = document.documentElement.scrollHeight - windowHeight;
-        const scrollPercent = (scrollTop / docHeight) * 100;
+        const scrollTrigger = window.scrollY + (windowHeight / 2); // Het 'actieve' punt is het midden van het scherm
+        
+        let relativeProgress = scrollTrigger - containerTop;
+        if (relativeProgress < 0) relativeProgress = 0;
+        if (relativeProgress > containerHeight) relativeProgress = containerHeight;
 
-        // 1. Update de voortgangslijn
-        progressLine.style.height = scrollPercent + "%";
+        // 2. Update de lijn en de bal positie
+        progressLine.style.height = relativeProgress + "px";
+        ball.style.top = relativeProgress + "px"; // De bal plakt aan de onderkant van de lijn
 
-        // 2. Bal rotatie
-        const rotation = scrollTop * 0.8;
+        // 3. Bal rotatie (gebaseerd op pixels voor soepel effect)
+        const rotation = relativeProgress * 0.5;
         ball.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
 
-        // 3. De 'Focus Zoom' voor elk blok
-        let ballShouldBeVisible = true;
+        // 4. Focus Zoom logica (blijft hetzelfde)
         const screenCenter = windowHeight / 2;
-
         items.forEach(item => {
             const rect = item.getBoundingClientRect();
             const itemCenter = rect.top + rect.height / 2;
 
-            // Als het midden van het blok dichtbij het midden van het scherm is
-            if (Math.abs(screenCenter - itemCenter) < 150) { 
+            if (Math.abs(screenCenter - itemCenter) < 150) {
                 item.classList.add('focus');
             } else {
                 item.classList.remove('focus');
             }
         });
 
-        // 4. Bal verbergen als deze achter een kaartje zit
+        // 5. Zichtbaarheid van de bal (verbergen bij overlap)
         let isOverlapping = false;
         contents.forEach(content => {
             const rect = content.getBoundingClientRect();
-            // Check of het midden van het scherm (waar de bal is) binnen een blok valt
+            // De bal is nu 'fixed' in het midden van het scherm visueel gezien tijdens scroll
             if (screenCenter > rect.top && screenCenter < rect.bottom) {
                 isOverlapping = true;
             }
         });
 
-        // Toon de bal alleen als hij niet overlapt en we niet helemaal bovenaan zijn
-        if (isOverlapping || scrollTop < 50) {
+        // Bal alleen tonen als we in de container zijn en niet overlappen
+        if (isOverlapping || relativeProgress <= 0 || relativeProgress >= containerHeight) {
             ball.style.opacity = '0';
         } else {
             ball.style.opacity = '1';

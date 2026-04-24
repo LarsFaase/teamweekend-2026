@@ -138,28 +138,45 @@
         const ball = document.getElementById('ball');
         const progressLine = document.getElementById('progress-line');
         const firstItem = document.querySelector('.first-item');
+        const items = document.querySelectorAll('.timeline-content, .day-separator span');
         
-        // Bereken hoe ver we zijn
         const scrollTop = window.pageYOffset;
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
         const scrollPercent = (scrollTop / docHeight) * 100;
 
-        // 1. Zoom effect voor het eerste item
+        // 1. Zoom effect eerste item
         if (scrollTop > 100) {
             firstItem.classList.add('shrunk');
-            ball.style.opacity = '1'; // Bal wordt zichtbaar
         } else {
             firstItem.classList.remove('shrunk');
-            ball.style.opacity = '0'; // Bal onzichtbaar bij de start
         }
 
-        // 2. Groei van de rode lijn
+        // 2. Lijn groei
         progressLine.style.height = scrollPercent + "%";
 
-        // 3. Draaien en bewegen van de bal
-        // De bal draait synchroon aan de scroll
-        const rotation = scrollTop * 0.8; 
+        // 3. Bal rotatie en ZICHTBAARHEID
+        const rotation = scrollTop * 0.8;
         ball.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
+
+        // Check of de bal (die op 50% van het scherm staat) overlapt met een kaartje
+        let isOverlapping = false;
+        const ballRect = ball.getBoundingClientRect();
+        const ballCenter = ballRect.top + ballRect.height / 2;
+
+        items.forEach(item => {
+            const rect = item.getBoundingClientRect();
+            // Als het midden van het scherm binnen de boven- en onderkant van een kaartje valt
+            if (ballCenter > rect.top && ballCenter < rect.bottom) {
+                isOverlapping = true;
+            }
+        });
+
+        // Bal verbergen als hij overlapt of als we helemaal bovenaan zijn
+        if (isOverlapping || scrollTop < 100) {
+            ball.style.opacity = '0';
+        } else {
+            ball.style.opacity = '1';
+        }
     });
 
     // Reveal effect voor de kaartjes (Intersection Observer)

@@ -531,6 +531,7 @@ img {
     margin: 50px auto;
     padding: 40px 0;
     display: flex;
+    z-index: 1;
     flex-direction: column; /* Items onder elkaar */
 }
 
@@ -562,12 +563,13 @@ img {
 
 /* De kaartjes (content) */
 .timeline-content {
-    width: 42%; /* Breedte van het kaartje */
+    position: relative;
+    z-index: 10; /* Hoger dan de bal! */
+    background: #1a1a1a; /* Gebruik je exacte achtergrondkleur, geen rgba met lage opacity */
     padding: 20px;
-    background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     border: 1px solid var(--accent);
-    box-sizing: border-box;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
 /* --- DE ZIGZAG LOGICA --- */
@@ -595,7 +597,7 @@ img {
     border: 3px solid #1a1a1a;
     border-radius: 50%;
     transform: translateX(-50%);
-    z-index: 10;
+    z-index: 11;
 }
 
 .day-separator {
@@ -603,11 +605,12 @@ img {
     width: 100%;
     text-align: center;
     margin: 40px 0;
-    z-index: 5; /* Zorg dat dit boven de lijn ligt */
+    z-index: 10; /* Zorg dat dit boven de lijn ligt */
 }
 
 .day-separator span {
     background-color: #1a1a1a; /* MOET exact dezelfde kleur zijn als je pagina-achtergrond */
+    display: inline-block;
     color: var(--accent);
     padding: 10px 25px;
     font-weight: bold;
@@ -625,7 +628,7 @@ img {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 2.5rem;
-    z-index: 100;
+    z-index: 5;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.3s;

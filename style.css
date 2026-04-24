@@ -623,12 +623,16 @@ img {
 
 /* Startpositie van de bal: verborgen */
 .scrolling-ball {
-    position: absolute;
+    position: fixed; /* Cruciaal voor smoothness */
+    top: 50%;
     left: 50%;
-    /* Verwijder eventuele 'top' transitions, alleen opacity is prima */
-    transition: opacity 0.3s; 
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem;
     z-index: 100;
     pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease; /* Alleen opacity transition */
+    will-change: transform; /* Vertelt de browser: dit gaat bewegen */
 }
 
 /* De groeiende rode lijn */
@@ -639,8 +643,10 @@ img {
     width: 4px;
     background: var(--accent);
     transform: translateX(-50%);
+    transform-origin: top; /* Zorgt dat hij van boven naar beneden groeit */
+    height: 100%; /* De container is de maximale lengte */
+    scale: 1 0; /* Begin op hoogte 0 */
     z-index: 2;
-    height: 0;
 }
 
 /* De statische grijze achtergrondlijn */

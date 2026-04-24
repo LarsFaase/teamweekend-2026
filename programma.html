@@ -141,33 +141,33 @@
         const items = document.querySelectorAll('.timeline-item');
         const contents = document.querySelectorAll('.timeline-content, .day-separator span');
 
-        // 1. Bereken hoe ver de container in beeld is
-        const containerRect = container.getBoundingClientRect();
-        const containerTop = container.offsetTop;
-        const containerHeight = container.offsetHeight;
-        
-        // Bereken scroll voortgang specifiek voor de tijdlijn
+        // 1. Verkrijg de posities van de container t.o.v. het scherm
+        const rect = container.getBoundingClientRect();
         const windowHeight = window.innerHeight;
-        const scrollTrigger = window.scrollY + (windowHeight / 2); // Het 'actieve' punt is het midden van het scherm
-        
-        let relativeProgress = scrollTrigger - containerTop;
-        if (relativeProgress < 0) relativeProgress = 0;
-        if (relativeProgress > containerHeight) relativeProgress = containerHeight;
+        const screenCenter = windowHeight / 2;
 
-        // 2. Update de lijn en de bal positie
-        progressLine.style.height = relativeProgress + "px";
-        ball.style.top = relativeProgress + "px"; // De bal plakt aan de onderkant van de lijn
+        // 2. Bereken hoeveel pixels de bovenkant van de container boven het midden van het scherm is
+        // Als de bovenkant van de container het midden van het scherm raakt, is progress 0.
+        let progressPx = screenCenter - rect.top;
 
-        // 3. Bal rotatie (gebaseerd op pixels voor soepel effect)
-        const rotation = relativeProgress * 0.5;
+        // Begrenzen: niet minder dan 0, niet meer dan de hoogte van de container
+        if (progressPx < 0) progressPx = 0;
+        if (progressPx > rect.height) progressPx = rect.height;
+
+        // 3. Pas BEIDE (lijn en bal) aan met exact dezelfde waarde
+        progressLine.style.height = progressPx + "px";
+        ball.style.top = progressPx + "px";
+
+        // 4. Bal rotatie (gebaseerd op dezelfde progressPx)
+        const rotation = progressPx * 0.5;
         ball.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
 
-        // 4. Focus Zoom logica (blijft hetzelfde)
-        const screenCenter = windowHeight / 2;
+        // 5. Focus Zoom logica voor de blokken
         items.forEach(item => {
-            const rect = item.getBoundingClientRect();
-            const itemCenter = rect.top + rect.height / 2;
+            const itemRect = item.getBoundingClientRect();
+            const itemCenter = itemRect.top + itemRect.height / 2;
 
+            // Als het midden van het item het midden van het scherm (de bal) raakt
             if (Math.abs(screenCenter - itemCenter) < 150) {
                 item.classList.add('focus');
             } else {
@@ -175,18 +175,18 @@
             }
         });
 
-        // 5. Zichtbaarheid van de bal (verbergen bij overlap)
+        // 6. Zichtbaarheid van de bal (verbergen bij overlap met kaartjes)
         let isOverlapping = false;
         contents.forEach(content => {
-            const rect = content.getBoundingClientRect();
-            // De bal is nu 'fixed' in het midden van het scherm visueel gezien tijdens scroll
-            if (screenCenter > rect.top && screenCenter < rect.bottom) {
+            const cRect = content.getBoundingClientRect();
+            // De bal bevindt zich visueel altijd op screenCenter (midden van het scherm)
+            if (screenCenter > cRect.top && screenCenter < cRect.bottom) {
                 isOverlapping = true;
             }
         });
 
-        // Bal alleen tonen als we in de container zijn en niet overlappen
-        if (isOverlapping || relativeProgress <= 0 || relativeProgress >= containerHeight) {
+        // Bal verbergen als hij overlapt, of als hij buiten de container is
+        if (isOverlapping || progressPx <= 0 || progressPx >= rect.height) {
             ball.style.opacity = '0';
         } else {
             ball.style.opacity = '1';

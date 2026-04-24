@@ -179,14 +179,24 @@
         }
     });
 
-    // Reveal effect voor de kaartjes (Intersection Observer)
+    // De Intersection Observer opties aanpassen
+    const observerOptions = {
+        root: null,
+        rootMargin: "-20% 0% -20% 0%", // Activeert als het item in het middelste 60% van het scherm is
+        threshold: 0.5 
+    };
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
+                // Blok komt in het midden: Vergroten
                 entry.target.classList.add('active');
+            } else {
+                // Blok verlaat het midden: Weer verkleinen
+                entry.target.classList.remove('active');
             }
         });
-    }, { threshold: 0.2 });
+    }, observerOptions);
 
     document.querySelectorAll('.timeline-item').forEach(item => {
         observer.observe(item);

@@ -556,14 +556,21 @@ img {
 .timeline-item {
     position: relative;
     width: 100%;
-    margin-bottom: 150px; /* Meer ruimte tussen blokken voor het scroll-effect */
+    margin-bottom: 30vh; /* Veel ruimte tussen blokken voor het roleffect */
     display: flex;
     justify-content: center;
     align-items: center;
-    /* De basis voor het zoom-effect */
-    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease;
-    transform: scale(0.8); /* Standaard iets kleiner */
-    opacity: 0.4; /* Standaard iets vervaagd */
+    /* De overgang moet snappy maar vloeiend zijn */
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+    transform: scale(0.7); /* Kleinere standaard staat */
+    opacity: 0.3;
+}
+
+/* De 'Zoom' staat die op elk blok wordt toegepast bij scrollen */
+.timeline-item.focus {
+    transform: scale(1.2); /* De zoom die je bij het eerste blok had */
+    opacity: 1;
+    z-index: 20;
 }
 
 /* Wanneer een blok 'actief' is (in het midden van het scherm) */
@@ -575,13 +582,14 @@ img {
 
 /* De kaartjes (content) */
 .timeline-content {
-    width: 80%; /* Breedte van de kaartjes in het midden */
-    max-width: 500px;
-    background: #1a1a1a; /* Zorg dat dit de bal bedekt */
-    padding: 25px;
-    border-radius: 15px;
+    width: 85%;
+    max-width: 450px;
+    background: #1a1a1a;
+    padding: 30px;
+    border-radius: 20px;
     border: 2px solid var(--accent);
-    text-align: center; /* Tekst ook netjes in het midden */
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 /* Het bolletje (dot) moet altijd op de lijn blijven */

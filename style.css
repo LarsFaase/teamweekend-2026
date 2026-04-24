@@ -598,6 +598,26 @@ img {
     z-index: 10;
 }
 
+.day-separator {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    margin: 40px 0;
+    z-index: 5; /* Zorg dat dit boven de lijn ligt */
+}
+
+.day-separator span {
+    background-color: #1a1a1a; /* MOET exact dezelfde kleur zijn als je pagina-achtergrond */
+    color: var(--accent);
+    padding: 10px 25px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: 2px solid var(--accent);
+    border-radius: 50px; /* Maakt er een pil-vorm van */
+    font-size: 0.9rem;
+}
+
 /* MOBIEL */
 @media (max-width: 768px) {
   h1 {
@@ -653,5 +673,10 @@ img {
   }
   .timeline-content {
     width: 100%; /* Volle breedte op mobiel */
+  }
+
+  .day-separator span {
+    font-size: 0.8rem;
+    padding: 8px 15px;
   }
 }

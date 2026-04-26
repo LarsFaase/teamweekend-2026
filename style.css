@@ -266,7 +266,7 @@ img {
 /* De kaart instellingen */
 .flip-card {
   background-color: transparent;
-  height: 250px; /* Pas aan naar wens */
+  height: 325px; /* Pas aan naar wens */
   perspective: 1000px; /* Nodig voor 3D effect */
   cursor: pointer;
 }
@@ -731,4 +731,10 @@ img {
     font-size: 0.8rem;
     padding: 8px 15px;
   }
+
+  @media (max-width: 768px) {
+  .flip-card {
+    height: 250px;
+  }
+}
 }

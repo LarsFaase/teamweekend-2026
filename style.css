@@ -197,7 +197,7 @@ p {
   background: var(--surface-light);
   border: 1px solid var(--border);
   border-radius: 18px;
-  padding: 16px 24px 24px;
+  padding: 5px 24px 24px;
   margin: 24px auto;
   max-width: 800px;
   box-shadow: 0 8px 24px var(--shadow);

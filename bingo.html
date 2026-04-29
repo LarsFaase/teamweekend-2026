@@ -124,12 +124,13 @@
                 { tekst: "Ren 3 rondjes", info: "Je moet 3 rondjes om de 3 huisjes heen rennen binnen 3 minuten, zorg ervoor dat een van de organisatoren de tijd bij houdt" },
                 { tekst: "Botten breken", info: "NNB" },
                 { tekst: "Activiteit tegen anderen", info: "NNB" },
-                { tekst: "Iemand KO", info: "NNB" },
+                { tekst: "Iemand KO", info: "Ga op de foto met iemand die KO is van de drank, of dit nu op bed is of boven de wasbak beide zijn goed." },
                 { tekst: "Naakt rondlopen", info: "NNB" },
-                { tekst: "Rit platte kar", info: "NNB" },
-                { tekst: "WC bezoekje", info: "NNB" },
+                { tekst: "Rit platte kar", info: "Rij een ritje mee op een platte kar door de plaats van het teamuitje, dit moet minimaal voor 10 seconden" },
+                { tekst: "WC bezoekje", info: "Iemand heeft gepoept maar heeft niet doorgetrokken, zoek uit wie het heeft gedaan en maak een video van hem die de drol (eerlijk, de drol moet door hem gelegd zijn) opeist en de wc doortrekt" },
+                { tekst: "WC bezoekje 2.0", info: "Doe een grote behoefte in de WC" },
                 { tekst: "Opruimsessie", info: "NNB" },
-                { tekst: "Grondpizza's", info: "NNB" },
+                { tekst: "Grondpizza's", info: "Maak een selfie met iemand die een pizza(stuk) op de grond heeft laten vallen. Zorg ervoor dat jij, de ongelukkige en de pizza te zien zijn" },
                 { tekst: "Smirnoff Ice", info: "NNB" },
                 { tekst: "Rave room 2.0", info: "NNB" },
                 { tekst: "Mr. Barf", info: "NNB" },
@@ -283,7 +284,7 @@
     // 4. Losse functie om de HTML op te bouwen (zo houden we de code schoon)
     function renderBingoHTML(kaart, user, container) {
         let html = `<h1>Bingo van ${user.toUpperCase()}</h1>
-                    <h3>LEES GOED DE INFORMATIE BIJ ELKE KAART</h3>`;
+                    <h3>LEES GOED DE INFORMATIE BIJ ELKE KAART, bij onduidelijkheden/hints vraag organisatie</h3>`;
         html += `<div class="bingo-grid">`;
 
         kaart.forEach((item, index) => {

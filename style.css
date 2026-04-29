@@ -183,7 +183,7 @@ h3 {
 h4 {
   font-style: italic;
   font-size: 0.5rem;
-  margin-bottom: 12px;
+  margin-bottom: 2px;
 }
 
 /* TEXT */
@@ -197,7 +197,7 @@ p {
   background: var(--surface-light);
   border: 1px solid var(--border);
   border-radius: 18px;
-  padding: 24px;
+  padding: 16px 24px 24px;
   margin: 24px auto;
   max-width: 800px;
   box-shadow: 0 8px 24px var(--shadow);

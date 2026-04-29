@@ -115,7 +115,7 @@
           inputs.forEach(input => {
               const r = input.dataset.row;
               const c = input.dataset.col;
-              if (input.value != solution[r][c] && input.value !== '') {
+              if (input.value != solution[r][c]) {
                   input.classList.add('error');
                   allCorrect = false;
               }

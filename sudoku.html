@@ -35,26 +35,43 @@
       let solution = [];
 
       function generateSudoku() {
-          // Basis oplossing (kan later uitgebreid worden met een echte generator)
-          const base = [
-              [5, 3, 4, 6, 7, 8, 9, 1, 2],
-              [6, 7, 2, 1, 9, 5, 3, 4, 8],
-              [1, 9, 8, 3, 4, 2, 5, 6, 7],
-              [8, 5, 9, 7, 6, 1, 4, 2, 3],
-              [4, 2, 6, 8, 5, 3, 7, 9, 1],
-              [7, 1, 3, 9, 2, 4, 8, 5, 6],
-              [9, 6, 1, 5, 3, 7, 2, 8, 4],
-              [2, 8, 7, 4, 1, 9, 6, 3, 5],
-              [3, 4, 5, 2, 8, 6, 1, 7, 9]
+          const sudokuPool = [
+              [[5,3,4,6,7,8,9,1,2],[6,7,2,1,9,5,3,4,8],[1,9,8,3,4,2,5,6,7],[8,5,9,7,6,1,4,2,3],[4,2,6,8,5,3,7,9,1],[7,1,3,9,2,4,8,5,6],[9,6,1,5,3,7,2,8,4],[2,8,7,4,1,9,6,3,5],[3,4,5,2,8,6,1,7,9]],
+              [[1,2,3,4,5,6,7,8,9],[4,5,6,7,8,9,1,2,3],[7,8,9,1,2,3,4,5,6],[2,3,1,5,6,4,8,9,7],[5,6,4,8,9,7,2,3,1],[8,9,7,2,3,1,5,6,4],[3,1,2,6,4,5,9,7,8],[6,4,5,9,7,8,3,1,2],[9,7,8,3,1,2,6,4,5]],
+              [[8,2,7,1,5,4,3,9,6],[9,6,5,3,2,7,1,4,8],[3,4,1,6,8,9,7,5,2],[5,9,3,4,6,8,2,7,1],[4,7,2,5,1,3,6,8,9],[6,1,8,9,7,2,4,3,5],[7,8,6,2,3,5,9,1,4],[1,5,4,7,9,6,8,2,3],[2,3,9,8,4,1,5,6,7]],
+              [[2,8,6,3,1,4,7,9,5],[3,4,5,7,9,2,8,1,6],[1,7,9,5,6,8,4,3,2],[7,9,3,1,2,5,6,4,8],[6,1,4,8,3,9,2,5,7],[8,5,2,4,7,6,3,9,1],[4,2,1,6,8,3,5,7,9],[9,3,8,2,5,7,1,6,4],[5,6,7,9,4,1,9,2,3]], // Grid 4
+              [[9,5,7,6,1,3,2,8,4],[4,8,3,2,5,7,1,9,6],[6,1,2,8,4,9,5,3,7],[1,7,8,3,6,4,9,5,2],[5,2,4,9,7,1,3,6,8],[3,6,9,5,2,8,7,4,1],[8,4,5,7,9,2,6,1,3],[2,9,1,4,3,6,8,7,5],[7,3,6,1,8,5,4,2,9]],
+              [[1,5,2,4,8,9,3,7,6],[7,3,9,2,5,6,8,4,1],[4,6,8,3,7,1,2,9,5],[3,8,7,1,2,4,6,5,9],[5,9,1,7,6,3,4,2,8],[2,4,6,8,9,5,7,1,3],[9,1,4,6,3,7,5,8,2],[6,2,5,9,4,8,1,3,7],[8,7,3,5,1,2,9,6,4]],
+              [[4,9,5,1,3,8,2,6,7],[7,2,8,6,5,9,1,4,3],[3,1,6,2,7,4,9,5,8],[1,7,2,9,8,3,5,6,4],[6,8,9,5,4,2,3,7,1],[5,3,4,7,6,1,8,2,9],[2,4,1,3,9,7,6,8,5],[9,6,3,8,2,5,4,1,7],[8,5,7,4,1,6,9,3,2]],
+              [[3,1,6,5,7,8,4,9,2],[5,2,9,1,3,4,7,6,8],[4,8,7,6,2,9,5,3,1],[2,6,3,4,1,5,9,8,7],[9,7,4,8,6,3,1,2,5],[8,5,1,7,9,2,6,4,3],[1,3,8,9,4,7,2,5,6],[6,9,2,3,5,1,8,7,4],[7,4,5,2,8,6,3,1,9]],
+              [[6,8,1,9,2,5,4,3,7],[2,7,3,4,8,1,6,5,9],[9,4,5,7,3,6,8,2,1],[1,5,4,2,9,3,7,8,6],[8,3,6,1,7,4,5,9,2],[7,9,2,5,6,8,1,4,3],[4,2,9,8,1,7,3,6,5],[3,1,8,6,5,2,9,7,4],[5,6,7,3,4,9,2,1,8]],
+              [[2,4,5,9,8,1,3,7,6],[1,6,9,2,7,3,5,8,4],[8,3,7,5,6,4,2,1,9],[9,7,6,1,2,5,4,3,8],[5,1,3,4,9,8,6,2,7],[4,8,2,7,3,6,9,5,1],[3,9,8,6,5,7,1,4,2],[7,2,1,8,4,9,5,6,3],[6,5,4,3,1,2,8,9,7]]
           ];
-          solution = JSON.parse(JSON.stringify(base));
+
+          // Willekeurige Sudoku kiezen
+          const randomIndex = Math.floor(Math.random() * sudokuPool.length);
+          const selectedBase = sudokuPool[randomIndex];
+
+          // Oplossing opslaan
+          solution = JSON.parse(JSON.stringify(selectedBase));
           
-          // Verwijder willekeurig 40 tot 50 cellen
-          const puzzle = base.map(row => row.map(cell => Math.random() > 0.5 ? cell : ''));
+          // Moeilijkheidsgraad instellen (0.6 = 60% kans op leeg vakje)
+          // Tip: Verander 0.6 naar 0.5 voor een makkelijkere versie
+          const puzzle = selectedBase.map(row => 
+              row.map(cell => Math.random() > 0.7 ? cell : '')
+          );
+          
           return puzzle;
       }
 
-      function renderGrid(puzzle) {
+      // Functie om de voortgang op te slaan
+      function saveProgress() {
+          const inputs = document.querySelectorAll('.cell input');
+          const currentValues = Array.from(inputs).map(input => input.value);
+          localStorage.setItem('sudoku_current_values', JSON.stringify(currentValues));
+      }
+
+      function renderGrid(puzzle, savedValues = null) {
           gridElement.innerHTML = '';
           puzzle.forEach((row, rIdx) => {
               row.forEach((cell, cIdx) => {
@@ -63,18 +80,27 @@
                   
                   const input = document.createElement('input');
                   input.type = 'number';
-                  input.value = cell;
+                  input.inputMode = 'numeric';
                   
+                  // Index berekenen voor de platte array van savedValues
+                  const flatIdx = rIdx * 9 + cIdx;
+
                   if (cell !== '') {
+                      input.value = cell;
                       input.readOnly = true;
                       input.classList.add('fixed');
+                  } else if (savedValues && savedValues[flatIdx]) {
+                      input.value = savedValues[flatIdx];
                   }
 
                   input.dataset.row = rIdx;
                   input.dataset.col = cIdx;
                   
-                  // Verwijder de error-kleur zodra je begint te typen
-                  input.addEventListener('input', () => input.classList.remove('error'));
+                  // Sla op bij elke wijziging
+                  input.addEventListener('input', () => {
+                      input.classList.remove('error');
+                      saveProgress();
+                  });
 
                   div.appendChild(input);
                   gridElement.appendChild(div);
@@ -100,13 +126,37 @@
           }
       }
 
+      // De vernieuwde opstart-functie
+      function initGame() {
+          const savedPuzzle = localStorage.getItem('sudoku_puzzle');
+          const savedSolution = localStorage.getItem('sudoku_solution');
+          const savedValues = localStorage.getItem('sudoku_current_values');
+
+          if (savedPuzzle && savedSolution) {
+              // Laad oude puzzel
+              solution = JSON.parse(savedSolution);
+              const puzzle = JSON.parse(savedPuzzle);
+              renderGrid(puzzle, JSON.parse(savedValues));
+          } else {
+              // Start een gloednieuwe
+              resetPuzzle();
+          }
+      }
+
       function resetPuzzle() {
+          // Wis eerst het oude geheugen
+          localStorage.removeItem('sudoku_current_values');
+          
           const newPuzzle = generateSudoku();
+          // Sla de nieuwe puzzel en oplossing op
+          localStorage.setItem('sudoku_puzzle', JSON.stringify(newPuzzle));
+          localStorage.setItem('sudoku_solution', JSON.stringify(solution));
+          
           renderGrid(newPuzzle);
       }
 
-      // Start
-      resetPuzzle();
+      // Vervang "resetPuzzle()" onderaan je script door:
+      initGame();
   </script>
 
 </body>

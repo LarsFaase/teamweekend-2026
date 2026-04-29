@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paklijst</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+
+  <div id="nav-placeholder"></div>
+
+  <main>
+      <h1>Sudoku</h1>
+      <p>Kraak de code van het weekend</p>
+
+      <div class="sudoku-container" id="sudoku-grid">
+          </div>
+
+      <div class="sudoku-controls">
+          <button class="btn-sudoku" onclick="checkPuzzle()">Controleer</button>
+          <button class="btn-sudoku btn-outline" onclick="resetPuzzle()">Nieuwe Sudoku</button>
+      </div>
+  </main>
+  
+  <script>
+    fetch('nav.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('nav-placeholder').innerHTML = data;
+      });
+
+      const gridElement = document.getElementById('sudoku-grid');
+      let solution = [];
+
+      function generateSudoku() {
+          // Basis oplossing (kan later uitgebreid worden met een echte generator)
+          const base = [
+              [5, 3, 4, 6, 7, 8, 9, 1, 2],
+              [6, 7, 2, 1, 9, 5, 3, 4, 8],
+              [1, 9, 8, 3, 4, 2, 5, 6, 7],
+              [8, 5, 9, 7, 6, 1, 4, 2, 3],
+              [4, 2, 6, 8, 5, 3, 7, 9, 1],
+              [7, 1, 3, 9, 2, 4, 8, 5, 6],
+              [9, 6, 1, 5, 3, 7, 2, 8, 4],
+              [2, 8, 7, 4, 1, 9, 6, 3, 5],
+              [3, 4, 5, 2, 8, 6, 1, 7, 9]
+          ];
+          solution = JSON.parse(JSON.stringify(base));
+          
+          // Verwijder willekeurig 40 tot 50 cellen
+          const puzzle = base.map(row => row.map(cell => Math.random() > 0.5 ? cell : ''));
+          return puzzle;
+      }
+
+      function renderGrid(puzzle) {
+          gridElement.innerHTML = '';
+          puzzle.forEach((row, rIdx) => {
+              row.forEach((cell, cIdx) => {
+                  const div = document.createElement('div');
+                  div.className = 'cell';
+                  
+                  const input = document.createElement('input');
+                  input.type = 'number';
+                  input.value = cell;
+                  
+                  if (cell !== '') {
+                      input.readOnly = true;
+                      input.classList.add('fixed');
+                  }
+
+                  input.dataset.row = rIdx;
+                  input.dataset.col = cIdx;
+                  
+                  // Verwijder de error-kleur zodra je begint te typen
+                  input.addEventListener('input', () => input.classList.remove('error'));
+
+                  div.appendChild(input);
+                  gridElement.appendChild(div);
+              });
+          });
+      }
+
+      function checkPuzzle() {
+          const inputs = document.querySelectorAll('.cell input');
+          let allCorrect = true;
+
+          inputs.forEach(input => {
+              const r = input.dataset.row;
+              const c = input.dataset.col;
+              if (input.value != solution[r][c] && input.value !== '') {
+                  input.classList.add('error');
+                  allCorrect = false;
+              }
+          });
+
+          if (allCorrect && Array.from(inputs).every(i => i.value !== '')) {
+              alert("GEFELICITEERD! De code is gekraakt! 🏆");
+          }
+      }
+
+      function resetPuzzle() {
+          const newPuzzle = generateSudoku();
+          renderGrid(newPuzzle);
+      }
+
+      // Start
+      resetPuzzle();
+  </script>
+
+</body>
+</html>

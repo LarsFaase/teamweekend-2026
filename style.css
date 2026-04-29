@@ -681,6 +681,92 @@ img {
     margin-top: 50px;
 }
 
+/* SUDOKU */
+/* Sudoku Specifiek */
+.sudoku-container {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    border: 3px solid var(--accent);
+    background-color: var(--accent);
+    gap: 1px;
+    max-width: 450px;
+    width: 95vw;
+    aspect-ratio: 1 / 1;
+    margin: 20px auto;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.cell {
+    background-color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cell input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    color: white;
+    text-align: center;
+    font-size: 1.2rem;
+    outline: none;
+    appearance: none;
+    -moz-appearance: textfield;
+}
+
+/* Verwijder pijltjes bij input type number */
+.cell input::-webkit-outer-spin-button,
+.cell input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* De dikke lijnen voor de 3x3 blokken */
+.cell:nth-child(3n) { border-right: 2px solid var(--accent); }
+.cell:nth-child(9n) { border-right: none; }
+.cell:nth-child(n+19):nth-child(-n+27),
+.cell:nth-child(n+46):nth-child(-n+54) {
+    border-bottom: 2px solid var(--accent);
+}
+
+.cell input.fixed {
+    font-weight: bold;
+    color: var(--accent);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.cell input.error {
+    background-color: rgba(255, 0, 0, 0.3);
+    color: white;
+}
+
+.sudoku-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-sudoku {
+    padding: 12px 25px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--accent);
+}
+
+.btn-sudoku:active { transform: scale(0.95); }
+
 /* MOBIEL */
 @media (max-width: 768px) {
   h1 {

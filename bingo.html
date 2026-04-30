@@ -120,25 +120,26 @@
         } else {
             // KAART BESTAAT NOG NIET: We maken een nieuwe kaart aan (jouw originele logica)
             const algemeen = [
-                { tekst: "Drank morsen", info: "Iemand anders moet per ongeluk zijn hele/volle glas omgooien, je mag geen invloed uitoefenen en je moet 3 mensen als getuigen hebben en een video ervan maken" },
-                { tekst: "Ren 3 rondjes", info: "Je moet 3 rondjes om de 3 huisjes heen rennen binnen 3 minuten, zorg ervoor dat een van de organisatoren de tijd bij houdt" },
-                { tekst: "Botten breken", info: "Iemand gaat iets breken, zorg ervoor dat je mee gaat en selfie maakt in het ziekenhuis" },
-                { tekst: "Activiteit tegen anderen", info: "Doe een potje steen papier schaar tegen 3 verschillende teamgenoten, laat een organisator meekijken en zorg ervoor dat je ze alle 3 achter elkaar wint (niet valspelen)" },
-                { tekst: "Iemand KO", info: "Ga op de foto met iemand die KO is van de drank, of dit nu op bed is of boven de wasbak beide zijn goed." },
-                { tekst: "Naakt rondlopen", info: "Elke keer als je een teamgenoot naakt zie, klap je en roep je in de buurt van een organisator 'PARKHOUT GAAT NAAKT'. Zodra je dit 3 keer hebt uitgevoerd mag je deze afstrepen." },
-                { tekst: "Rit platte kar", info: "Rij een ritje mee op een platte kar door de plaats van het teamuitje, dit moet minimaal voor 10 seconden" },
-                { tekst: "WC bezoekje", info: "Iemand heeft gepoept maar heeft niet doorgetrokken, zoek uit wie het heeft gedaan en maak een video van hem die de drol (eerlijk, de drol moet door hem gelegd zijn) opeist en de wc doortrekt" },
-                { tekst: "WC bezoekje 2.0", info: "Doe een grote behoefte in de WC en trek niet door. Zorg ervoor dat iemand eerst vraagt wie de schuldige is, voordat die doortrekt. Zorg ervoor dat als de organisator in de groep vraagt wie het heeft gevonden, hij (zonder jouw hulp) dit kan bevestigen" },
-                { tekst: "Opruimsessie", info: "Maak een video van iemand die in zijn eentje het afval die gemaakt is aan het opruimen is, er mag niemand anders in diezelfde kamer zijn." },
-                { tekst: "Grondpizza's", info: "Maak een selfie met iemand die een pizza(stuk) op de grond heeft laten vallen. Zorg ervoor dat jij, de ongelukkige en de pizza te zien zijn" },
-                { tekst: "Smirnoff Ice", info: "NNB" },
-                { tekst: "Rave room 2.0", info: "Houd eenzelfde soort rave feest" },
-                { tekst: "Mr. Barf", info: "NNB" },
-                { tekst: "Opdracht koprol", info: "NNB" },
-                { tekst: "Barfplek", info: "NNB" },
-                { tekst: "Yoga", info: "Als we yoga of iets soortgelijks gaan doen, zorg ervoor dat je deze sessie volledig uitvoert in je onderbroek" },
-                { tekst: "Scheten", info: "NNB" },
+                { tekst: "Drank morsen", info: "Iemand anders moet per ongeluk zijn hele/volle glas omgooien, je mag geen invloed uitoefenen en je moet 3 mensen als getuigen hebben en een video ervan maken. Gelukt = Afvinken" },
+                { tekst: "Ren 3 rondjes", info: "Je moet 3 rondjes om de 3 huisjes heen rennen binnen 3 minuten, zorg ervoor dat een van de organisatoren de tijd bij houdt. Gelukt = Afvinken" },
+                { tekst: "Botten breken", info: "Iemand gaat iets breken, zorg ervoor dat je mee gaat en selfie maakt in het ziekenhuis. Gelukt = Afvinken" },
+                { tekst: "Activiteit tegen anderen", info: "Doe een potje steen papier schaar tegen 3 verschillende teamgenoten, laat een organisator meekijken en zorg ervoor dat je ze alle 3 achter elkaar wint (niet valspelen). Gelukt = Afvinken" },
+                { tekst: "Iemand KO", info: "Ga op de foto met iemand die KO is van de drank, of dit nu op bed is of boven de wasbak beide zijn goed. Gelukt = Afvinken" },
+                { tekst: "Naakt rondlopen", info: "Elke keer als je een teamgenoot naakt zie, klap je en roep je in de buurt van een organisator 'PARKHOUT GAAT NAAKT'. Zodra je dit 3 keer hebt uitgevoerd mag je deze afstrepen. Gelukt = Afvinken" },
+                { tekst: "Rit platte kar", info: "Rij een ritje mee op een platte kar door de plaats van het teamuitje, dit moet minimaal voor 10 seconden. Gelukt = Afvinken" },
+                { tekst: "WC bezoekje", info: "Iemand heeft gepoept maar heeft niet doorgetrokken, zoek uit wie het heeft gedaan en maak een video van hem die de drol (eerlijk, de drol moet door hem gelegd zijn) opeist en de wc doortrekt. Gelukt = Afvinken" },
+                { tekst: "WC bezoekje 2.0", info: "Doe een grote behoefte in de WC en trek niet door. Zorg ervoor dat iemand eerst vraagt wie de schuldige is, voordat die doortrekt. Zorg ervoor dat als de organisator in de groep vraagt wie het heeft gevonden, hij (zonder jouw hulp) dit kan bevestigen. Gelukt = Afvinken" },
+                { tekst: "Opruimsessie", info: "Maak een video van iemand die in zijn eentje het afval die gemaakt is aan het opruimen is, er mag niemand anders in diezelfde kamer zijn. Gelukt = Afvinken" },
+                { tekst: "Grondpizza's", info: "Maak een selfie met iemand die een pizza(stuk) op de grond heeft laten vallen. Zorg ervoor dat jij, de ongelukkige en de pizza te zien zijn. Gelukt = Afvinken" },
+                { tekst: "Smirnoff Ice", info: "Verzamel iedereen bij elkaar en roep 3 teamgenoten op om naast elkaar tegelijk een Ice te doen, mocht dit niet lukken in 1 keer dan mag je na 1 uur weer hetzelfde proberen (vraag aan de organisatie om een timer te zetten). Gelukt = Afvinken" },
+                { tekst: "Rave room 2.0", info: "Houd eenzelfde soort rave feest als vorig jaar, dit MOET in een slaapkamer zijn voor max 4 personen en je doet dit met minimaal 14 man. Gelukt = Afvinken" },
+                { tekst: "Mr. Barf", info: "Stuur 3 namen van teamgenoten op naar Lars, van wie je denkt dat minimaal 1 van die gaat kotsen. LET OP, als je de namen doorstuurt na dat iemand gekotst heeft telt het niet. Correct = Afvinken" },
+                { tekst: "Opdracht koprol", info: "Laat iemand 5 koprollen achter elkaar doen om vervolgens direct na de koprollen een bal in de basket te gooien, indien dit niet lukt moet je 30 minuten wachten voordat het opnieuw geprobeerd mag worden (laat organisatie de timer bijhouden). Gelukt = Afvinken" },
+                { tekst: "Barfplek", info: "Stuur 3 plekken waar gekotst gaat worden op naar Lars, van waar je denkt dat minimaal op 1 plek gekotst gaat worden (Toilet mag niet). LET OP, als je de plekken doorstuurt na dat iemand gekotst heeft telt het niet. Correct = Afvinken" },
+                { tekst: "Yoga", info: "Als we yoga of iets soortgelijks gaan doen, zorg ervoor dat je deze sessie volledig uitvoert in je onderbroek. Gelukt = Afvinken" },
+                { tekst: "Scheten", info: "Stuur een tijdsbestek van 2x 1 uur naar Lars waarin je verwacht dat iemand een scheet gaat laten, indien dit gebeurt mag je deze afvinken" },
                 { tekst: "Overleef dag 1", info: "NNB" },
+                { tekst: "Goedemorgen!", info: "NNB" },
                 { tekst: "Striptease", info: "NNB" },
                 { tekst: "Bierflesjes", info: "NNB" },
                 { tekst: "Doe voorzichtig!", info: "NNB" },
@@ -284,7 +285,8 @@
     // 4. Losse functie om de HTML op te bouwen (zo houden we de code schoon)
     function renderBingoHTML(kaart, user, container) {
         let html = `<h1>Bingo van ${user.toUpperCase()}</h1>
-                    <h3>LEES GOED DE INFORMATIE BIJ ELKE KAART, bij onduidelijkheden/hints vraag organisatie</h3>`;
+                    <h3>LEES GOED DE INFORMATIE BIJ ELKE KAART, bij onduidelijkheden/hints vraag organisatie</h3>
+                    <h3>⚠️⚠️⚠️Bewaar de bewijzen goed⚠️⚠️⚠️</h3>`;
         html += `<div class="bingo-grid">`;
 
         kaart.forEach((item, index) => {

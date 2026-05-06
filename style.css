@@ -862,6 +862,12 @@ img {
     padding: 8px 15px;
   }
 
+  hint-dossier.open {
+        padding: 10px; /* Iets minder padding geeft meer ruimte voor tekst */
+        width: 100%;
+        box-sizing: border-box; /* Zorgt dat padding de box niet breder maakt */
+  }
+
   @media (max-width: 768px) {
   .flip-card {
     height: 250px;

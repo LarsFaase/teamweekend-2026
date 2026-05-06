@@ -872,6 +872,11 @@ img {
       /* width en box-sizing worden overgeërfd van hierboven, 
         dus die hoef je niet te herhalen */
   }
+  
+  .hint-dossier ul {
+        padding-left: 15px;
+        font-size: 0.85rem;
+  }
 
   @media (max-width: 768px) {
   .flip-card {

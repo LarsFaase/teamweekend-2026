@@ -862,10 +862,15 @@ img {
     padding: 8px 15px;
   }
 
-  hint-dossier.open {
-        padding: 10px; /* Iets minder padding geeft meer ruimte voor tekst */
-        width: 100%;
-        box-sizing: border-box; /* Zorgt dat padding de box niet breder maakt */
+  .hint-dossier {
+      width: 100% !important; /* Forceert de breedte */
+      box-sizing: border-box;  /* Houdt padding binnen de breedte */
+  }
+
+  .hint-dossier.open {
+      padding: 10px; 
+      /* width en box-sizing worden overgeërfd van hierboven, 
+        dus die hoef je niet te herhalen */
   }
 
   @media (max-width: 768px) {

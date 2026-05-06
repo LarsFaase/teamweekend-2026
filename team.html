@@ -72,6 +72,18 @@
           <div class="flip-card-back">
             <h3>Naam 5</h3>
             <p>Hint 1: Verantwoordelijk voor activiteiten</p>
+
+            <button class="dossier-btn" onclick="toggleDossier(this)">Open Dossier</button>
+    
+            <div class="hint-dossier">
+                <p>📋 <strong>Eerdere hints:</strong></p>
+                <ul>
+                    <li>Is ooit vergeten zijn voetbalschoenen mee te nemen.</li>
+                    <li>Heeft een recordaantal gele kaarten in één seizoen.</li>
+                    <li>Zat vorig jaar in de organisatie van het kerstdiner.</li>
+                </ul>
+                <p>🔍 <strong>Nieuwe hint:</strong> Slaapt met een knuffelbeer.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -84,6 +96,18 @@
       .then(data => {
         document.getElementById('nav-placeholder').innerHTML = data;
       });
+
+      function toggleDossier(btn) {
+          const dossier = btn.nextElementSibling;
+          dossier.classList.toggle('open');
+          
+          // Tekst op de knop aanpassen
+          if (dossier.classList.contains('open')) {
+              btn.innerText = "Sluit Dossier";
+          } else {
+              btn.innerText = "Open Dossier";
+          }
+      }
   </script>
 
 </body>

@@ -18,13 +18,18 @@
       <h2>Locatie 🔒</h2>
       <p>De exacte locatie is nog niet onthuld.</p>
 
-      <button id="revealLocationBtn" class="reveal-btn">
-        Reveal een hint
-      </button>
+      <div class="hint-container">
+        <!-- Eerste Hint -->
+        <button id="btnHint1" class="reveal-btn">Reveal eerste hint</button>
+        <div id="hint1" class="reveal-hint hidden">
+          <p><strong>Hint 1:</strong> We hebben genoeg auto's nodig om er te komen.</p>
+        </div>
 
-      <div id="locationHint" class="reveal-hint hidden">
-        <p><strong>Hint 1:</strong> We hebben genoeg auto's nodig om er te komen.</p>
-        <p><strong>Hint 2:</strong> ID/Paspoort moet mee, let op rijbewijs niet voldoende.</p>
+        <!-- Tweede Hint -->
+        <button id="btnHint2" class="reveal-btn" style="margin-top: 10px;">Reveal nog een hint</button>
+        <div id="hint2" class="reveal-hint hidden">
+          <p><strong>Hint 2:</strong> ID/Paspoort moet mee, let op rijbewijs niet voldoende.</p>
+        </div>
       </div>
       <!-- 
         Hint: Braadworst foto/tekst
@@ -61,13 +66,21 @@
         document.getElementById('nav-placeholder').innerHTML = data;
       });
 
-    const revealBtn = document.getElementById('revealLocationBtn');
-    const hintBox = document.getElementById('locationHint');
+    // Pak alle knoppen met de class 'reveal-btn'
+    const revealButtons = document.querySelectorAll('.reveal-btn');
 
-    revealBtn.addEventListener('click', () => {
-      hintBox.classList.remove('hidden');
-      revealBtn.disabled = true;
-      revealBtn.textContent = 'Hint onthuld';
+    revealButtons.forEach(btn => {
+      btn.addEventListener('click', function() {
+        // Zoek de hint die direct na deze knop komt in de HTML
+        const hint = this.nextElementSibling;
+
+        if (hint) {
+          hint.classList.remove('hidden'); // Toon de hint
+          this.disabled = true;           // Maak knop onklikbaar
+          this.textContent = 'Hint onthuld'; // Verander de tekst
+          this.classList.add('disabled-style'); // Optioneel: voor styling
+        }
+      });
     });
   </script>
 

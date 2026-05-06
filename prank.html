@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teamweekend 2026</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+
+  <div id="nav-placeholder"></div>
+
+  <main>
+    <h1>Too soon!! Nog even geduld jij 😜</h1>
+  </main>
+
+  <iframe 
+        src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+  </iframe>
+
+  <script>
+    // Navbar laden
+    fetch('nav.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('nav-placeholder').innerHTML = data;
+      });
+
+    // Countdown
+    const countdownEl = document.getElementById("countdown");
+    const targetDate = new Date("June 12, 2026 17:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        countdownEl.innerHTML = "WE ZIJN BEGONNEN 🔥";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((distance / (1000 * 60)) % 60);
+      const seconds = Math.floor((distance / 1000) % 60);
+
+      countdownEl.innerHTML = `
+        <div class="time-box"><span>${days}</span><small>Dagen</small></div>
+        <div class="time-box"><span>${hours}</span><small>Uur</small></div>
+        <div class="time-box"><span>${minutes}</span><small>Min</small></div>
+        <div class="time-box"><span>${seconds}</span><small>Sec</small></div>
+      `;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+
+</body>
+</html>

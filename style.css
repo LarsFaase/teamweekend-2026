@@ -338,24 +338,29 @@ img {
   font-style: italic;
 }
 
+.hint-dossier::-webkit-scrollbar {
+    width: 5px; /* Lekker smal */
+}
+
 /* Het geheime dossier dat onder het kaartje vandaan komt */
 .hint-dossier {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s ease-out, padding 0.3s;
-    background: #2a2a2a;
-    border-radius: 0 0 10px 10px;
+    background: var(--primary);
     font-size: 0.9rem;
     color: #ccc;
     text-align: left;
-    border: 1px solid transparent;
+    border-radius: 15px;
+    border: 2px solid transparent;
 }
 
 .hint-dossier.open {
     max-height: 300px; /* Ruimte voor alle hints */
-    padding: 15px;
+    padding: 0px 10px;
     border: 1px solid var(--accent);
     border-top: none;
+    border-radius: 15px;
     overflow-y: auto; /* Scrollbaar als er écht veel hints zijn */
 }
 

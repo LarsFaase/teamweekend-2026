@@ -36,6 +36,15 @@
           <div class="flip-card-back">
             <h3>Naam 2</h3>
             <p>Hint 1: Verantwoordelijk voor de catering + sociale updates</p>
+
+            <button class="dossier-btn" onclick="toggleDossier(event, this)">Open eerdere hints 🔎</button>
+    
+            <div class="hint-dossier">
+                <p>📋 <strong>Eerdere hints:</strong></p>
+                <ul>
+                    <li>Hint 1: Verantwoordelijk voor de catering + sociale updates</li>
+                </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -48,6 +57,15 @@
           <div class="flip-card-back">
             <h3>Naam 3</h3>
             <p>Hint 1: Verantwoordelijk voor plezier</p>
+
+            <button class="dossier-btn" onclick="toggleDossier(event, this)">Open eerdere hints 🔎</button>
+    
+            <div class="hint-dossier">
+                <p>📋 <strong>Eerdere hints:</strong></p>
+                <ul>
+                    <li>Hint 1: Verantwoordelijk voor plezier</li>
+                </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -60,6 +78,15 @@
           <div class="flip-card-back">
             <h3>Naam 4</h3>
             <p>Hint 1: Ervaringsdeskundige</p>
+
+            <button class="dossier-btn" onclick="toggleDossier(event, this)">Open eerdere hints 🔎</button>
+    
+            <div class="hint-dossier">
+                <p>📋 <strong>Eerdere hints:</strong></p>
+                <ul>
+                    <li>Hint 1: Ervaringsdeskundige</li>
+                </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -73,16 +100,13 @@
             <h3>Naam 5</h3>
             <p>Hint 1: Verantwoordelijk voor activiteiten</p>
 
-            <button class="dossier-btn" onclick="toggleDossier(this)">Open Dossier</button>
+            <button class="dossier-btn" onclick="toggleDossier(event, this)">Open eerdere hints 🔎</button>
     
             <div class="hint-dossier">
                 <p>📋 <strong>Eerdere hints:</strong></p>
                 <ul>
-                    <li>Is ooit vergeten zijn voetbalschoenen mee te nemen.</li>
-                    <li>Heeft een recordaantal gele kaarten in één seizoen.</li>
-                    <li>Zat vorig jaar in de organisatie van het kerstdiner.</li>
+                    <li>Hint 1: Verantwoordelijk voor activiteiten</li>
                 </ul>
-                <p>🔍 <strong>Nieuwe hint:</strong> Slaapt met een knuffelbeer.</p>
             </div>
           </div>
         </div>
@@ -97,17 +121,19 @@
         document.getElementById('nav-placeholder').innerHTML = data;
       });
 
-      function toggleDossier(btn) {
-          const dossier = btn.nextElementSibling;
-          dossier.classList.toggle('open');
-          
-          // Tekst op de knop aanpassen
-          if (dossier.classList.contains('open')) {
-              btn.innerText = "Sluit Dossier";
-          } else {
-              btn.innerText = "Open Dossier";
-          }
-      }
+    function toggleDossier(event, btn) {
+        // Dit voorkomt dat de kaart terugdraait!
+        event.stopPropagation(); 
+
+        const dossier = btn.nextElementSibling;
+        dossier.classList.toggle('open');
+        
+        if (dossier.classList.contains('open')) {
+            btn.innerText = "Sluit eerdere hints 🔎";
+        } else {
+            btn.innerText = "Open eerdere hints 🔎";
+        }
+    }
   </script>
 
 </body>

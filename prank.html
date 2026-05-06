@@ -11,14 +11,20 @@
 
   <div id="nav-placeholder"></div>
 
-  <main>
+  <main id="main-content">
     <h1>Too soon!! Nog even geduld jij 😜</h1>
+    <h4>We hebben natuurlijk niet voor niets de naam van de pagina vrijgegeven, dus we willen jullie al wel een kleine sneak preview geven met allemaal hints erin verstopt.</h4>
+    <h3>Tip: KIJK HEEL GOED!</h3>
+    <!-- Knop om de video mét geluid te triggeren -->
+    <button class="reveal-btn" onclick="playSecretVideo()">Klik voor de preview!</button>
   </main>
 
-  <video autoplay muted controls>
-        <source src="pictures/video.mp4" type="video/mp4">
-        Je browser ondersteunt geen video.
-  </video>
+  <!-- De Video Container -->
+  <div id="video-container">
+    <video id="myVideo">
+      <source src="pictures/video.mp4" type="video/mp4">
+    </video>
+  </div>
 
   <script>
     // Navbar laden
@@ -28,34 +34,19 @@
         document.getElementById('nav-placeholder').innerHTML = data;
       });
 
-    // Countdown
-    const countdownEl = document.getElementById("countdown");
-    const targetDate = new Date("June 12, 2026 17:00:00").getTime();
-
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = targetDate - now;
-
-      if (distance < 0) {
-        countdownEl.innerHTML = "WE ZIJN BEGONNEN 🔥";
-        return;
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((distance / (1000 * 60)) % 60);
-      const seconds = Math.floor((distance / 1000) % 60);
-
-      countdownEl.innerHTML = `
-        <div class="time-box"><span>${days}</span><small>Dagen</small></div>
-        <div class="time-box"><span>${hours}</span><small>Uur</small></div>
-        <div class="time-box"><span>${minutes}</span><small>Min</small></div>
-        <div class="time-box"><span>${seconds}</span><small>Sec</small></div>
-      `;
+      // Functie om video te starten met geluid
+    function playSecretVideo() {
+      const video = document.getElementById('myVideo');
+      const container = document.getElementById('video-container');
+      
+      container.style.display = 'block'; // Toon de video
+      video.muted = false; // Zet geluid aan
+      video.play(); // Start de video
     }
 
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
+    document.getElementById('myVideo').onended = function() {
+        document.getElementById('video-container').style.display = 'none';
+    };
   </script>
 
 </body>

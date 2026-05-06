@@ -476,7 +476,7 @@ img {
 }
 
 .reveal-btn {
-  display: block;
+  display: inline-block;
   background: var(--accent);
   color: var(--text);
   border: none;
@@ -904,6 +904,24 @@ img {
 }
 
 .btn-sudoku:active { transform: scale(0.95); }
+
+/* PRANK */
+#video-container {
+    display: none; /* Verbergt de video volledig bij het laden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    z-index: 9999; /* Zorgt dat de video bovenop alles komt te staan */
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Gebruik 'cover' als je het hele scherm wilt vullen */
+}
 
 /* MOBIEL */
 @media (max-width: 768px) {

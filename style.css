@@ -339,41 +339,131 @@ img {
 }
 
 .hint-dossier::-webkit-scrollbar {
-    width: 5px; /* Lekker smal */
+  width: 5px;
 }
 
-/* Het geheime dossier dat onder het kaartje vandaan komt */
+/* Desktop dossier */
 .hint-dossier {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease-out, padding 0.3s;
-    background: var(--primary);
-    font-size: 0.9rem;
-    color: #ccc;
-    text-align: left;
-    border-radius: 15px;
-    border: 2px solid transparent;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out, padding 0.3s;
+  background: var(--primary);
+  font-size: 0.9rem;
+  color: #ccc;
+  text-align: left;
+  border-radius: 15px;
+  border: 2px solid transparent;
 }
 
 .hint-dossier.open {
-    max-height: 300px; /* Ruimte voor alle hints */
-    padding: 0px 10px;
-    border: 1px solid var(--accent);
-    border-top: none;
-    border-radius: 15px;
-    overflow-y: auto; /* Scrollbaar als er écht veel hints zijn */
+  max-height: 300px;
+  padding: 10px;
+  border: 1px solid var(--accent);
+  border-top: none;
+  overflow-y: auto;
 }
 
-.dossier-btn {
-    margin-top: 10px;
-    padding: 5px 10px;
-    background: var(--accent);
-    border: none;
-    color: white;
-    cursor: pointer;
-    font-family: 'Courier New', Courier, monospace; /* Dossier stijl */
-    text-transform: uppercase;
+.hint-dossier ul {
+  padding: 0;
+  margin: 8px 0 0;
 }
+
+.hint-dossier li {
+  max-width: none;
+  margin: 8px 0;
+  padding: 10px;
+  font-size: 0.85rem;
+}
+
+/* Dossier knop */
+.dossier-btn {
+  margin-top: 10px;
+  padding: 7px 10px;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.hint-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(10, 15, 31, 0.85);
+  padding: 20px;
+}
+
+.hint-modal.open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hint-modal-content {
+  position: relative;
+  width: min(700px, 94vw);
+  max-height: 85vh;
+  overflow-y: auto;
+  background: linear-gradient(180deg, var(--surface) 0%, var(--primary) 100%);
+  border: 2px solid var(--accent);
+  border-radius: 20px;
+  padding: 28px 22px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+  text-align: left;
+}
+
+.hint-modal-content h2 {
+  text-align: center;
+  color: var(--accent);
+  margin-top: 0;
+}
+
+.hint-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 1.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+#hintModalBody {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+#hintModalBody p {
+  color: white;
+}
+
+#hintModalBody ul {
+  padding: 0;
+  margin: 16px 0 0;
+}
+
+#hintModalBody li {
+  max-width: none;
+  list-style: none;
+  background: rgba(255,255,255,0.06);
+  border-left: 4px solid var(--accent);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 14px;
+  color: white;
+}
+
 
 /* LOCATIE */
 /* De hint-container zorgt dat de knop en tekst bij elkaar blijven */
@@ -872,25 +962,24 @@ img {
     padding: 8px 15px;
   }
 
+    /* Geen inline dossier meer */
   .hint-dossier {
-      width: 100% !important; /* Forceert de breedte */
-      box-sizing: border-box;  /* Houdt padding binnen de breedte */
+    display: none !important;
   }
 
-  .hint-dossier.open {
-      padding: 10px; 
-      /* width en box-sizing worden overgeërfd van hierboven, 
-        dus die hoef je niet te herhalen */
+  .hint-modal-content {
+    width: 94vw;
+    max-width: none;
+    min-height: 55vh;
+    padding: 26px 20px;
   }
 
-  .hint-dossier ul {
-        padding-left: 15px;
-        font-size: 0.85rem;
+  .dossier-btn {
+    font-size: 0.75rem;
+    padding: 7px 8px;
   }
 
-  @media (max-width: 768px) {
   .flip-card {
     height: 250px;
   }
-}
 }

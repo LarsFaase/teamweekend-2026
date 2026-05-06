@@ -113,28 +113,55 @@
       </div>
     </div>
   </main>
+
+  <div id="hintModal" class="hint-modal">
+    <div class="hint-modal-content">
+      <button class="hint-modal-close" onclick="closeHintModal()">×</button>
+      <h2 id="hintModalTitle">Eerdere hints 🔎</h2>
+      <div id="hintModalBody"></div>
+    </div>
+  </div>
   
   <script>
-    fetch('nav.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('nav-placeholder').innerHTML = data;
-      });
+  fetch('nav.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('nav-placeholder').innerHTML = data;
+    });
 
-    function toggleDossier(event, btn) {
-        // Dit voorkomt dat de kaart terugdraait!
-        event.stopPropagation(); 
+  function toggleDossier(event, btn) {
+    event.stopPropagation();
 
-        const dossier = btn.nextElementSibling;
-        dossier.classList.toggle('open');
-        
-        if (dossier.classList.contains('open')) {
-            btn.innerText = "Sluit eerdere hints 🔎";
-        } else {
-            btn.innerText = "Open eerdere hints 🔎";
-        }
+    const cardBack = btn.closest('.flip-card-back');
+    const name = cardBack.querySelector('h3').innerText;
+    const dossier = btn.nextElementSibling;
+
+    if (window.innerWidth <= 768) {
+      document.getElementById('hintModalTitle').innerText = ` ${name} 🔎`;
+      document.getElementById('hintModalBody').innerHTML = dossier.innerHTML;
+      document.getElementById('hintModal').classList.add('open');
+      return;
     }
-  </script>
+
+    dossier.classList.toggle('open');
+
+    btn.innerText = dossier.classList.contains('open')
+      ? "Sluit eerdere hints 🔎"
+      : "Open eerdere hints 🔎";
+  }
+
+  function closeHintModal() {
+    document.getElementById('hintModal').classList.remove('open');
+  }
+
+  document.addEventListener('click', function(event) {
+    const modal = document.getElementById('hintModal');
+
+    if (event.target === modal) {
+      closeHintModal();
+    }
+  });
+</script>
 
 </body>
 </html>

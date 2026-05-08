@@ -923,6 +923,15 @@ video {
     object-fit: contain; /* Gebruik 'cover' als je het hele scherm wilt vullen */
 }
 
+.prank-foto img {
+    width: 100%;       /* Vult de container... */
+    max-width: 300px;  /* ...maar wordt nooit breder dan dit */
+    height: auto;      /* Behoudt de verhoudingen */
+    border-radius: 15px; /* Optioneel: maakt de hoekjes mooi rond */
+    margin: 20px auto; /* Centreert de foto */
+    display: block;
+}
+
 /* MOBIEL */
 @media (max-width: 768px) {
   h1 {

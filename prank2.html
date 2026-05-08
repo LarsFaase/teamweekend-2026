@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teamweekend 2026</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+
+  <div id="nav-placeholder"></div>
+
+  <main id="main-content">
+    <h1>KAN JE HET ZIEN?! 😎</h1>
+    <h3>Even geduld nog! Kijk op de pagina van het programma om wat meer van deze update te zien!</h3>
+    <div class="prank-foto"> 
+      <img src="pictures/GrapjeZuen.jpeg" alt="Naam">
+    </div>
+  </main>
+
+  <script>
+    // Navbar laden
+    fetch('nav.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('nav-placeholder').innerHTML = data;
+      });
+  </script>
+
+</body>
+</html>

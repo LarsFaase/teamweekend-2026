@@ -978,10 +978,10 @@ video {
   }
   
   .timeline-content {
-    text-align: left; /* Alles weer links op mobiel */
+    text-align: center; /* Alles weer links op mobiel */
   }
   .timeline-content {
-    width: 100%; /* Volle breedte op mobiel */
+    width: 90%; /* Volle breedte op mobiel */
   }
 
   .day-separator span {

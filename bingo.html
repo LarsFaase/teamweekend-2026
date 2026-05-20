@@ -96,8 +96,9 @@
 
         // Controleer of de gebruiker bestaat EN of het wachtwoord klopt
         if (teamLeden[user] && teamLeden[user] === pass) {
-            localStorage.setItem('bingoUser', user);
-            showBingo(user);
+            
+            //localStorage.setItem('bingoUser', user);
+            //showBingo(user);
         } else {
             const error = document.getElementById('error');
             error.innerText = "Naam of wachtwoord onjuist!";

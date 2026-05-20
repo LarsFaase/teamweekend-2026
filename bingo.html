@@ -10,8 +10,6 @@
 <body>
   
   <div id="nav-placeholder"></div>
-<!--
-  ONDER DE INLOGKNOP OPNIEUW DE RICKROLL TOEVOEGEN, LET OP DAN KAN JE GEWOON DE INLOG GEVEN MAAR MET EEN ANDER WACHTWOORD-->
   <main id="bingo-content">
     </main>
   
@@ -96,9 +94,8 @@
 
         // Controleer of de gebruiker bestaat EN of het wachtwoord klopt
         if (teamLeden[user] && teamLeden[user] === pass) {
-            
-            //localStorage.setItem('bingoUser', user);
-            //showBingo(user);
+            localStorage.setItem('bingoUser', user);
+            showBingo(user);
         } else {
             const error = document.getElementById('error');
             error.innerText = "Naam of wachtwoord onjuist!";

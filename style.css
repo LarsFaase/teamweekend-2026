@@ -203,6 +203,97 @@ p {
   box-shadow: 0 8px 24px var(--shadow);
 }
 
+/* SPOTIFY NUMMERS */
+/* De hoofdcontainer */
+.spotify-container {
+  width: 90%;
+  max-width: 450px;
+  margin: 30px auto;
+  background: rgba(20, 20, 20, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.spotify-container h3 {
+  color: #fff;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  letter-spacing: 0.5px;
+}
+
+/* De individuele muzieknummers */
+.track-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+/* Subtiele hover-animatie */
+.track-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.track-card:last-child {
+  margin-bottom: 0;
+}
+
+/* Tekst styling */
+.track-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  flex-grow: 1;
+  padding-right: 15px;
+}
+
+.track-title {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+
+.track-artist {
+  color: #b3b3b3;
+  font-size: 0.8rem;
+}
+
+/* De Fancy Spotify Knop */
+.spotify-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #1DB954; /* Officiële Spotify Groen */
+  color: #000000 !important; /* Forceer zwarte tekst, geen link-blauw */
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.spotify-btn:hover {
+  background-color: #1ed760; /* Iets lichter groen op hover */
+  transform: scale(1.04);
+}
+
+/* Het kleine SVG logootje */
+.spotify-icon {
+  width: 16px;
+  height: 16px;
+}
+
 /* LIJST */
 ul {
   list-style: none;

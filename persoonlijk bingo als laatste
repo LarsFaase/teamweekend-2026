@@ -180,10 +180,11 @@
                     { tekst: "Adtje vlag", info: "Vlag minimaal 5 mensen af waarna je vervolgens zegt dat ze een biertje moeten adten omdat ze een 'overtreding' hebben gemaakt of 'buitenspel' stonden. Je mag diegene niet direct vragen of ze dat willen doen voor jouw opdracht. Lukt het om 5 mensen zonder problemen een adtje te laten doen door alleen te vlaggen = afvinken"}
                 ],
                 "marco": [
-                    { tekst: "Handboeien-bond", info: "Zorg dat je met een touwtje of tiewrap voor 1 uur lang aan een willekeurige teamgenoot vastgebonden zit bij de polsen, laat de organisatie weten voordat je dit doet en bij wie je het doet (zij hebben tiewrap). Jullie moeten alles samen doen: drinken, eten, lopen, toilet. De timer stopt als de uur om is. Gelukt = Afvinken" }
+                    { tekst: "Handboeien-bond", info: "Zorg dat je met een touwtje of tiewrap voor 1 uur lang aan een willekeurige teamgenoot vastgebonden zit bij de polsen, laat de organisatie weten voordat je dit doet en bij wie je het doet (zij hebben tiewrap). Jullie moeten alles samen doen: drinken, eten, lopen, toilet. De timer stopt als de uur om is. Gelukt = Afvinken" },
+                    { tekst: "Kijkje in de kijkdoos", info: "Overtuig iemand om een kijkje in de kijkdoos (van Sven) te nemen, heeft hij erin gekeken, dan afvinken." }      
                 ],
                 "matej": [
-                    { tekst: "Tarzan in Parkhout", info: "Klim in een boom op het terrein en blijf daar 30 minuten zitten. Terwijl je daar zit, moet je elke 3 minuten een luidruchtige oerkreet geven. Er moeten minimaal 5 teamgenoten onder de boom staan te kijken. Gelukt = Afvinken" }
+                    { tekst: "Tarzan in Parkhout", info: "Klim in een boom op het terrein en blijf daar 30 minuten zitten. Terwijl je daar zit, moet je elke 3 minuten een luidruchtige oerkreet geven. Er moeten minimaal 5 teamgenoten onder de boom staan te kijken. Gelukt = Afvinken" }      
                     /* { tekst: "De Levende Benchpress", info: "Omdat je de maandagtraining skipt voor chest-day, moet je dat hier inhalen. Elke keer als een teamgenoot het woord 'voetbal' of 'training' zegt, moet jij ter plekke 10 push-ups doen. Dit duurt totdat je in totaal 150 push-ups hebt aangetikt. Houd je eigen score bij op een bierviltje en laat een organisator de eindsom checken. Gelukt = Afvinken" }*/
                 ],
                 "lennart": [

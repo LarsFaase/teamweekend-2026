@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Programma</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+  
+  <div id="nav-placeholder"></div>
+
+  <main>
+    <h1>Programma</h1>
+
+    <div class="timeline-container">
+      <div class="scrolling-ball" id="ball">⚽</div>
+    
+      <div class="timeline-line" id="progress-line"></div>
+
+      <div class="timeline-line-bg"></div>
+    
+      <div class="day-separator">
+          <span>Vrijdag</span>
+      </div>
+
+      <div class="timeline-item locked active"> 
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+              <span class="time">17:00</span>
+              <h3>Verzamelen 📍</h3>
+              <p>Locatie: Onbekend......</p>
+              <p>ATTENTIE! Te laat is boete</p>
+          </div>
+      </div>
+<!--
+      <div class="timeline-item locked active">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+              <span class="time">17:30</span>
+              <h3>Diner</h3>
+              <p>Er wordt een heerlijk lokaal avondmaal voor jullie bereid</p>
+          </div>
+      </div>
+
+      <div class="timeline-item locked active">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+              <span class="time">19:30</span>
+              <p>Activiteit 🎲</p>
+          </div>
+      </div>
+-->
+      <div class="day-separator">
+          <span>Zaterdag</span>
+      </div>
+<!--
+      <div class="timeline-item locked active">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+              <span class="time">00:30</span>
+              <p>UITREIKING! 🏅</p>
+          </div>
+      </div>
+
+      <div class="timeline-item locked active">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+              <span class="time">10:00</span>
+              <p>Ochtendactiviteit 🕺</p>
+          </div>
+      </div>
+      
+      <div class="timeline-item locked active">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+              <span class="time">13:00</span>
+              <p>Middagactiviteit ⚽</p>
+          </div>
+      </div>
+
+      <div class="timeline-item locked active">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+              <span class="time">17:00</span>
+              <p>Diner 🍔</p>
+          </div>
+      </div>
+      
+      <div class="timeline-item locked active">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+              <span class="time">18:00</span>
+              <p>Activiteit 🚌</p>
+          </div>
+      </div>
+
+      <div class="timeline-item locked active">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+              <span class="time">19:00</span>
+              <p>Avondactiviteit 🍻</p>
+          </div>
+      </div>
+-->
+      <div class="day-separator">
+          <span>Zondag</span>
+      </div>
+<!--
+      <div class="timeline-item locked active">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+              <span class="time">13:30</span>
+              <p>Middagactiviteit ⛳</p>
+          </div>
+      </div>
+-->
+      <div class="timeline-item locked active">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+              <span class="time">17:00</span>
+              <h3>Uitchecken en naar huis 🏠</h3>
+              <p>Tijd om bij te komen</p>
+          </div>
+      </div>
+  </div>
+
+  </main>
+  
+  <script>
+    // Navigatie inladen
+    fetch('nav.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('nav-placeholder').innerHTML = data;
+        });
+
+    // Scroll Logica
+    window.addEventListener('scroll', () => {
+        const ball = document.getElementById('ball');
+        const progressLine = document.getElementById('progress-line');
+        const container = document.querySelector('.timeline-container');
+        const items = document.querySelectorAll('.timeline-item');
+        const contents = document.querySelectorAll('.timeline-content, .day-separator span');
+
+        // 1. Verkrijg de posities van de container t.o.v. het scherm
+        const rect = container.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        const screenCenter = windowHeight / 2;
+
+        // 2. Bereken hoeveel pixels de bovenkant van de container boven het midden van het scherm is
+        // Als de bovenkant van de container het midden van het scherm raakt, is progress 0.
+        let progressPx = screenCenter - rect.top;
+
+        // Begrenzen: niet minder dan 0, niet meer dan de hoogte van de container
+        if (progressPx < 0) progressPx = 0;
+        if (progressPx > rect.height) progressPx = rect.height;
+
+        // 3. Pas BEIDE (lijn en bal) aan met exact dezelfde waarde
+        progressLine.style.height = progressPx + "px";
+        ball.style.top = progressPx + "px";
+
+        // 4. Bal rotatie (gebaseerd op dezelfde progressPx)
+        const rotation = progressPx * 0.5;
+        ball.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
+
+        // 5. Focus Zoom logica voor de blokken
+        items.forEach(item => {
+            const itemRect = item.getBoundingClientRect();
+            const itemCenter = itemRect.top + itemRect.height / 2;
+
+            // Als het midden van het item het midden van het scherm (de bal) raakt
+            if (Math.abs(screenCenter - itemCenter) < 150) {
+                item.classList.add('focus');
+            } else {
+                item.classList.remove('focus');
+            }
+        });
+
+        // 6. Zichtbaarheid van de bal (verbergen bij overlap met kaartjes)
+        let isOverlapping = false;
+        contents.forEach(content => {
+            const cRect = content.getBoundingClientRect();
+            // De bal bevindt zich visueel altijd op screenCenter (midden van het scherm)
+            if (screenCenter > cRect.top && screenCenter < cRect.bottom) {
+                isOverlapping = true;
+            }
+        });
+
+        // Bal verbergen als hij overlapt, of als hij buiten de container is
+        if (isOverlapping || progressPx <= 0 || progressPx >= rect.height) {
+            ball.style.opacity = '0';
+        } else {
+            ball.style.opacity = '1';
+        }
+    });
+
+    // De Intersection Observer opties aanpassen
+    const observerOptions = {
+        root: null,
+        rootMargin: "-20% 0% -20% 0%", // Activeert als het item in het middelste 60% van het scherm is
+        threshold: 0.5 
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Blok komt in het midden: Vergroten
+                entry.target.classList.add('active');
+            } else {
+                // Blok verlaat het midden: Weer verkleinen
+                entry.target.classList.remove('active');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.timeline-item').forEach(item => {
+        observer.observe(item);
+    });
+  </script>
+
+</body>
+</html>
+
+
+
+
+<!-- 
+        Hint: Je hoort er meer vogels dan verkeer
+        Hint: Limburgse zin, dat lijkt op het vlaams
+        Hint: Vlag limburg zonder leeuw of alleen foto van die leeuw in een vlag
+        Hint laatste: Foto accommodatie
+      -->

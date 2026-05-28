@@ -36,7 +36,7 @@
       main.innerHTML = `
         <div class="card login-form">
             <h2>Mijn Persoonlijke Pagina</h2>
-            <h3>Lees de informatie bij iedere kaart HEEL GOED</h3>
+            <h3>Lees de informatie HEEL GOED!!</h3>
             
             <input type="text" id="username" placeholder="Je naam (bijv. Jan)">
             <input type="password" id="password" placeholder="Wachtwoord">
@@ -259,7 +259,61 @@
 
     // 4. Losse functie om de HTML op te bouwen (zo houden we de code schoon)
     function renderBingoHTML(kaart, user, container) {
-        let html = `<h1>Bingo van ${user.toUpperCase()}</h1>
+        const uniekeBerichten = {
+            "julian": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "tycho": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "fabio": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "lars": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "franck": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "sten": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "john": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "marco": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "matej": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "lennart": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "marijn": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "marlon": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "robin": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "roy": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "ryan": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "sven": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "jesper": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "tom": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "tim": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "wout": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "sander": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "lorenzo": "Dit weekend ben jij mede verantwoordelijk voor ",
+            "jim": "Dit weekend ben jij mede verantwoordelijk voor "
+        };
+        
+        const uniekeBerichten1 = {
+            "julian": "Dit jaar gaan we weer eens kijken of je weer zoveel kunt adten 😉",
+            "tycho": "Jij bent ook wel de bulldozer van het team. Bereid je maag maar voor op die eetwedstrijd! 🥫",
+            "fabio": "Vlieguren maken vriend! Succes in het knockout-vierkant.",
+            "lars": "De Admin... Hopelijk werkt je eigen bingo-kaart beter dan de anderen die nog zwaardere opdrachten te wachten staan... 🤯",
+            "franck": "Zet de wekker maar alvast om 09:30, Franck! Goedemorgen zonneschijn! 🌅",
+            "sten": "Tijd voor die LinkedIn pitch, Sten. Maak ons trots! 🎓",
+            "john": "De vedette langs de lijn. Welke 5 gaan er vandaag nat? 😥",
+            "marco": "Succes met een kijkje in de kijkdoos.... 🥽",
+            "matej": "Tarzan! Zet je stem maar aan en laat wat oerkreten los in die boom.",
+            "lennart": "Gefeliciteerd met je kersverse kindje (voor dit weekend dan)! 👨‍🍼",
+            "marijn": "Geniet van je weekend! 🌓",
+            "marlon": "Salah, we willen die celebration zien op de vrijdag! 👨‍🦯",
+            "robin": "We verwachten dat je alles op alles zet tijdens de eetwedstrijd... Niet opgeven hè! 🎃",
+            "roy": "Utrecht! Succes dit weekend, Roy! ⚽",
+            "ryan": "Niet verbranden dit weekend alsjeblieft, veel smeren jij! 🔥",
+            "sven": "Hou je kleren nou eens aan man! 🕴️",
+            "jesper": "De koning van de eetwedstrijd? Laat het zien wat je in huis hebt! 🏑",
+            "tom": "60 minuten stilte, dat wordt een zware opgave voor jou ... 🙋",
+            "tim": "Succes bij het eten vriend! Doorvreten jij! ⛈️",
+            "wout": "Hey aanvoerder! Laat die heupen maar vast warmdraaien voor de limbo! 💃",
+            "sander": "Succes dit weekend met deze bende! ⚱️",
+            "lorenzo": "Succes met de cocktail van de organisatie. Sterkte! 🍸",
+            "jim": "De wandelende scheids. Vandaag fluit je eens in het voordeel van de organisatie! 👷‍♀️"
+        };
+        
+        let html = `<h1>Welkom ${user.toUpperCase()}!</h1>
+                    <h2>⚠️⚠️⚠️ LET OP!!!! ${uniekeBerichten[user]}⚠️⚠️⚠️</h2>
+                    <h1>Bingo van ${user.toUpperCase()}</h1>
                     <h3>LEES GOED DE INFORMATIE BIJ ELKE KAART, bij onduidelijkheden/hints vraag organisatie</h3>
                     <h3>⚠️⚠️⚠️Bewaar de bewijzen goed⚠️⚠️⚠️</h3>`;
         html += `<div class="bingo-grid">`;

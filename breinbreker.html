@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Paklijst</title>
+  <title>Breinbreker</title>
   <link rel="stylesheet" href="style.css" />
   <meta name="robots" content="noindex, nofollow">
 </head>
@@ -58,7 +58,7 @@
           // Moeilijkheidsgraad instellen (0.6 = 60% kans op leeg vakje)
           // Tip: Verander 0.6 naar 0.5 voor een makkelijkere versie
           const puzzle = selectedBase.map(row => 
-              row.map(cell => Math.random() > 0.7 ? cell : '')
+              row.map(cell => Math.random() > 0.6 ? cell : '')
           );
           
           return puzzle;

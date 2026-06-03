@@ -69,6 +69,27 @@
       </div>
     </div>
 
+    <div class="card">
+      <h3>Wie zit er, naast Lars, in de organisatie? 📝</h3>
+      <h4>Vul je naam, je unieke verificatiecode en de 4 namen in waarvan jij denkt dat die naast lars in de organisatie zitten.</h4>
+      <div class="form-group" style="margin-top: 15px;">
+        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+          <input type="text" id="v_speler" placeholder="Jouw naam (bijv. Jan)" style="flex: 2; padding: 10px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box;">
+          <input type="password" id="v_code" placeholder="Ver. code" style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; text-align: center;">
+        </div>
+
+        <hr style="border: 0; height: 5px; background: #e10600; margin: 10px 0;">
+        
+        <input type="text" id="v_org1" placeholder="Organisator 1" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box;">
+        <input type="text" id="v_org2" placeholder="Organisator 2" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box;">
+        <input type="text" id="v_org3" placeholder="Organisator 3" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box;">
+        <input type="text" id="v_org4" placeholder="Organisator 4" style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box;">
+        
+        <button id="submit-prediction-btn" class="btn-primary" style="width: 100%;">Voorspelling insturen</button>
+        <p id="form-status" style="display: none; margin-top: 10px; font-weight: bold;"></p>
+      </div>
+    </div>
+
     <!-- Rubriek template -->
      <!-- 
      <div class="card">
@@ -352,6 +373,103 @@ Wat we wel al kunnen verklappen is dat deze pagina het <strong>weekend onmisbaar
     </div>
 
   </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+    import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDfaQhcS4kNLCy1BPHxnmicLj_zxexjTAU",
+        authDomain: "parkhout-2026.firebaseapp.com",
+        projectId: "parkhout-2026",
+        storageBucket: "parkhout-2026.firebasestorage.app",
+        messagingSenderId: "286583232322",
+        appId: "1:286583232322:web:9efcb22a61a8f7f1b4dadb",
+        measurementId: "G-WR9S68PJ3G",
+        databaseURL: "https://parkhout-2026-default-rtdb.europe-west1.firebasedatabase.app/"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    function showStatus(text, color) {
+      const statusEl = document.getElementById('form-status');
+      statusEl.innerText = text;
+      statusEl.style.color = color;
+      statusEl.style.display = "block";
+    }
+
+    document.getElementById('submit-prediction-btn').addEventListener('click', () => {
+      const speler = document.getElementById('v_speler').value.trim();
+      const ingevoerdeCode = document.getElementById('v_code').value.trim();
+      const org1 = document.getElementById('v_org1').value.trim();
+      const org2 = document.getElementById('v_org2').value.trim();
+      const org3 = document.getElementById('v_org3').value.trim();
+      const org4 = document.getElementById('v_org4').value.trim();
+
+      if (!speler || !ingevoerdeCode || !org1 || !org2 || !org3 || !org4) {
+        showStatus("⚠️ Vul alsjeblieft alle velden in!", "red");
+        return;
+      }
+
+      const dbNodeName = speler.toLowerCase().replace(/\s+/g, '_');
+      
+      // 1. Haal de juiste verificatiecode op uit de database
+      const codeRef = ref(db, 'verificatie_codes/' + dbNodeName);
+      
+      get(codeRef).then((codeSnapshot) => {
+        const correcteCode = codeSnapshot.val();
+        
+        if (!correcteCode) {
+          showStatus("❌ Deze spelersnaam is niet herkend in het systeem.", "red");
+          return;
+        }
+        
+        if (correcteCode !== ingevoerdeCode) {
+          showStatus("❌ Ongeldige verificatiecode voor deze speler!", "red");
+          return;
+        }
+
+        // 2. Check of deze speler al een voorspelling heeft ingestuurd
+        const voorspellingRef = ref(db, 'organisatie_voorspellingen/' + dbNodeName);
+        
+        get(voorspellingRef).then((voorspellingSnapshot) => {
+          if (voorspellingSnapshot.exists()) {
+            showStatus("⚠️ Je hebt al een voorspelling ingestuurd!", "orange");
+            return;
+          }
+
+          // 3. Alles klopt en nog niet ingestuurd -> Nu pas opslaan!
+          set(voorspellingRef, {
+            speler: speler,
+            organisator_1: org1,
+            organisator_2: org2,
+            organisator_3: org3,
+            organisator_4: org4,
+            tijdstip: new Date().toISOString()
+          })
+          .then(() => {
+            showStatus("✅ Succes! Je voorspelling is beveiligd opgeslagen.", "green");
+            
+            // Velden leegmaken
+            document.getElementById('v_speler').value = '';
+            document.getElementById('v_code').value = '';
+            document.getElementById('v_org1').value = '';
+            document.getElementById('v_org2').value = '';
+            document.getElementById('v_org3').value = '';
+            document.getElementById('v_org4').value = '';
+          })
+          .catch((error) => {
+            console.error("Fout bij opslaan:", error);
+            showStatus("❌ Er ging iets mis bij het opslaan.", "red");
+          });
+        });
+      }).catch((err) => {
+        console.error("Database fout:", err);
+        showStatus("❌ Database verbindingsfout.", "red");
+      });
+    });
+  </script>
 
   <script>
     // Navbar laden

@@ -415,7 +415,7 @@ Wat we wel al kunnen verklappen is dat deze pagina het <strong>weekend onmisbaar
         return;
       }
 
-      const dbNodeName = speler.toLowerCase().replace(/\s+/g, '_');
+      const dbNodeName = speler.replace(/\s+/g, '_');
       
       // 1. Haal de juiste verificatiecode op uit de database
       const codeRef = ref(db, 'verificatie_codes/' + dbNodeName);

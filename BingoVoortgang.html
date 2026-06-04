@@ -14,8 +14,15 @@
   <main class="admin-container">
     <h1>🏆 Organisatie Dashboard</h1>
     <h2>Live Bingo Voortgang Teamweekend 2026</h2>
-    <p>Hieronder zie je real-time hoeveel en welke vakjes iedereen heeft afgestreept.</p>
+    <p>Hieronder zie je real-time de tussenstand en welke vakjes iedereen heeft afgestreept.</p>
     
+    <div class="player-row" style="background: #002561; border: 2px solid #28a745;">
+      <h3 style="margin-top: 0; color: #28a745;">📊 Live Tussenstand (Meeste punten bovenaan)</h3>
+      <ol id="leaderboard-list" style="margin: 0; padding-left: 20px; font-size: 1.1rem; line-height: 1.6; font-weight: bold; text-transform: capitalize;">
+        <li>Wachten op actieve spelers... ⏳</li>
+      </ol>
+    </div>
+
     <hr class="admin-hr">
 
     <div id="dashboard-content">
@@ -49,52 +56,82 @@
         document.getElementById('nav-placeholder').innerHTML = data;
       });
 
+    const leaderboardList = document.getElementById('leaderboard-list');
     const dashboardContent = document.getElementById('dashboard-content');
     const bingoCardsRef = ref(db, 'bingo_kaarten');
 
-    // Live luisteren naar wijzigingen in de database
+    // Live luisteren naar database wijzigingen
     onValue(bingoCardsRef, (snapshot) => {
         const allCards = snapshot.val();
         
-        if (!allCards) {
-            dashboardContent.innerHTML = "<p class='admin-empty'>Er zijn nog geen bingokaarten gegenereerd door spelers.</p>";
+        // Als er nog GEEN kaarten in de database staan (iemand heeft ingelogd)
+        if (!allCards || Object.keys(allCards).length === 0) {
+            dashboardContent.innerHTML = "<p class='admin-empty'>Er hebben nog geen spelers ingelogd. Zodra iemand inlogt, verschijnt hij hier live!</p>";
+            leaderboardList.innerHTML = "<li>Nog geen actieve spelers beschikbaar</li>";
             return;
         }
 
-        let html = "";
-
-        // Loop door alle spelers heen (gesorteerd op naam)
-        Object.keys(allCards).sort().forEach((player) => {
+        // 1. Maak een lijst van ALLEEN de spelers die daadwerkelijk in de database staan
+        const spelersLijst = Object.keys(allCards).map(player => {
             const card = allCards[player];
-            
             const totalItems = card.length;
             const checkedItems = card.filter(item => item.checked).length;
+            return {
+                name: player,
+                score: checkedItems,
+                total: totalItems,
+                cardData: card
+            };
+        });
+
+        // Sorteer: Meeste punten bovenaan. Bij gelijke stand sorteren op naam
+        spelersLijst.sort((a, b) => {
+            if (b.score !== a.score) {
+                return b.score - a.score;
+            }
+            return a.name.localeCompare(b.name);
+        });
+
+        // 2. Genereer de Live Tussenstand HTML
+        let leaderboardHtml = "";
+        spelersLijst.forEach((speler, index) => {
+            let medaille = "";
+            if (index === 0 && speler.score > 0) medaille = "🥇 ";
+            if (index === 1 && speler.score > 0) medaille = "🥈 ";
+            if (index === 2 && speler.score > 0) medaille = "🥉 ";
             
-            html += `
+            leaderboardHtml += `<li>${medaille}${speler.name}: <span style="color: #28a745;">${speler.score}</span></li>`;
+        });
+        leaderboardList.innerHTML = leaderboardHtml;
+
+        // 3. Genereer de individuele kaarten hieronder
+        let cardsHtml = "";
+        spelersLijst.forEach((speler) => {
+            cardsHtml += `
                 <div class="player-row">
                     <div class="player-header">
-                        <h3 class="player-name">${player}</h3>
-                        <span class="progress-badge">${checkedItems} / ${totalItems} Afgevinkt</span>
+                        <h3 class="player-name">${speler.name}</h3>
+                        <span class="progress-badge">${speler.score} / ${speler.total} Afgevinkt</span>
                     </div>
                     <div class="admin-grid">
             `;
 
-            card.forEach((item) => {
+            speler.cardData.forEach((item) => {
                 const isChecked = item.checked ? 'checked' : '';
-                html += `
+                cardsHtml += `
                     <div class="admin-item ${isChecked}" title="${item.info}">
                         ${item.tekst}
                     </div>
                 `;
             });
 
-            html += `
+            cardsHtml += `
                     </div>
                 </div>
             `;
         });
 
-        dashboardContent.innerHTML = html;
+        dashboardContent.innerHTML = cardsHtml;
     }, (error) => {
         console.error("Fout bij ophalen dashboard data:", error);
         dashboardContent.innerHTML = "<p class='admin-error'>Fout bij het laden van de voortgang.</p>";

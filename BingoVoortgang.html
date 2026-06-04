@@ -91,13 +91,8 @@
 
             // Controleer of de gebruiker bestaat EN of het wachtwoord klopt
             if (correctWachtwoord && correctWachtwoord === pass) {
-                if (user === 'admin'){
-                    window.location.href = 'BingoVoortgang.html';
-                } else {
-                    localStorage.setItem('bingoUser', user);
-                    showBingo(user);
-                }
-                
+                localStorage.setItem('bingoUser', user);
+                showBingo(user);
             } else {
                 errorEl.innerText = "Naam of wachtwoord onjuist!";
                 errorEl.style.display = 'block';

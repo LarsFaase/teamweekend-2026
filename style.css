@@ -1042,6 +1042,96 @@ video {
     display: block;
 }
 
+/* Voortgang bingo */
+/* Admin Dashboard Specifieke Styling */
+.admin-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.admin-hr {
+  border: 0;
+  height: 1px;
+  background: #bb2a2a;
+  margin: 20px 0;
+}
+
+.player-row {
+  background: #002561;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.player-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.player-name {
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-transform: capitalize;
+  margin: 0;
+}
+
+.progress-badge {
+  background: #28a745;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.admin-item {
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  text-align: center;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  color: #6c757d;
+  position: relative;
+  word-wrap: break-word;
+}
+
+.admin-item.checked {
+  background: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+  font-weight: bold;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 50px;
+}
+
+.admin-error {
+  color: red;
+  text-align: center;
+}
+
+.admin-empty {
+  text-align: center;
+  font-weight: bold;
+}
+
 /* MOBIEL */
 @media (max-width: 768px) {
   h1 {

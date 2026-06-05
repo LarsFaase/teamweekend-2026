@@ -72,7 +72,7 @@
     <div class="card">
       <h2>🚨 AANKONDIGING 🚨</h2>
       <p>De locatie is bekend, check snel de locatie pagina!!</p>
-      <p>De deadline voor het invullen van de organisatoren is voorbij, inzendingen die vanaf nu binnenkomen tellen niet mee met de einduitslag.</p>
+      <p>De deadline voor het invullen van de organisatoren is voorbij, het is niet meer mogelijk om te stemmen...</p>
     </div>
     
 
@@ -536,40 +536,19 @@ Wat we wel al kunnen verklappen is dat deze pagina het <strong>weekend onmisbaar
           return;
         }
 
-        // 2. Check of deze speler al een voorspelling heeft ingestuurd
-        const voorspellingRef = ref(db, 'organisatie_voorspellingen/' + dbNodeName);
+        // 2. Check of het stemmen nog open is -> NU GESLOTEN!
+        showStatus("⚠️ Het insturen van voorspellingen is gesloten!", "orange");
         
-        get(voorspellingRef).then((voorspellingSnapshot) => {
-          if (voorspellingSnapshot.exists()) {
-            showStatus("⚠️ Je hebt al een voorspelling ingestuurd!", "orange");
-            return;
-          }
-
-          // 3. Alles klopt en nog niet ingestuurd -> Nu pas opslaan!
-          set(voorspellingRef, {
-            speler: speler,
-            organisator_1: org1,
-            organisator_2: org2,
-            organisator_3: org3,
-            organisator_4: org4,
-            tijdstip: new Date().toISOString()
-          })
-          .then(() => {
-            showStatus("✅ Succes! Je voorspelling is beveiligd opgeslagen.", "green");
-            
-            // Velden leegmaken
-            document.getElementById('v_speler').value = '';
-            document.getElementById('v_code').value = '';
-            document.getElementById('v_org1').value = '';
-            document.getElementById('v_org2').value = '';
-            document.getElementById('v_org3').value = '';
-            document.getElementById('v_org4').value = '';
-          })
-          .catch((error) => {
-            console.error("Fout bij opslaan:", error);
-            showStatus("❌ Er ging iets mis bij het opslaan.", "red");
-          });
-        });
+        // Optioneel: Velden direct leegmaken zodat ze zien dat er niks gebeurt
+        document.getElementById('v_speler').value = '';
+        document.getElementById('v_code').value = '';
+        document.getElementById('v_org1').value = '';
+        document.getElementById('v_org2').value = '';
+        document.getElementById('v_org3').value = '';
+        document.getElementById('v_org4').value = '';
+        
+        return; // Dit zorgt ervoor dat de code hier direct stopt en niks naar Firebase stuurt
+        
       }).catch((err) => {
         console.error("Database fout:", err);
         showStatus("❌ Database verbindingsfout.", "red");

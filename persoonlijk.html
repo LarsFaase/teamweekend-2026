@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Persoonlijke pagina</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+  
+  <div id="nav-placeholder"></div>
+  <main id="bingo-content"></main>
+  
+  <script type="module">
+    // Firebase SDK Imports (v12 compatible)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-analytics.js";
+    // HIER GEÏMPORTEERD: De functies voor de Realtime Database
+    import { getDatabase, ref, get, set, onValue } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+
+    // Firebase configuratie
+    // Jouw Firebase configuratie
+    const firebaseConfig = {
+        apiKey: "AIzaSyDfaQhcS4kNLCy1BPHxnmicLj_zxexjTAU",
+        authDomain: "parkhout-2026.firebaseapp.com",
+        projectId: "parkhout-2026",
+        storageBucket: "parkhout-2026.firebasestorage.app",
+        messagingSenderId: "286583232322",
+        appId: "1:286583232322:web:9efcb22a61a8f7f1b4dadb",
+        measurementId: "G-WR9S68PJ3G",
+        // VOEG DEZE LIJN TOE (Let op de komma hierboven!):
+        databaseURL: "https://parkhout-2026-default-rtdb.europe-west1.firebasedatabase.app/"
+    };
+
+    // Firebase Initialiseren
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    // HIER GEACTIVEERD: De database koppeling
+    const db = getDatabase(app);
+
+    // Navigatie inladen
+    fetch('nav.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('nav-placeholder').innerHTML = data;
+      });
+    
+    const main = document.getElementById('bingo-content');
+    const savedUser = localStorage.getItem('bingoUser');
+
+    if (savedUser) {
+      showBingo(savedUser);
+    } else {
+      showLoginForm();
+    }
+
+    function showLoginForm() {
+      main.innerHTML = `
+        <div class="card login-form">
+            <h2>Mijn Persoonlijke Pagina</h2>
+            <h3>Lees de informatie HEEL GOED!!</h3>
+            <input type="text" id="username" placeholder="Je naam (bijv. Jan)">
+            <input type="password" id="password" placeholder="Wachtwoord">
+            <button id="login-btn" class="btn-primary">Open mijn pagina</button>
+            <p id="error" style="color:red; display:none;">Verkeerd wachtwoord!</p>
+        </div>
+      `;
+      // Event listener toevoegen aan de knop (omdat inline onclick niet werkt met type="module")
+      document.getElementById('login-btn').addEventListener('click', login);
+    }
+
+    // Functie: Inloggen verwerken via Firebase Database
+    function login() {
+        const user = document.getElementById('username').value.trim().toLowerCase();
+        const pass = document.getElementById('password').value.trim();
+        const errorEl = document.getElementById('error');
+
+        if (!user || !pass) {
+            errorEl.innerText = "Vul een naam en wachtwoord in!";
+            errorEl.style.display = 'block';
+            return;
+        }
+
+        // Verwijzing naar het specifieke wachtwoord van deze gebruiker in Firebase
+        const passwordRef = ref(db, 'team_wachtwoorden/' + user);
+
+        // Haal het wachtwoord live op uit de database
+        get(passwordRef).then((snapshot) => {
+            const correctWachtwoord = snapshot.val();
+
+            // Controleer of de gebruiker bestaat EN of het wachtwoord klopt
+            if (correctWachtwoord && correctWachtwoord === pass) {
+                if (user === 'admin'){
+                    window.location.href = 'BingoVoortgang.html';
+                } else {
+                    localStorage.setItem('bingoUser', user);
+                    showBingo(user);
+                }
+                
+            } else {
+                errorEl.innerText = "Naam of wachtwoord onjuist!";
+                errorEl.style.display = 'block';
+            }
+        }).catch((err) => {
+            console.error("Firebase login error:", err);
+            errorEl.innerText = "Fout bij verbinden met de database.";
+            errorEl.style.display = 'block';
+        });
+    }
+
+    function showBingo(user) {
+        const container = document.getElementById('bingo-content');
+        
+        // Luister LIVE naar de gehele bingo_kaarten tak zodat we statistieken kunnen berekenen
+        const allCardsRef = ref(db, 'bingo_kaarten');
+        
+        onValue(allCardsRef, (snapshot) => {
+            const allCards = snapshot.val() || {};
+            let mijnKaart = allCards[user];
+
+            if (mijnKaart) {
+                // Kaart bestaat al in de cloud, teken hem direct
+                renderBingoHTML(mijnKaart, user, container, allCards);
+            } else {
+                // Kaart bestaat nog niet, genereer een nieuwe kaart
+                const algemeen = [
+                    { tekst: "Drank morsen", info: "Iemand anders moet per ongeluk zijn hele/volle glas omgooien, je mag geen invloed uitoefenen en je moet 3 mensen als getuigen hebben en een video ervan maken. Gelukt = Afvinken" },
+                    { tekst: "Ren 3 rondjes", info: "Je moet 3 rondjes om de 3 huisjes heen rennen binnen 3 minuten, zorg ervoor dat een van de organisatoren de tijd bij houdt. Gelukt = Afvinken" },
+                    { tekst: "Botten breken", info: "Iemand gaat iets breken, zorg ervoor dat je mee gaat en selfie maakt in het ziekenhuis. Gelukt = Afvinken" },
+                    { tekst: "Activiteit tegen anderen", info: "Doe een potje steen papier schaar tegen 3 verschillende teamgenoten, laat een organisator meekijken en zorg ervoor dat je ze alle 3 achter elkaar wint (niet valspelen). Gelukt = Afvinken" },
+                    { tekst: "Iemand KO", info: "Ga op de foto met iemand die KO is van de drank, of dit nu op bed is of boven de wasbak beide zijn goed. Gelukt = Afvinken" },
+                    { tekst: "Naakt rondlopen", info: "Elke keer als je een teamgenoot naakt zie, klap je en roep je in de buurt van een organisator 'PARKHOUT GAAT NAAKT'. Zodra je dit 3 keer hebt uitgevoerd mag je deze afstrepen. Gelukt = Afvinken" },
+                    { tekst: "WC bezoekje", info: "Iemand heeft gepoept maar heeft niet doorgetrokken, zoek uit wie het heeft gedaan en maak een video van hem die de drol (eerlijk, de drol moet door hem gelegd zijn) opeist en de wc doortrekt. Gelukt = Afvinken" },
+                    { tekst: "WC bezoekje 2.0", info: "Doe een grote behoefte in de WC en trek niet door. Zorg ervoor dat iemand eerst vraagt wie de schuldige is, voordat die doortrekt. Zorg ervoor dat als de organisator in de groep vraagt wie het heeft gevonden, hij (zonder jouw hulp) dit kan bevestigen. Gelukt = Afvinken" },
+                    { tekst: "Opruimsessie", info: "Maak een video van iemand die in zijn eentje het afval die gemaakt is aan het opruimen is, er mag niemand anders in diezelfde kamer zijn. Gelukt = Afvinken" },
+                    { tekst: "Grondvoedsel", info: "Maak een selfie met iemand die een iets van eten op de grond heeft laten vallen. Zorg ervoor dat jij, de ongelukkige en de pizza te zien zijn. Gelukt = Afvinken" },
+                    { tekst: "Smirnoff Ice", info: "Verzamel iedereen bij elkaar en roep 3 teamgenoten op om naast elkaar tegelijk een Ice te doen, mocht dit niet lukken in 1 keer dan mag je na 1 uur weer hetzelfde proberen (vraag aan de organisatie om een timer te zetten). Gelukt = Afvinken" },
+                    { tekst: "Rave room 2.0", info: "Houd eenzelfde soort rave feest als vorig jaar, dit MOET in een slaapkamer zijn voor max 4 personen en je doet dit met minimaal 14 man. Gelukt = Afvinken" },
+                    { tekst: "Mr. Barf", info: "Stuur 3 namen van teamgenoten op naar Lars, van wie je denkt dat minimaal 1 van die gaat kotsen. LET OP, als je de namen doorstuurt na dat iemand gekotst heeft telt het niet. Correct = Afvinken" },
+                    { tekst: "Opdracht koprol", info: "Laat jij/iemand 5 koprollen achter elkaar doen om vervolgens direct na de koprollen een bal in de basket te gooien. Gelukt = Afvinken" },
+                    { tekst: "Barfplek", info: "Stuur 3 plekken waar gekotst gaat worden op naar Lars, van waar je denkt dat minimaal op 1 plek gekotst gaat worden (Toilet mag niet). LET OP, als je de plekken doorstuurt na dat iemand gekotst heeft telt het niet. Correct = Afvinken" },
+                    { tekst: "Yoga", info: "Als we yoga of iets soortgelijks gaan doen, zorg ervoor dat je deze sessie volledig uitvoert in je onderbroek. Gelukt = Afvinken" },
+                    { tekst: "Scheten", info: "Stuur 2 tijdsbestekken, van 1 uur lang, naar Lars waarin je verwacht dat iemand een scheet gaat laten, indien dit gebeurt (je mag dit niet zelf zijn) in een van deze tijdsbestekken mag je deze afvinken" },
+                    { tekst: "Overleef dag 1", info: "Stuur 2 namen van teamgenoten op naar Lars, van wie je denkt dat die de eerste dag niet overleven. LET OP, als je de namen doorstuurt na VRIJDAG telt het niet. Correct = Afvinken" },
+                    { tekst: "Striptease", info: "Zet een aantal teamgenoten (hoeveel je er ook nodig hebt) naast elkaar met ieder 1 kledingstuk minder (dus van volledig aangekleed naar volledig naakt). Maak een foto als bewijs, gelukt = afgevinkt" },
+                    { tekst: "Bierflesjes", info: "Tel per persoon (voor jezelf behouden!) het aantal bierflesjes die hij kapot laat gevallen. Zodra we het met zijn allen op een bepaald moment natellen, moet dit exact overeenkomen. Gelukt = afgevinkt" },
+                    { tekst: "Doe voorzichtig!", info: "Zorg ervoor dat niemand je in 1 uur aangesloten aanraakt. Laat een timer zetten door een organisator, lukt het niet dan moet je een uur wachten voordat je dit weer mag proberen. Gelukt = afvinken" }, /* Persoonlijk maken? Matej */
+                    { tekst: "Sven naakt?!?!?", info: "Zodra je Sven naakt ziet, zeg dat hij daar blijft staan. Zeg vervolgens dat hij 1/2 minuut zo moet blijven staan (met timer), zorg ervoor dat iedereen hem binnen die minuut naakt gezien heeft" },
+                    { tekst: "Monstermaster", info: "Neem een tray monster mee en geef die kado aan team organisatie zodra ze aankondigen wie er allemaal in de organisatie zat dit jaar. Gelukt = afvinken." },
+                    { tekst: "GIG tastemaster", info: "Raadt binnen 30 seconden van alle soort GIG welke GIG welke is door te geblinddoekt te proeven. Gelukt = Afvinken" },
+                    { tekst: "Mr. Commentator", info: "Geef 2 minuten lang live commentaar bij een willekeurige activiteit van een ander teamlid, alsof het de Champions League-finale is. Laat iemand dit filmen/ een organisator meekijken, gelukt = afvinken." },
+                    { tekst: "King adtje", info: "Kies iemand uit (die ook drinkt) voor een wedstrijdje bier adten, je mag niet valspelen door de ander te vragen om jou te laten winnen. Laat een organisator meekijken, niet gelukt is over 1 uur opnieuw proberen. Gelukt = afvinken." },
+                    { tekst: "Tiktok", info: "Maak een tiktok. Doe de tiktok trend/dans na onder het nummer My Neck, My Beck. Ga naar een van de organisatoren en vraag om de bronvideo. Neem dit op, gelukt = afvinken" },
+                    { tekst: "Ice finder", info: "Laat iemand 1 fles ice verstoppen voor jou, diegene krijgt 2 minuten om de fles te verstoppen en jij krijgt 10 minuten om de fles te zoeken. Laat een organisator meekijken en timen. Niet gelukt = ice drinken + je mag opnieuw proberen, wel gelukt = afvinken" },
+                    { tekst: "Ice tellers", info: "Tel het aantal ice flessen die zijn gedronken, zijn het er 15 dan roep je heel hard BINGO en wordt er geverifieerd of het aantal klopt. Klopt het niet = opnieuw proberen en een fles ice drinken, klopt het wel = afvinken" },
+                    { tekst: "King of the court", info: "Gooi 3 keer achter elkaar raak in de basket op een afstand van 5 meter vanaf de basket. Laat een organisator meekijken, gelukt = afvinken" },
+                    { tekst: "Naakte mannen", info: "Zorg ervoor dat je 3 selfies maakt met 3 naakte teamgenoten (pielemuis mag afgeschermd worden), gelukt = afvinken. Hint: probeer eventueel omkopen" },
+                    { tekst: "Hooghouden", info: "Houd een item, alles behalve een voetbal, 10 keer hoog met de voeten en laat een organisator meetellen. Gelukt = afvinken" },
+                    { tekst: "SlavernIce", info: "Krijg iemand zover om zelf een fles ICE te halen (dit mag dus geen vòòr het teamweekend gekochtte fles zijn) en zorg ervoor dat hij het voor 1 van de organisatoren ad. Gelukt = afvinken" },
+                    { tekst: "Foto bomb", info: "Probeer van elke individuele speler uit ons team een foto van voren (zijn gezicht moet in beeld zijn) te maken zonder dat hij het door heeft. Gelukt = afvinken" },
+                    { tekst: "Kiekeboe", info: "Zoek 4 vrijwilligers die 30 seconden de tijd krijgen om zich op het terein te verstoppen, na de 30 seconden mogen ze niet meer bewegen waar ze ook staan. Zorg ervoor dat je ze binnen 5 minuten vindt, anders moet je het opnieuw doen met 4 anderen. Gelukt = afvinken" },
+                    { tekst: "Wiskunde-nerd", info: "Vraag een organisator om mee te kijken naar hoe jij de sudoku oplost binnen 2 minuten, niet gelukt binnen 2 minuten dan mag je het pas over 30 minuten opnieuw proberen. Gelukt = afvinken" },
+                    { tekst: "Klein boefje", info: "Steel een item van 5 verschillende spelers binnen dit voetbalteam, zonder dat ze het door hebben, bewaar deze op 1 plek. Zodra je van iedereen een item hebt, roep je iedereen bij elkaar en geef je een voor een de items terug. Gelukt = afvinken, ben je iemand vergeten dan heb je pech en begin je opnieuw (let op iedereen weet het nu wel van je)" },
+                    { tekst: "Stille Getuige", info: "Kies een teamgenoot uit en volg diegene 15 minuten lang op precies 2 meter afstand, waar hij of zij ook heen gaat. Je mag niks zeggen. Word je eerder 'weggejaagd' of verlies je de afstand? Dan faal je. Gelukt = Afvinken, je mag niet valsspelen dus die persoon niet overtuigen om te liegen en hij moet bevestigen dat je je aan de 2 meter hebt gehouden anders niet gehaald" },
+                    { tekst: "Kleding-swap", info: "Vind een teamgenoot en ruil je volledige outfit (inclusief sokken en schoenen) met hem, je mag hem niet vertellen wat de context van deze opdracht is en hoe lang het moet, dus als hij vraagt waarom zeg jij 'gewoon' dus alleen zeggen dat jullie kleding moeten ruilen. Jullie moeten beide de rest van de avond (minimaal 2 uur) in elkaars kleren blijven lopen. Maak een voor- en na-foto. Gelukt = Afvinken" },
+                    { tekst: "De Menselijke Rugzak", info: "Vind iemand die bereid is om jou 5 minuten (de tijd mag je diegene niet vertellen) lang op zijn rug te dragen terwijl hij/zij gewoon doorgaat met socializen of een spel speelt. Je voeten mogen de grond niet raken. Gelukt = Afvinken" },
+                    { tekst: "De Schaduw-kopie", info: "Kies een teamgenoot en doe hem/haar voor de komende 20 minuten exact na. Alles wat diegene zegt, zegt jij na. Elke beweging die diegene maakt, maak jij ook. Als de ander boos wordt of wegloopt, moet je blijven volgen. Gelukt = Afvinken. Zorg ervoor dat je bijhoudt bij wie je het hebt gedaan ter verificatie!" },
+                    { tekst: "Menselijke piramide", info: "Maak een piramide van 6 personen (3 onder, 2 in het midden, jij bovenop), laat iemand een foto maken als bewijs. Gelukt = Afvinken."},
+                    { tekst: "Beast Mode", info: "Doe 50 burpees binnen 10 minuten. Een organisator moet de tijd en vorm controleren (borst de grond raken, sprong met handen boven het hoofd). Haal je het niet binnen de tijd? Dan mag je het pas over 1 uur opnieuw proberen. Gelukt = Afvinken" },
+                    { tekst: "Plank-Koning", info: "Houd de plank-positie minimaal 4 minuten vast. Je mag niet met je knieën de grond raken. Laat een organisator de timer bijhouden. Gelukt = Afvinken" },
+                    { tekst: "Schwalbe", info: "Doe alsof iemand je ECHT pijn heeft gedaan of laat struikelen, als iemand jou ECHT pijn heeft gedaan of laat struikelen telt het niet. Heeft iemand onterecht sorry (je mag diegene het niet laten zeggen) gezegd is het gelukt = afvinken" },
+                    { tekst: "Bullseye", info: "Gooi een dart midden in de bullseye (rode rondje) van het dartbord, laat een van de organisatoren meekijken. Gelukt = Afvinken." },
+                    { tekst: "Tafeltennis", info: "Daag Lars uit voor een potje tafeltennis, win een best of 5 wedstrijd. Gelukt = Afvinken." },
+                    { tekst: "Glaasje te diep", info: "Maak een selfie met iemand die dronken is, je moet in de foto kunnen aflezen aan diegene zijn gezicht of hij echt dronken is. Gelukt = Afvinken." },
+                    { tekst: "King GIG", info: "Shotgun een GIG aan de hand van de shotgun tool waarbij je tegelijkertijd de GIG vlag als cape draagt, gooi vervolgens met 2 dobbelstenen minimaal 9 er na (maak een video hiervan). Gelukt = Afvinken." },
+                    { tekst: "Stapelaar", info: "Stapel 24 lege GIG blikjes op elkaar, als een 3D-piramide, maak hiervan vervolgens een selfie waarop jij en de piramide te zien zijn. Gelukt = Afvinken." }            
+                ];
+
+                const specifiek = {
+                    "julian": [
+                        { tekst: "No-Return pleidooi", info: "Geef 1 minuut een pitch aan het volledige team over waarom hij dit jaar liever in het tweede blijft dan dat hij terug komt. Je MOET aaneengesloten doorpraten, dus niet 1 zin en dan voor de rest niks zeggen. 30s pitch gedaan = afvinken." },
+                        { tekst: "Koning van de Derde Helft", info: "Daag iemand uit het team uit die in is voor een duel: Een 'Adtje' trekken, direct gevolgd door 20 push-ups. Jij moet beide onderdelen sneller doen dan je tegenstander (JE MAG NIET VALSPELEN, dus de ander mag jou niet laten winnen). Gelukt = Afvinken" }
+                    ],
+                    "tycho": [
+                        { tekst: "Eetkoning", info: "Doe een eetwedstrijd tegen Jesper, Tim, en Robin. Wie deze wedstrijd wint mag als enige de bingo kaart afvinken, de verliezers kunnen hun kaart niet meer vol krijgen...." },
+                        { tekst: "Haar koningin", info: "Kies een activiteit waarbij je tijdens deze gehele activiteit met een kapsel moet lopen die door de organisatie in model is gebracht. Gedaan = afvinken" }
+                    ],
+                    "fabio": [
+                        { tekst: "Joden knallertje", info: "Zet een vierkant uit van 10 bij 10 meter en pak 4 ballen. Laat vervolgens het hele team buiten het vierkant plaatsnemen vanwaar zij met die 4 ballen voor 2 minuten lang op jou, in het vierkant waarin jij mag rondrennen om te ontwijken, mogen schieten. Telkens als je wordt geraakt komt er 10 seconden bij." },
+                        { tekst: "Vliegmeters", info: "Maak een vliegtuigje van papier en zorg ervoor dat deze minimaal 10 meter ver komt. Gelukt = afvinken (zorg voor bewijs)" }
+                    ],
+                    "franck": [
+                        { tekst: "Goedemorgen!", info: "Pak de muziek box en ga langs alle kamers om iedereen wakker te maken met het nummer Guten morgen Sonnenschein, doe dit tussen 09:30-10:00. Gelukt = Afvinken" }
+                    ],
+                    "sten": [
+                        { tekst: "Wanhopige LinkedIn pitch", info: "Omdat je eindelijk bent afgestudeerd dit jaar was het tijd om te kijken naar een nieuw bedrijf, echter was dit lastiger dan je verwacht had om een bedrijf te vinden waar je fulltime aan de slag mag gaan. Geef daarom een overtuigende pitch (Hint: Kies een slim moment) aan het hele team van 2 minuten waarom een bedrijf jou zou moeten aannemen en wat jij te bieden hebt. Gedaan = afvinken." }
+                    ],
+                    "john": [
+                        { tekst: "Adtje vlag", info: "Vlag minimaal 5 mensen af waarna je vervolgens zegt dat ze een biertje moeten adten omdat ze een 'overtreding' hebben gemaakt of 'buitenspel' stonden. Je mag diegene niet direct vragen of ze dat willen doen voor jouw opdracht. Lukt het om 5 mensen zonder problemen een adtje te laten doen door alleen te vlaggen = afvinken"}
+                    ],
+                    "marco": [
+                        { tekst: "Handboeien-bond", info: "Zorg dat je met een touwtje of tiewrap voor 1 uur lang aan een willekeurige teamgenoot vastgebonden zit bij de polsen, laat de organisatie weten voordat je dit doet en bij wie je het doet (zij hebben tiewrap). Jullie moeten alles samen doen: drinken, eten, lopen, toilet. De timer stopt als de uur om is. Gelukt = Afvinken" },
+                        { tekst: "Kijkje in de kijkdoos", info: "Overtuig minimaal één iemand om een kijkje in de echte natuurlijk kijkdoos (van Sven) te nemen, heeft hij erin gekeken, dan afvinken." }      
+                    ],
+                    "matej": [
+                        { tekst: "Tarzan in Parkhout", info: "Klim in een boom op het terrein en blijf daar 30 minuten zitten. Terwijl je daar zit, moet je elke 3 minuten een luidruchtige oerkreet geven. Er moeten minimaal 5 teamgenoten onder de boom een keer gekeken hebben. Gelukt = Afvinken" }      
+                        /* { tekst: "De Levende Benchpress", info: "Omdat je de maandagtraining skipt voor chest-day, moet je dat hier inhalen. Elke keer als een teamgenoot het woord 'voetbal' of 'training' zegt, moet jij ter plekke 10 push-ups doen. Dit duurt totdat je in totaal 150 push-ups hebt aangetikt. Houd je eigen score bij op een bierviltje en laat een organisator de eindsom checken. Gelukt = Afvinken" }*/
+                    ],
+                    "lennart": [
+                        { tekst: "Papa", info: "Kies een voorwerp die je tijdens een hele activiteit naar keuze behandeld als jouw kind. Gelukt = afvinken, als de organisitie ziet dat je je er niet aan houdt telt het niet, dan moet je wachten tot een andere activiteit om het opnieuw te proberen." }
+                    ],
+                    "marlon": [
+                        { tekst: "Marlon Salah", info: "Doe de celebration van Salah na elke keer dat je iets goed hebt tijdens de vrijdagavond activiteit. Gelukt = afvinken" }
+                    ],
+                    "robin": [
+                        { tekst: "Eetkoning", info: "Doe een eetwedstrijd tegen Tim, Jesper, en Tycho. Wie deze wedstrijd wint mag als enige de bingo kaart afvinken, de verliezers kunnen hun kaart niet meer vol krijgen...." },
+                        { tekst: "Kijkje in de kijkdoos", info: "Overtuig minimaal twee mensen om een kijkje in de echte natuurlijk kijkdoos (van Sven) te nemen, heeft hij erin gekeken, dan afvinken." }      
+                    ],
+                    "ryan": [
+                        { tekst: "NIET VERBRANDEN!", info: "Smeer je gedurende de vrijdagavond activiteit elk halfuur in met zonnebrand, smeer dit niet goed uit zodat iedereen ziet dat je bent ingesmeerd. Gelukt = afvinken" }
+                    ],
+                    "jesper": [
+                        { tekst: "Eetkoning", info: "Doe een eetwedstrijd tegen Tim, Robin, en Tycho. Wie deze wedstrijd wint mag als enige de bingo kaart afvinken, de verliezers kunnen hun kaart niet meer vol krijgen...." }
+                    ],
+                    "tom": [
+                        { tekst: "Stille gast", info: "Zorg dat je 60 minuten lang met niemand praat (dit mag dus niet tijdens het slapen) zonder dit aan te kondigen of tegen iemand zegt, geef bij een organisator aan zodra je de tijd wilt starten. Gelukt = Afvinken" }
+                    ],
+                    "tim": [
+                        /* Knak/Bratworst */{ tekst: "Eetkoning", info: "Doe een eetwedstrijd tegen Robin, Tycho, en Jesper. Wie deze wedstrijd wint mag als enige de bingo kaart afvinken, de verliezers kunnen hun kaart niet meer vol krijgen...." }
+                    ],
+                    "wout": [
+                        { tekst: "Gangnamstyle", info: "Verbind zelf/iemand anders met de box en zet het nummer Gangnamstyle - PSY op. Zorg ervoor dat er, tijdens het nummer zonder dat je het aankondigt, minimaal 10 mensen kijken naar hoe jij danst op het nummer totdat het volledig is afgelopen. Gedaan = Afgevinkt" },
+                        { tekst: "Limbo-Marathon", info: "Als aanvoerder moet je laten zien dat je door alles kunt gaan voor je team, benoem zsm aan het team dat iedereen op ieder moment LIMBO-WOUT mag roepen. Er wordt dan een limbo-lijn gespannen op jouw heuphoogte. Jij moet hier minimaal 10 keer (dit aantal mag je tegen niemand zeggen) onderdoor dansen gedurende het weekend. Raak je de grond met je handen of de lijn met je borst? Dan moet telt die niet mee en doe je 10 push-ups. Gelukt = Afvinken" }
+                    ],
+                    "lorenzo": [
+                        { tekst: "De Maag-Masterclass", info: "Omdat je maag wel eens tegenwerkt, moet je hem trainen. Drink een 'cocktail' bestaande uit 3 vloeistoffen die normaal niet samengaan, samengesteld door de organisatie. Je moet het glas leegdrinken en daarna 5 minuten stil blijven zitten zonder te boeren of te kokhalzen. Gelukt = Afvinken" }
+                    ],
+                    "jim": [
+                        { tekst: "De Zachte Reus", info: "Draag voor 1 uur lang een outfit van je broer. Gedurende dit uur ben jij de persoonlijke verzorger van je broer: je haalt zijn drankjes, ruimt zijn afval op en elke keer als hij wat vraagt doe jij dat. Gelukt = Afvinken" },
+                        { tekst: "De Wandelende VAR", info: "Omdat jij altijd wel wat vindt van de scheids, draaien we de rollen nu eens om. Tijdens de vrijdagavond activiteit moet je als VAR fungeren bij discussies tijdens de activieit (je staat aan de kant van de organisatie). Je helpt de organisatie met het winnen van discussies" }
+                    ]
+                };
+                
+                const startItems = specifiek[user] || [];
+                mijnKaart = startItems.map(item => ({ ...item, checked: false }));
+
+                while (mijnKaart.length < 9) {
+                    let randomItem = algemeen[Math.floor(Math.random() * algemeen.length)];
+                    if (!mijnKaart.some(e => e.tekst === randomItem.tekst)) {
+                        mijnKaart.push({ ...randomItem, checked: false });
+                    }
+                }
+
+                mijnKaart.sort(() => Math.random() - 0.5);
+
+                const userCardRef = ref(db, 'bingo_kaarten/' + user);
+                set(userCardRef, mijnKaart);
+            }
+        }).catch(err => {
+            console.error("Firebase live stream error: ", err);
+        });
+    }
+
+    // Toggle functie aangepast: Alleen opslaan in Firebase. 
+    // Omdat showBingo live luistert via onValue, ververst het scherm nu automatisch!
+    window.toggleVakje = function(index) {
+        const user = localStorage.getItem('bingoUser');
+        const userCardRef = ref(db, 'bingo_kaarten/' + user);
+
+        get(userCardRef).then((snapshot) => {
+            let kaart = snapshot.val();
+            if (kaart && kaart[index]) {
+                kaart[index].checked = !kaart[index].checked;
+                set(userCardRef, kaart);
+            }
+        });
+    };
+    
+    function renderBingoHTML(kaart, user, container, allCards) {
+        const uniekeBerichten = {
+            "julian": "Dit weekend ben jij mede verantwoordelijk voor schone vloeren",
+            "tycho": "Dit weekend ben jij mede verantwoordelijk voor opruimen afval",
+            "fabio": "Dit weekend ben jij mede verantwoordelijk voor schone keuken",
+            "lars": "Dit weekend ben jij mede verantwoordelijk voor schone keuken",
+            "franck": "Dit weekend ben jij mede verantwoordelijk voor schone keuken",
+            "sten": "Dit weekend ben jij mede verantwoordelijk voor schone vloeren",
+            "john": "Dit weekend ben jij mede verantwoordelijk voor schone keuken",
+            "marco": "Dit weekend ben jij mede verantwoordelijk voor opruimen afval",
+            "matej": "Dit weekend ben jij mede verantwoordelijk voor opruimen afval",
+            "lennart": "Dit weekend ben jij mede verantwoordelijk voor schone vloeren",
+            "marlon": "Dit weekend ben jij mede verantwoordelijk voor statiegeld verzamelen",
+            "robin": "Dit weekend ben jij mede verantwoordelijk voor opruimen afval",
+            "ryan": "Dit weekend ben jij mede verantwoordelijk voor statiegeld verzamelen",
+            "sven": "Dit weekend ben jij mede verantwoordelijk voor schone keuken",
+            "jesper": "Dit weekend ben jij mede verantwoordelijk voor statiegeld verzamelen",
+            "tom": "Dit weekend ben jij mede verantwoordelijk voor opruimen afval",
+            "tim": "Dit weekend ben jij mede verantwoordelijk voor opruimen afval",
+            "wout": "Dit weekend ben jij mede verantwoordelijk voor schone vloeren",
+            "lorenzo": "Dit weekend ben jij mede verantwoordelijk voor opruimen afval",
+            "jim": "Dit weekend ben jij mede verantwoordelijk voor statiegeld verzamelen"
+        };
+        
+        const uniekeBerichten1 = {
+            "julian": "Dit jaar gaan we weer eens kijken of je weer zoveel kunt adten 😉",
+            "tycho": "Jij bent ook wel de bulldozer van het team. Bereid je maag maar voor op die eetwedstrijd! 🥫",
+            "fabio": "Vlieguren maken vriend! Succes in het knockout-vierkant.",
+            "lars": "De Admin... Hopelijk werkt je eigen bingo-kaart beter dan de anderen die nog zwaardere opdrachten te wachten staan... 🤯",
+            "franck": "Zet de wekker maar alvast om 09:30, Franck! Goedemorgen zonneschijn! 🌅",
+            "sten": "Tijd voor die LinkedIn pitch, Sten. Maak ons trots! 🎓",
+            "john": "De vedette langs de lijn. Welke 5 gaan er vandaag nat? 😥",
+            "marco": "Succes met een kijkje in de kijkdoos.... 🥽",
+            "matej": "Tarzan! Zet je stem maar aan en laat wat oerkreten los in die boom.",
+            "lennart": "Gefeliciteerd met je kersverse kindje (voor dit weekend dan)! 👨‍🍼",
+            "marijn": "Geniet van je weekend! 🌓",
+            "marlon": "Salah, we willen die celebration zien op de vrijdag! 👨‍🦯",
+            "robin": "We verwachten dat je alles op alles zet tijdens de eetwedstrijd... Niet opgeven hè! 🎃",
+            "roy": "Utrecht! Succes dit weekend, Roy! ⚽",
+            "ryan": "Niet verbranden dit weekend alsjeblieft, veel smeren jij! 🔥",
+            "sven": "Hou je kleren nou eens aan man! 🕴️",
+            "jesper": "De koning van de eetwedstrijd? Laat het zien wat je in huis hebt! 🏑",
+            "tom": "60 minuten stilte, dat wordt een zware opgave voor jou ... 🙋",
+            "tim": "Succes bij het eten vriend! Doorvreten jij! ⛈️",
+            "wout": "Hey aanvoerder! Laat die heupen maar vast warmdraaien voor de limbo! 💃",
+            "sander": "Succes dit weekend met deze bende! ⚱️",
+            "lorenzo": "Succes met de cocktail van de organisatie. Sterkte! 🍸",
+            "jim": "De wandelende scheids. Vandaag fluit je eens in het voordeel van de organisatie! 👷‍♀️"
+        };
+        
+        let html = `<h1>Welkom ${user.toUpperCase()}!</h1>
+                    <h3>⚠️⚠️${uniekeBerichten[user] || "een topweekend!"}⚠️⚠️</h3>
+                    <h1>Bingo van ${user.toUpperCase()}</h1>
+                    <h3>LEES GOED DE INFORMATIE BIJ ELKE KAART</h3>
+                    <h3>⚠️⚠️⚠️Bewaar de bewijzen goed⚠️⚠️⚠️</h3>`;
+        html += `<div class="bingo-grid">`;
+
+        kaart.forEach((item, index) => {
+            const checkedClass = item.checked ? 'checked' : '';
+            html += `
+            <div class="bingo-item ${checkedClass}" onclick="toggleVakje(${index})">
+                <span class="item-text">${item.tekst}</span>
+                <button type="button" class="info-btn" onclick="event.stopPropagation(); alert('${item.info}');">i</button>
+            </div>`;
+        });
+
+        html += `</div>`;
+
+        // --- NIEUW: LIVE STATISTIEKEN BLOK ONDER HET GRID ---
+        
+        // Bereken scores van alle actieve spelers
+        const spelersLijst = Object.keys(allCards).map(player => {
+            const c = allCards[player];
+            return {
+                name: player,
+                score: c.filter(item => item.checked).length,
+                total: c.length
+            };
+        });
+
+        // Sorteer: meeste punten bovenaan
+        spelersLijst.sort((a, b) => b.score - a.score);
+
+        // Vind de huidige positie van de ingelogde speler
+        const mijnIndex = spelersLijst.findIndex(s => s.name === user);
+        const mijnPositie = mijnIndex !== -1 ? mijnIndex + 1 : spelersLijst.length + 1;
+
+        // Pak de Top 3 en de Bodem 3 spelers
+        const top3 = spelersLijst.slice(0, 3);
+        // Zorg dat de onderste 3 niet overlappen met de top 3 als er nog weinig spelers zijn
+        const bodem3 = spelersLijst.length > 3 ? spelersLijst.slice(-3).reverse() : [];
+
+        html += `
+        <div class="player-stats-container">
+            <div class="current-position-box">
+                <h3>Huidige positie: <strong>#${mijnPositie}</strong></h3>
+            </div>
+            
+            <div class="split-stats-grid">
+                <div class="stat-column">
+                    <h4 style="color: #28a745;">🥇 Koplopers (Top 3)</h4>
+                    <ol class="stat-list">
+        `;
+        
+        top3.forEach((s, idx) => {
+            html += `<li>${s.name}: <span style="color:#28a745;">${s.score}/${s.total}</span></li>`;
+        });
+        if(top3.length === 0) html += `<li>Nog geen data...</li>`;
+
+        html += `
+                    </ol>
+                </div>
+                
+                <div class="stat-column">
+                    <h4 style="color: #dc3545;">🚨 Achterblijvers (Onderste 3)</h4>
+                    <ul class="stat-list" style="list-style-type: square;">
+        `;
+
+        if(bodem3.length > 0) {
+            bodem3.forEach(s => {
+                html += `<li>${s.name}: <span style="color:#dc3545;">${s.score}/${s.total}</span></li>`;
+            });
+        } else {
+            html += `<li>Nog niet genoeg spelers...</li>`;
+        }
+
+        html += `
+                    </ul>
+                </div>
+            </div>
+        </div>
+        `;
+        
+        // --- EINDE STATISTIEKEN BLOK ---
+        html += `<button id="logout-btn" class="btn-secondary" style="margin-top: 30px;">Uitloggen</button>`;
+
+        container.innerHTML = html;
+        
+        // Klik-event voor uitloggen netjes toevoegen
+        document.getElementById('logout-btn').addEventListener('click', logout);
+    }
+
+    function logout() {
+      localStorage.removeItem('bingoUser');
+      location.reload();
+    }
+  </script>
+  
+</body>
+</html>

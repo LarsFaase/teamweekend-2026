@@ -1043,6 +1043,58 @@ video {
 }
 
 /* Voortgang bingo */
+/* Statistieken onder de Bingokaart */
+.player-stats-container {
+  margin-top: 40px;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.current-position-box {
+  text-align: center;
+  background: #f8f9fa;
+  border: 2px solid #007bff;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.current-position-box h3 {
+  margin: 0;
+  color: #007bff;
+  font-size: 1.3rem;
+}
+
+.split-stats-grid {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.stat-column {
+  flex: 1;
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #dee2e6;
+}
+
+.stat-column h4 {
+  margin-top: 0;
+  border-bottom: 2px solid #dee2e6;
+  padding-bottom: 5px;
+}
+
+.stat-list {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.6;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
 /* Admin Dashboard Specifieke Styling */
 .admin-container {
   max-width: 1200px;
@@ -1208,5 +1260,9 @@ video {
 
   .flip-card {
     height: 250px;
+  }
+  
+  .split-stats-grid {
+    flex-direction: column;
   }
 }

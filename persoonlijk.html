@@ -337,10 +337,10 @@
         };
         
         let html = `<h1>Welkom ${user.toUpperCase()}!</h1>
-                    <h3>⚠️⚠️${uniekeBerichten[user] || "een topweekend!"}⚠️⚠️</h3>
+                    <h3>${uniekeBerichten[user] || "een topweekend!"}</h3>
                     <h1>Bingo van ${user.toUpperCase()}</h1>
                     <h3>LEES GOED DE INFORMATIE BIJ ELKE KAART</h3>
-                    <h3>⚠️⚠️⚠️Bewaar de bewijzen goed⚠️⚠️⚠️</h3>`;
+                    <h3>⚠️ Bewaar de bewijzen goed!!</h3>`;
         html += `<div class="bingo-grid">`;
 
         kaart.forEach((item, index) => {

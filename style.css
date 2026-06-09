@@ -1241,6 +1241,38 @@ video {
     padding: 8px 15px;
   }
 
+    .bingo-grid {
+    gap: 6px;
+    margin-top: 14px;
+  }
+
+  .bingo-item {
+    min-height: 95px;
+    padding: 22px 4px 10px;
+    border-radius: 10px;
+    font-size: 0.72rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .item-text {
+    padding: 2px;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+    text-align: center;
+  }
+
+  .info-btn {
+    top: 5px;
+    right: 5px;
+    width: 19px;
+    height: 19px;
+    font-size: 11px;
+    border-width: 1px;
+  }
+
     /* Geen inline dossier meer */
   .hint-dossier {
     display: none !important;

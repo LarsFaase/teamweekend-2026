@@ -112,7 +112,7 @@
         let leaderboardHtml = "";
         spelersLijst.forEach((speler, index) => {
             const positieNummer = index + 1;
-            let medaille of Positie = `${positieNummer}.`;
+            let medailleOfPositie = `${positieNummer}.`;
             
             if (positieNummer === 1 && speler.score > 0) medailleOfPositie = "🥇";
             if (positieNummer === 2 && speler.score > 0) medailleOfPositie = "🥈";

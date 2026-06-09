@@ -1046,7 +1046,7 @@ video {
 /* Statistieken onder de Bingokaart */
 .player-stats-container {
   margin-top: 40px;
-  background: white;
+  background: #002561;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.05);
@@ -1054,7 +1054,7 @@ video {
 
 .current-position-box {
   text-align: center;
-  background: #f8f9fa;
+  background: #fafafa;
   border: 2px solid #007bff;
   border-radius: 6px;
   padding: 10px;
@@ -1075,16 +1075,16 @@ video {
 
 .stat-column {
   flex: 1;
-  background: #f8f9fa;
+  background: #002561;
   padding: 15px;
   border-radius: 6px;
   border: 1px solid #dee2e6;
 }
 
-.stat-column h4 {
+.stat-column h3 {
   margin-top: 0;
-  border-bottom: 2px solid #dee2e6;
-  padding-bottom: 5px;
+  border-bottom: 2px solid #e10600;
+  padding-bottom: 10px;
 }
 
 .stat-list {

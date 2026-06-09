@@ -271,7 +271,16 @@
         get(userCardRef).then((snapshot) => {
             let kaart = snapshot.val();
             if (kaart && kaart[index]) {
+                // Wissel de status van het vakje
                 kaart[index].checked = !kaart[index].checked;
+                
+                // NIEUW: Sla de exacte tijd op als hij gecheckt wordt, anders wissen
+                if (kaart[index].checked) {
+                    kaart[index].lastChanged = Date.now(); // Tijdstip in milliseconden
+                } else {
+                    delete kaart[index].lastChanged;
+                }
+                
                 set(userCardRef, kaart);
             }
         });
@@ -347,27 +356,61 @@
 
         // --- NIEUW: LIVE STATISTIEKEN BLOK ONDER HET GRID ---
         
-        // Bereken scores van alle actieve spelers
-        const spelersLijst = Object.keys(allCards).map(player => {
-            const c = allCards[player];
-            return {
-                name: player,
-                score: c.filter(item => item.checked).length,
-                total: c.length
-            };
-        });
+        // Bereken scores EN laatst behaalde punt-tijdstip van alle actieve spelers
+        const spelersLijst = [];
+        if (allCards) {
+            Object.keys(allCards).forEach(player => {
+                const c = allCards[player];
+                if (c && Array.isArray(c)) {
+                    const gecheckteVakjes = c.filter(item => item.checked);
+                    
+                    // Zoek naar het nieuwste tijdstip binnen de gecheckte vakjes van deze speler
+                    let laatstePuntTijd = 0;
+                    gecheckteVakjes.forEach(item => {
+                        if (item.lastChanged && item.lastChanged > laatstePuntTijd) {
+                            laatstePuntTijd = item.lastChanged;
+                        }
+                    });
 
-        // Sorteer: meeste punten bovenaan
-        spelersLijst.sort((a, b) => b.score - a.score);
+                    spelersLijst.push({
+                        name: player,
+                        score: gecheckteVakjes.length,
+                        total: c.length,
+                        lastTime: laatstePuntTijd // Hoe hoger dit getal, hoe RECENTER het punt
+                    });
+                }
+            });
+        }
+
+        // SLIMMERE SORTERING (Eerlijk op basis van tijd)
+        spelersLijst.sort((a, b) => {
+            // 1. Eerst sorteren op de hoogste score
+            if (b.score !== a.score) {
+                return b.score - a.score;
+            }
+            
+            // 2. Hebben ze evenveel punten?
+            // Als ze allebei 0 punten hebben, sorteer dan gewoon alfabetisch op naam
+            if (a.score === 0 && b.score === 0) {
+                return a.name.localeCompare(b.name);
+            }
+            
+            // 3. Wie heeft er EERDER de score behaald? (Laagste timestamp wint)
+            return a.lastTime - b.lastTime;
+        });
 
         // Vind de huidige positie van de ingelogde speler
         const mijnIndex = spelersLijst.findIndex(s => s.name === user);
         const mijnPositie = mijnIndex !== -1 ? mijnIndex + 1 : spelersLijst.length + 1;
 
-        // Pak de Top 3 en de Bodem 3 spelers
+        // Pak de Top 3 (staat nu automatisch goed op score én tijd)
         const top3 = spelersLijst.slice(0, 3);
-        // Zorg dat de onderste 3 niet overlappen met de top 3 als er nog weinig spelers zijn
-        const bodem3 = spelersLijst.length > 3 ? spelersLijst.slice(-3).reverse() : [];
+        
+        // Pak de onderste 3 
+        // We pakken de slechtste spelers. Omdat we bij gelijke stand de 'snellere' speler
+        // hoger hebben gezet, staan de 'langzamere' spelers met gelijke scores al onderaan.
+        // Door .reverse() te gebruiken, komt de ALLERLANGZAAMSTE (of de absolute nummer laatst) helemaal onderaan het rode lijstje te staan.
+        const bodem3 = spelersLijst.length > 3 ? spelersLijst.slice(-3) : [];
 
         html += `
         <div class="player-stats-container">
@@ -377,7 +420,7 @@
             
             <div class="split-stats-grid">
                 <div class="stat-column">
-                    <h4 style="color: #28a745;">🥇 Koplopers (Top 3)</h4>
+                    <h3 style="color: #28a745;">🥇 Top 3</h3>
                     <ol class="stat-list">
         `;
         
@@ -391,16 +434,23 @@
                 </div>
                 
                 <div class="stat-column">
-                    <h4 style="color: #dc3545;">🚨 Achterblijvers (Onderste 3)</h4>
-                    <ul class="stat-list" style="list-style-type: square;">
+                    <h3 style="color: #dc3545;">🚨 Laatste 3 (gevarenzone)</h3>
+                    <ol class="stat-list" style="list-style-type: none; padding-left: 0;">
         `;
 
-        if(bodem3.length > 0) {
+        if (bodem3.length > 0) {
             bodem3.forEach(s => {
-                html += `<li>${s.name}: <span style="color:#dc3545;">${s.score}/${s.total}</span></li>`;
+                // Zoek de échte positie op in de volledige gesorteerde spelersLijst
+                const echtePositie = spelersLijst.findIndex(p => p.name === s.name) + 1;
+                
+                html += `
+                <li style="display: flex; align-items: center;">
+                    <span style="display: inline-block; width: 30px; text-align: left; font-weight: bold;">${echtePositie}.</span>
+                    <span style="flex-grow: 1;">${s.name}: <span style="color:#dc3545;">${s.score}/${s.total}</span></span>
+                </li>`;
             });
         } else {
-            html += `<li>Nog niet genoeg spelers...</li>`;
+            html += `<li>Wachten op meer spelers...</li>`;
         }
 
         html += `

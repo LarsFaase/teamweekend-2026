@@ -12,13 +12,19 @@
   <div id="nav-placeholder"></div>
 
   <main class="admin-container">
-    <h1>🏆 Organisatie Dashboard</h1>
-    <h2>Live Bingo Voortgang Teamweekend 2026</h2>
+    <div class="admin-header-container">
+      <div>
+        <h1>🏆 Organisatie Dashboard</h1>
+        <h2>Live Bingo Voortgang Teamweekend 2026</h2>
+      </div>
+      <button id="logout-btn" class="logout-btn">Uitloggen</button>
+    </div>
+
     <p>Hieronder zie je real-time de tussenstand en welke vakjes iedereen heeft afgestreept.</p>
     
     <div class="player-row" style="background: #002561; border: 2px solid #28a745;">
-      <h3 style="margin-top: 0; color: #28a745;">📊 Live Tussenstand (Meeste punten bovenaan)</h3>
-      <ol id="leaderboard-list" style="margin: 0; padding-left: 20px; font-size: 1.1rem; line-height: 1.6; font-weight: bold; text-transform: capitalize;">
+      <h3 style="margin-top: 0; color: #28a745;">📊 Live Tussenstand (Meeste punten + snelste tijd bovenaan)</h3>
+      <ol id="leaderboard-list" style="margin: 0; padding-left: 0; list-style-type: none; font-size: 1.1rem; line-height: 1.6; font-weight: bold; text-transform: capitalize;">
         <li>Wachten op actieve spelers... ⏳</li>
       </ol>
     </div>
@@ -56,6 +62,11 @@
         document.getElementById('nav-placeholder').innerHTML = data;
       });
 
+    document.getElementById('logout-btn').addEventListener('click', () => {
+        
+        window.location.href = 'persoonlijk.html';  // Stuur de admin terug naar het inlogscherm
+    });
+
     const leaderboardList = document.getElementById('leaderboard-list');
     const dashboardContent = document.getElementById('dashboard-content');
     const bingoCardsRef = ref(db, 'bingo_kaarten');
@@ -64,43 +75,65 @@
     onValue(bingoCardsRef, (snapshot) => {
         const allCards = snapshot.val();
         
-        // Als er nog GEEN kaarten in de database staan (iemand heeft ingelogd)
         if (!allCards || Object.keys(allCards).length === 0) {
             dashboardContent.innerHTML = "<p class='admin-empty'>Er hebben nog geen spelers ingelogd. Zodra iemand inlogt, verschijnt hij hier live!</p>";
-            leaderboardList.innerHTML = "<li>Nog geen actieve spelers beschikbaar</li>";
+            leaderboardList.innerHTML = "<li>Nog geen active spelers beschikbaar</li>";
             return;
         }
 
-        // 1. Maak een lijst van ALLEEN de spelers die daadwerkelijk in de database staan
+        // 1. Bouw de spelerslijst op inclusief de 'lastTime' timestamp van het laatst behaalde punt
         const spelersLijst = Object.keys(allCards).map(player => {
             const card = allCards[player];
-            const totalItems = card.length;
-            const checkedItems = card.filter(item => item.checked).length;
-            return {
-                name: player,
-                score: checkedItems,
-                total: totalItems,
-                cardData: card
-            };
-        });
+            
+            // Check of de kaart een geldige array is
+            if (card && Array.isArray(card)) {
+                const checkedItems = card.filter(item => item.checked);
+                
+                // Zoek naar de nieuwste timestamp binnen de gecheckte vakjes van deze speler
+                let laatstePuntTijd = 0;
+                checkedItems.forEach(item => {
+                    if (item.lastChanged && item.lastChanged > laatstePuntTijd) {
+                        laatstePuntTijd = item.lastChanged;
+                    }
+                });
 
-        // Sorteer: Meeste punten bovenaan. Bij gelijke stand sorteren op naam
+                return {
+                    name: player,
+                    score: checkedItems.length,
+                    total: card.length,
+                    lastTime: laatstePuntTijd,
+                    cardData: card
+                };
+            }
+            return null;
+        }).filter(speler => speler !== null); // Filter eventuele corrupte data eruit
+
+        // SLIMMERE SORTERING: Meeste punten bovenaan, bij gelijke stand wint de snelste tijd
         spelersLijst.sort((a, b) => {
             if (b.score !== a.score) {
-                return b.score - a.score;
+                return b.score - a.score; // Sorteer op de hoogste score
             }
-            return a.name.localeCompare(b.name);
+            if (a.score === 0 && b.score === 0) {
+                return a.name.localeCompare(b.name); // Als iedereen 0 heeft, gewoon alfabetisch
+            }
+            return a.lastTime - b.lastTime; // Snelste tijd (laagste timestamp) komt bovenaan
         });
 
-        // 2. Genereer de Live Tussenstand HTML
+        // 2. Genereer de Live Tussenstand HTML (met strakke links-uitlijning)
         let leaderboardHtml = "";
         spelersLijst.forEach((speler, index) => {
-            let medaille = "";
-            if (index === 0 && speler.score > 0) medaille = "🥇 ";
-            if (index === 1 && speler.score > 0) medaille = "🥈 ";
-            if (index === 2 && speler.score > 0) medaille = "🥉 ";
+            const positieNummer = index + 1;
+            let medailleOfPositie = `${positieNummer}.`;
             
-            leaderboardHtml += `<li>${medaille}${speler.name}: <span style="color: #28a745;">${speler.score}</span></li>`;
+            if (positieNummer === 1 && speler.score > 0) medailleOfPositie = "🥇";
+            if (positieNummer === 2 && speler.score > 0) medailleOfPositie = "🥈";
+            if (positieNummer === 3 && speler.score > 0) medailleOfPositie = "🥉";
+            
+            leaderboardHtml += `
+                <li style="display: flex; align-items: center; margin-bottom: 4px; padding-left: 10px;">
+                    <span style="display: inline-block; width: 35px; text-align: left;">${medailleOfPositie}</span>
+                    <span>${speler.name}: <span style="color: #28a745;">${speler.score}</span></span>
+                </li>`;
         });
         leaderboardList.innerHTML = leaderboardHtml;
 

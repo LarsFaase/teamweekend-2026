@@ -1043,6 +1043,58 @@ video {
 }
 
 /* Voortgang bingo */
+/* Statistieken onder de Bingokaart */
+.player-stats-container {
+  margin-top: 40px;
+  background: #002561;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.current-position-box {
+  text-align: center;
+  background: #fafafa;
+  border: 2px solid #007bff;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.current-position-box h3 {
+  margin: 0;
+  color: #007bff;
+  font-size: 1.3rem;
+}
+
+.split-stats-grid {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.stat-column {
+  flex: 1;
+  background: #002561;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #dee2e6;
+}
+
+.stat-column h3 {
+  margin-top: 0;
+  border-bottom: 2px solid #e10600;
+  padding-bottom: 10px;
+}
+
+.stat-list {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.6;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
 /* Admin Dashboard Specifieke Styling */
 .admin-container {
   max-width: 1200px;
@@ -1189,6 +1241,38 @@ video {
     padding: 8px 15px;
   }
 
+    .bingo-grid {
+    gap: 6px;
+    margin-top: 14px;
+  }
+
+  .bingo-item {
+    min-height: 95px;
+    padding: 22px 4px 10px;
+    border-radius: 10px;
+    font-size: 0.72rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .item-text {
+    padding: 2px;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+    text-align: center;
+  }
+
+  .info-btn {
+    top: 5px;
+    right: 5px;
+    width: 19px;
+    height: 19px;
+    font-size: 11px;
+    border-width: 1px;
+  }
+
     /* Geen inline dossier meer */
   .hint-dossier {
     display: none !important;
@@ -1208,5 +1292,9 @@ video {
 
   .flip-card {
     height: 250px;
+  }
+  
+  .split-stats-grid {
+    flex-direction: column;
   }
 }

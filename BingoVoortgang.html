@@ -12,8 +12,14 @@
   <div id="nav-placeholder"></div>
 
   <main class="admin-container">
-    <h1>🏆 Organisatie Dashboard</h1>
-    <h2>Live Bingo Voortgang Teamweekend 2026</h2>
+    <div class="admin-header-container">
+      <div>
+        <h1>🏆 Organisatie Dashboard</h1>
+        <h2>Live Bingo Voortgang Teamweekend 2026</h2>
+      </div>
+      <button id="logout-btn" class="logout-btn">Uitloggen</button>
+    </div>
+
     <p>Hieronder zie je real-time de tussenstand en welke vakjes iedereen heeft afgestreept.</p>
     
     <div class="player-row" style="background: #002561; border: 2px solid #28a745;">
@@ -55,6 +61,11 @@
       .then(data => {
         document.getElementById('nav-placeholder').innerHTML = data;
       });
+
+    document.getElementById('logout-btn').addEventListener('click', () => {
+        
+        window.location.href = 'persoonlijk.html';  // Stuur de admin terug naar het inlogscherm
+    });
 
     const leaderboardList = document.getElementById('leaderboard-list');
     const dashboardContent = document.getElementById('dashboard-content');
